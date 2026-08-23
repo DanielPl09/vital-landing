@@ -47,22 +47,131 @@
     revealables.forEach(function (el) { revealer.observe(el); });
   }
 
-  /* ---------- play feature videos only while on screen ---------- */
-  var videos = document.querySelectorAll('.media__video');
-  if (videos.length && 'IntersectionObserver' in window) {
-    var player = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        var video = entry.target;
-        if (entry.isIntersecting && !reduced) {
-          var play = video.play();
-          if (play && play.catch) play.catch(function () { /* autoplay blocked — poster stands in */ });
-        } else {
-          video.pause();
-        }
-      });
-    }, { threshold: 0.35 });
+  /* ---------- feature accordion ---------- */
+  initFeatureAccordion();
 
-    videos.forEach(function (video) { player.observe(video); });
+  function idleCallback(cb) {
+    if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 2000 });
+    else setTimeout(cb, 1200);
+  }
+
+  function hydrateVideo(video) {
+    if (!video || !video.dataset.src || video.src) return;
+    video.src = video.dataset.src;
+    video.load();
+  }
+
+  function tryPlay(video) {
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stands in */ });
+  }
+
+  function initFeatureAccordion() {
+    var root = document.getElementById('featureAccordion');
+    if (!root) return;
+
+    var items = Array.prototype.slice.call(root.querySelectorAll('.accordion__item'));
+
+    // Feature 1 ships with a real video src and loads eagerly. Every other
+    // feature (currently just feature 2) only carries a data-src, so the
+    // browser never fetches it on page load — hydrate those in the
+    // background once idle, so the clip is ready the moment its section
+    // is opened, without competing with first paint.
+    root.querySelectorAll('.media__video[data-src]').forEach(function (video) {
+      idleCallback(function () { hydrateVideo(video); });
+    });
+
+    root.classList.add('is-js');
+
+    // Animates by measuring real content height (scrollHeight) rather than
+    // transitioning grid-template-rows — a nested grid inside an animating
+    // 0fr/1fr row froze mid-transition in testing, so this uses the
+    // classic, reliable height-transition accordion recipe instead.
+    function setOpen(item, open, animate) {
+      var trigger = item.querySelector('.accordion__trigger');
+      var body = item.querySelector('.accordion__body');
+      trigger.setAttribute('aria-expanded', String(open));
+      body.setAttribute('aria-hidden', String(!open));
+
+      if (open) {
+        item.classList.add('is-open');
+        if (!animate) {
+          body.style.height = 'auto';
+          return;
+        }
+        body.style.height = body.scrollHeight + 'px';
+        body.addEventListener('transitionend', function onEnd(e) {
+          if (e.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', onEnd);
+          if (item.classList.contains('is-open')) body.style.height = 'auto';
+        });
+      } else {
+        var video = body.querySelector('.media__video');
+        if (video) video.pause();
+        if (!animate) {
+          item.classList.remove('is-open');
+          body.style.height = '0px';
+          return;
+        }
+        // Freeze the current (possibly 'auto') height as a concrete pixel
+        // value first — a transition can't animate away from 'auto'.
+        body.style.height = body.scrollHeight + 'px';
+        void body.offsetHeight; // force layout so that height is committed
+        item.classList.remove('is-open');
+        requestAnimationFrame(function () { body.style.height = '0px'; });
+      }
+    }
+
+    function openOnly(target, animate) {
+      items.forEach(function (item) { setOpen(item, item === target, animate); });
+    }
+
+    items.forEach(function (item) {
+      item.querySelector('.accordion__trigger').addEventListener('click', function () {
+        openOnly(item, true);
+      });
+    });
+
+    // Feature 1 starts open, matching its markup — set instantly, no
+    // animation, so the page doesn't visibly "open" on every load.
+    openOnly(items[0], false);
+
+    // A video only plays once its own accordion section is open AND the
+    // majority of the clip is actually on screen — not merely present in
+    // a collapsed (zero-height) panel.
+    if ('IntersectionObserver' in window) {
+      var player = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var video = entry.target;
+          var item = video.closest('.accordion__item');
+          var isOpen = item && item.classList.contains('is-open');
+          if (entry.isIntersecting && isOpen && !reduced) {
+            hydrateVideo(video);
+            tryPlay(video);
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.5 });
+
+      root.querySelectorAll('.media__video').forEach(function (v) { player.observe(v); });
+    }
+
+    // Header/footer "Safety" link: open that section, then scroll to it.
+    document.querySelectorAll('a[href^="#feature-body-"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var id = link.getAttribute('href').slice(1);
+        var body = document.getElementById(id);
+        var item = body && body.closest('.accordion__item');
+        if (!item) return;
+        e.preventDefault();
+        openOnly(item, true);
+        requestAnimationFrame(function () {
+          item.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        });
+        history.pushState(null, '', '#' + id);
+      });
+    });
   }
 
   /* ---------- demo form (front-end only for now) ---------- */
