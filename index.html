@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vital — Clinic software for dietitians</title>
+<meta name="description" content="Vital is clinic software for dietitians: an AI chat layer that onboards patients, books appointments, and keeps them engaged between visits — steered by your clinic." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8762F'/><path d='M9 12h4l3 8 3-8h4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ───────────────────────── Header ───────────────────────── -->
+<header class="site-header" id="siteHeader">
+  <div class="container header__inner">
+    <a class="brand" href="#top" aria-label="Vital home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M9 12h4l3 8 3-8h4" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand__name">Vital</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#safety">Safety</a>
+      <a href="#compliance">Compliance</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="#demo">Book a demo</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <section class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true">
+      <span class="blob blob--1"></span>
+      <span class="blob blob--2"></span>
+      <span class="blob blob--3"></span>
+    </div>
+
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow">Clinic software for dietitians</p>
+        <h1 class="hero__title">The patient relationship doesn&rsquo;t pause between appointments.</h1>
+        <p class="hero__sub">
+          Vital adds an AI chat layer to your practice. It onboards new patients, books their
+          appointments, and keeps them engaged on the topics you choose — always steered by
+          your clinic, never off protocol.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#demo">Book a demo</a>
+          <a class="btn btn--ghost" href="#features">See how it works</a>
+        </div>
+        <p class="hero__note">
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5 13.5 4v4c0 3.2-2.3 5.7-5.5 6.5C4.8 13.7 2.5 11.2 2.5 8V4L8 1.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m5.8 8.1 1.6 1.6 3-3.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          HIPAA-ready and GDPR compliant by default
+        </p>
+      </div>
+
+      <!-- Glass panel collage, echoing the product UI -->
+      <div class="hero__art" aria-hidden="true">
+        <div class="panel panel--db">
+          <p class="panel__label">Database</p>
+          <ul class="rows">
+            <li><span>Drin Name</span><b class="chip chip--ok">Cleared</b></li>
+            <li><span>Jasen Alex</span><b class="chip chip--ok">Cleared</b></li>
+            <li><span>Mary Ardilson</span><b class="chip">Intake</b></li>
+            <li><span>Clera Warson</span><b class="chip">Booked</b></li>
+            <li><span>Alen Marys</span><b class="chip chip--ok">Cleared</b></li>
+            <li><span>Larn Diaszer</span><b class="chip">Intake</b></li>
+          </ul>
+        </div>
+
+        <div class="panel panel--chat">
+          <div class="panel__bar">
+            <span class="avatar"></span>
+            <p class="panel__title">Chat</p>
+            <span class="dots">&#8942;</span>
+          </div>
+          <div class="thread">
+            <p class="bubble bubble--in">Hi Clara — ready to finish your intake?</p>
+            <p class="bubble bubble--out">Yes, and can I move Thursday?</p>
+            <p class="bubble bubble--in">Done. Tuesday 10:30 with Dr. Levy.</p>
+          </div>
+          <div class="composer"><span></span><i class="send"></i></div>
+        </div>
+
+        <div class="panel panel--profile">
+          <p class="panel__label">User profile</p>
+          <div class="profile__face"></div>
+          <p class="profile__name">Clara E.</p>
+          <p class="profile__meta">Sports nutrition · Week 6</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Features ───────────────────────── -->
+  <section class="section" id="features">
+    <div class="container">
+      <header class="section__head">
+        <p class="eyebrow">Features</p>
+        <h2 class="section__title">Three things your clinic gets on day one</h2>
+        <p class="section__sub">Built for dietitian practices — the clinic sets the protocol, Vital does the follow-through.</p>
+      </header>
+
+      <!-- Feature 1 — chat / patient relationship (video) -->
+      <article class="feature reveal">
+        <div class="feature__copy">
+          <p class="feature__num">01</p>
+          <h3 class="feature__title">Chat that carries the patient relationship</h3>
+          <p class="feature__text">
+            New patients are onboarded the moment they land — intake questions, history, goals,
+            consent. From the same thread they book, move or confirm an appointment, and it
+            lands straight in your clinic calendar. No forms to chase, no phone tag.
+          </p>
+          <ul class="ticks">
+            <li>Guided intake and history in a conversation</li>
+            <li>Appointment booking and rescheduling in-thread</li>
+            <li>Every message written back to the patient record</li>
+          </ul>
+        </div>
+        <figure class="media">
+          <video
+            class="media__video"
+            src="assets/video/chat-onboarding.mp4"
+            poster="assets/img/chat-onboarding-poster.png"
+            muted loop playsinline preload="metadata"
+            aria-label="Vital chat onboarding a patient and setting an appointment"></video>
+        </figure>
+      </article>
+
+      <!-- Feature 2 — custom agents and topics (video TBD: drop a <video> in place of .placeholder) -->
+      <article class="feature feature--flip reveal">
+        <div class="feature__copy">
+          <p class="feature__num">02</p>
+          <h3 class="feature__title">Custom agents for the topics you treat</h3>
+          <p class="feature__text">
+            Sleep, sports nutrition, weight management, GI, pregnancy — spin up an agent per
+            topic, each with its own tone, questions and clinical protocol. Your dietitians
+            steer what it may say, what it must ask, and when it hands the patient back.
+          </p>
+          <ul class="ticks">
+            <li>One agent per topic, cloned from your protocols</li>
+            <li>Clinic-defined scope, tone and escalation rules</li>
+            <li>Assign agents per patient, per programme stage</li>
+          </ul>
+        </div>
+        <figure class="media media--placeholder" data-slot="feature-2-video">
+          <div class="placeholder">
+            <div class="placeholder__grid">
+              <span class="tile">Sleep</span><span class="tile">Sports</span>
+              <span class="tile">Weight</span><span class="tile">GI</span>
+              <span class="tile">Pregnancy</span><span class="tile tile--add">+</span>
+            </div>
+            <p class="placeholder__note">Video coming soon</p>
+          </div>
+        </figure>
+      </article>
+
+      <!-- Feature 3 — safety (video TBD: drop a <video> in place of .placeholder) -->
+      <article class="feature reveal" id="safety">
+        <div class="feature__copy">
+          <p class="feature__num">03</p>
+          <h3 class="feature__title">Safety that a clinician can defend</h3>
+          <p class="feature__text">
+            Vital stays inside the boundary you draw. Red-flag language, out-of-scope medical
+            questions and distress signals are escalated to a human dietitian in seconds, and
+            every exchange is logged, reviewable and exportable for your records.
+          </p>
+          <ul class="ticks">
+            <li>Red-flag detection with instant human handover</li>
+            <li>Hard limits on diagnosis and medication advice</li>
+            <li>Full audit trail on every conversation</li>
+          </ul>
+        </div>
+        <figure class="media media--placeholder" data-slot="feature-3-video">
+          <div class="placeholder">
+            <div class="placeholder__safety">
+              <p class="flag">Red flag detected</p>
+              <p class="hand">Handed to Dr. Levy · 4s</p>
+              <p class="log">Logged to audit trail</p>
+            </div>
+            <p class="placeholder__note">Video coming soon</p>
+          </div>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── Compliance ───────────────────────── -->
+  <section class="section section--compliance" id="compliance">
+    <div class="container">
+      <header class="section__head">
+        <p class="eyebrow">Compliance</p>
+        <h2 class="section__title">Patient data handled the way regulators expect</h2>
+      </header>
+
+      <div class="badges">
+        <div class="badge reveal">
+          <div class="badge__seal" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="40" height="40"><path d="M24 4 40 10v12c0 9.4-6.8 16.8-16 19-9.2-2.2-16-9.6-16-19V10L24 4Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="m17 24 5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <p class="badge__name">HIPAA</p>
+            <p class="badge__text">PHI encrypted in transit and at rest, role-based access, BAA available for every clinic.</p>
+          </div>
+        </div>
+
+        <div class="badge reveal">
+          <div class="badge__seal" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M24 12v5M24 31v5M12 24h5M31 24h5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="24" r="6" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>
+          </div>
+          <div>
+            <p class="badge__name">GDPR</p>
+            <p class="badge__text">EU data residency, consent captured in-chat, export and erasure on request.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────────────────── CTA ───────────────────────── -->
+  <section class="cta" id="demo">
+    <div class="container cta__inner">
+      <h2 class="cta__title">See Vital running on your clinic&rsquo;s protocols</h2>
+      <p class="cta__sub">A 20-minute walkthrough with one of our dietitian-side specialists.</p>
+      <form class="cta__form" id="demoForm" novalidate>
+        <label class="sr-only" for="email">Work email</label>
+        <input id="email" name="email" type="email" placeholder="you@clinic.com" autocomplete="email" required />
+        <button class="btn btn--primary" type="submit">Book a demo</button>
+      </form>
+      <p class="cta__status" id="formStatus" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="site-footer">
+  <div class="container footer__inner">
+    <p class="footer__brand">Vital</p>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#features">Features</a>
+      <a href="#safety">Safety</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#demo">Book a demo</a>
+    </nav>
+    <p class="footer__legal">© <span id="year">2026</span> Vital Health Software. Not a medical device. Clinical decisions stay with your dietitians.</p>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
