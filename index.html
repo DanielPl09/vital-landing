@@ -28,7 +28,7 @@
 
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#features">Features</a>
-      <a href="#safety">Safety</a>
+      <a href="#feature-body-2">Safety</a>
       <a href="#compliance">Compliance</a>
       <a class="btn btn--primary btn--sm nav__cta" href="#demo">Book a demo</a>
     </nav>
@@ -115,87 +115,124 @@
         <p class="section__sub">Built for dietitian practices — the clinic sets the protocol, Vital does the follow-through.</p>
       </header>
 
-      <!-- Feature 1 — chat / patient relationship (video) -->
-      <article class="feature reveal">
-        <div class="feature__copy">
-          <p class="feature__num">01</p>
-          <h3 class="feature__title">Chat that carries the patient relationship</h3>
-          <p class="feature__text">
-            New patients are onboarded the moment they land — intake questions, history, goals,
-            consent. From the same thread they book, move or confirm an appointment, and it
-            lands straight in your clinic calendar. No forms to chase, no phone tag.
-          </p>
-          <ul class="ticks">
-            <li>Guided intake and history in a conversation</li>
-            <li>Appointment booking and rescheduling in-thread</li>
-            <li>Every message written back to the patient record</li>
-          </ul>
-        </div>
-        <figure class="media">
-          <video
-            class="media__video"
-            src="assets/video/chat-onboarding.mp4"
-            poster="assets/img/chat-onboarding-poster.png"
-            muted loop playsinline preload="metadata"
-            aria-label="Vital chat onboarding a patient and setting an appointment"></video>
-        </figure>
-      </article>
+      <!-- Vertical accordion: feature 1 open by default, the other two
+           collapse under their own sub-headers. Fully expanded and usable
+           without JS — see the .js-scoped rules in styles.css. -->
+      <div class="accordion" id="featureAccordion">
 
-      <!-- Feature 2 — custom agents and topics (video TBD: drop a <video> in place of .placeholder) -->
-      <article class="feature feature--flip reveal">
-        <div class="feature__copy">
-          <p class="feature__num">02</p>
-          <h3 class="feature__title">Custom agents for the topics you treat</h3>
-          <p class="feature__text">
-            Sleep, sports nutrition, weight management, GI, pregnancy — spin up an agent per
-            topic, each with its own tone, questions and clinical protocol. Your dietitians
-            steer what it may say, what it must ask, and when it hands the patient back.
-          </p>
-          <ul class="ticks">
-            <li>One agent per topic, cloned from your protocols</li>
-            <li>Clinic-defined scope, tone and escalation rules</li>
-            <li>Assign agents per patient, per programme stage</li>
-          </ul>
-        </div>
-        <figure class="media media--placeholder" data-slot="feature-2-video">
-          <div class="placeholder">
-            <div class="placeholder__grid">
-              <span class="tile">Sleep</span><span class="tile">Sports</span>
-              <span class="tile">Weight</span><span class="tile">GI</span>
-              <span class="tile">Pregnancy</span><span class="tile tile--add">+</span>
+        <!-- Feature 1 — chat / patient relationship (video, loads eagerly) -->
+        <article class="accordion__item is-open" data-index="0">
+          <h3 class="accordion__header">
+            <button class="accordion__trigger" type="button" aria-controls="feature-body-0" id="feature-trigger-0">
+              <span class="accordion__num">01</span>
+              <span class="accordion__title">Chat that carries the patient relationship</span>
+              <span class="accordion__chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="accordion__body" id="feature-body-0" role="region" aria-labelledby="feature-trigger-0">
+            <div class="feature">
+              <div class="feature__copy">
+                <p class="feature__text">
+                  New patients are onboarded the moment they land — intake questions, history, goals,
+                  consent. From the same thread they book, move or confirm an appointment, and it
+                  lands straight in your clinic calendar. No forms to chase, no phone tag.
+                </p>
+                <ul class="ticks">
+                  <li>Guided intake and history in a conversation</li>
+                  <li>Appointment booking and rescheduling in-thread</li>
+                  <li>Every message written back to the patient record</li>
+                </ul>
+              </div>
+              <figure class="media">
+                <video
+                  class="media__video"
+                  src="assets/video/chat-onboarding.mp4"
+                  poster="assets/img/chat-onboarding-poster.png"
+                  muted loop playsinline preload="metadata"
+                  aria-label="Vital chat onboarding a patient and setting an appointment"></video>
+                <div class="media__tint" aria-hidden="true"></div>
+              </figure>
             </div>
-            <p class="placeholder__note">Video coming soon</p>
           </div>
-        </figure>
-      </article>
+        </article>
 
-      <!-- Feature 3 — safety (video TBD: drop a <video> in place of .placeholder) -->
-      <article class="feature reveal" id="safety">
-        <div class="feature__copy">
-          <p class="feature__num">03</p>
-          <h3 class="feature__title">Safety that a clinician can defend</h3>
-          <p class="feature__text">
-            Vital stays inside the boundary you draw. Red-flag language, out-of-scope medical
-            questions and distress signals are escalated to a human dietitian in seconds, and
-            every exchange is logged, reviewable and exportable for your records.
-          </p>
-          <ul class="ticks">
-            <li>Red-flag detection with instant human handover</li>
-            <li>Hard limits on diagnosis and medication advice</li>
-            <li>Full audit trail on every conversation</li>
-          </ul>
-        </div>
-        <figure class="media media--placeholder" data-slot="feature-3-video">
-          <div class="placeholder">
-            <div class="placeholder__safety">
-              <p class="flag">Red flag detected</p>
-              <p class="hand">Handed to Dr. Levy · 4s</p>
-              <p class="log">Logged to audit trail</p>
+        <!-- Feature 2 — smart scheduling (video, hydrated in the background on idle) -->
+        <article class="accordion__item" data-index="1">
+          <h3 class="accordion__header">
+            <button class="accordion__trigger" type="button" aria-controls="feature-body-1" id="feature-trigger-1">
+              <span class="accordion__num">02</span>
+              <span class="accordion__title">Scheduling that keeps the calendar full</span>
+              <span class="accordion__chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="accordion__body" id="feature-body-1" role="region" aria-labelledby="feature-trigger-1">
+            <div class="feature feature--flip">
+              <div class="feature__copy">
+                <p class="feature__text">
+                  The moment a patient is ready to book, Vital checks your real availability and
+                  proposes the next open slot — no coordinator in the loop. Confirmations,
+                  reschedules and cancellations sync straight back to the calendar your clinic
+                  already runs on.
+                </p>
+                <ul class="ticks">
+                  <li>Live sync with your clinic calendar and availability rules</li>
+                  <li>Automatic confirmations, reminders and reschedule requests</li>
+                  <li>Cancelled slots are re-offered to the next patient on the waitlist</li>
+                </ul>
+              </div>
+              <figure class="media">
+                <video
+                  class="media__video"
+                  data-src="assets/video/smart-scheduling.mp4"
+                  poster="assets/img/smart-scheduling-poster.png"
+                  muted loop playsinline preload="none"
+                  aria-label="Vital's AI Clinician view proposing and confirming appointment slots on the clinic calendar">
+                  <noscript><source src="assets/video/smart-scheduling.mp4" type="video/mp4" /></noscript>
+                </video>
+                <div class="media__tint" aria-hidden="true"></div>
+              </figure>
             </div>
-            <p class="placeholder__note">Video coming soon</p>
           </div>
-        </figure>
-      </article>
+        </article>
+
+        <!-- Feature 3 — safety (video TBD: drop a <video> in place of .placeholder) -->
+        <article class="accordion__item" data-index="2">
+          <h3 class="accordion__header">
+            <button class="accordion__trigger" type="button" aria-controls="feature-body-2" id="feature-trigger-2">
+              <span class="accordion__num">03</span>
+              <span class="accordion__title">Safety that a clinician can defend</span>
+              <span class="accordion__chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="accordion__body" id="feature-body-2" role="region" aria-labelledby="feature-trigger-2">
+            <div class="feature">
+              <div class="feature__copy">
+                <p class="feature__text">
+                  Vital stays inside the boundary you draw. Red-flag language, out-of-scope medical
+                  questions and distress signals are escalated to a human dietitian in seconds, and
+                  every exchange is logged, reviewable and exportable for your records.
+                </p>
+                <ul class="ticks">
+                  <li>Red-flag detection with instant human handover</li>
+                  <li>Hard limits on diagnosis and medication advice</li>
+                  <li>Full audit trail on every conversation</li>
+                </ul>
+              </div>
+              <figure class="media media--placeholder" data-slot="feature-3-video">
+                <div class="placeholder">
+                  <div class="placeholder__safety">
+                    <p class="flag">Red flag detected</p>
+                    <p class="hand">Handed to Dr. Levy · 4s</p>
+                    <p class="log">Logged to audit trail</p>
+                  </div>
+                  <p class="placeholder__note">Video coming soon</p>
+                </div>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
   </section>
 
@@ -252,7 +289,7 @@
     <p class="footer__brand">Vital</p>
     <nav class="footer__nav" aria-label="Footer">
       <a href="#features">Features</a>
-      <a href="#safety">Safety</a>
+      <a href="#feature-body-2">Safety</a>
       <a href="#compliance">Compliance</a>
       <a href="#demo">Book a demo</a>
     </nav>

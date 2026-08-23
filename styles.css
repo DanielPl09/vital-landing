@@ -218,14 +218,57 @@ img, video { display: block; max-width: 100%; }
 .feature {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: 56px; align-items: center;
-  padding: 44px 0;
+  padding: 8px 0 44px;
 }
-.feature + .feature { border-top: 1px solid var(--line); }
 .feature--flip .feature__copy { order: 2; }
-
-.feature__num { font-size: 13px; font-weight: 700; color: var(--amber); letter-spacing: .1em; }
-.feature__title { font-size: clamp(24px, 2.6vw, 31px); margin: 10px 0 16px; }
 .feature__text { color: var(--ink-soft); margin-bottom: 22px; }
+
+/* ---------- feature accordion ----------
+   Default (no JS): every .accordion__body is fully expanded in normal
+   flow, so all three features are readable without any interaction —
+   this is the same "show everything" fallback used for .reveal above.
+   main.js adds .is-js once it has wired up real collapse/expand behavior,
+   which is the only thing that switches on the rules below. */
+.accordion__item { border-top: 1px solid var(--line); }
+.accordion__item:last-child { border-bottom: 1px solid var(--line); }
+
+.accordion__header { margin: 0; }
+.accordion__trigger {
+  width: 100%; display: flex; align-items: center; gap: 18px;
+  background: none; border: 0; padding: 28px 2px; margin: 0;
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+.accordion__num {
+  flex-shrink: 0; width: 30px;
+  font-size: 13px; font-weight: 700; color: var(--amber); letter-spacing: .1em;
+}
+.accordion__title {
+  flex: 1; font-size: clamp(19px, 2.1vw, 23px); font-weight: 600; letter-spacing: -.01em;
+}
+.accordion__chevron {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--line); position: relative;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.accordion__chevron::before,
+.accordion__chevron::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  background: var(--ink-soft); transform: translate(-50%, -50%);
+}
+.accordion__chevron::before { width: 10px; height: 1.6px; }
+.accordion__chevron::after  { width: 1.6px; height: 10px; transition: opacity .25s ease; }
+
+.is-js .accordion__item.is-open .accordion__chevron { background: var(--teal); border-color: var(--teal); }
+.is-js .accordion__item.is-open .accordion__chevron::before,
+.is-js .accordion__item.is-open .accordion__chevron::after { background: #fff; }
+.is-js .accordion__item.is-open .accordion__chevron::after { opacity: 0; }
+
+/* Height is driven by main.js (measuring scrollHeight, then animating to
+   it — the classic accordion recipe). The grid-template-rows 0fr/1fr trick
+   was tried first but a nested grid inside the animating row froze mid-
+   transition in Chromium, so this sticks to plain, reliable height. */
+.accordion__body { overflow: hidden; }
+.is-js .accordion__body { height: 0; transition: height .38s ease; }
 
 .ticks { display: grid; gap: 11px; font-size: 15.5px; }
 .ticks li { position: relative; padding-left: 30px; }
@@ -241,12 +284,24 @@ img, video { display: block; max-width: 100%; }
 
 /* media frame — same shell for video and placeholder */
 .media {
+  position: relative; isolation: isolate;
   margin: 0; border-radius: var(--radius-lg); overflow: hidden;
   background: linear-gradient(150deg, var(--cream-2), #fff);
   border: 1px solid var(--line); box-shadow: var(--shadow-md);
   aspect-ratio: 16 / 9;
 }
 .media__video { width: 100%; height: 100%; object-fit: cover; }
+
+/* The source footage's orange runs darker/duller than the hero's amber.
+   `screen` only ever lightens, so it lifts that background toward the
+   brand amber without washing out the light UI chrome already in-shot. */
+.media__tint {
+  position: absolute; inset: 0;
+  background: var(--amber-lite);
+  mix-blend-mode: overlay;
+  opacity: .55;
+  pointer-events: none;
+}
 
 .media--placeholder {
   background: linear-gradient(150deg, #fff5e9, #ffe6cd 60%, #ffd9b0);
@@ -258,14 +313,6 @@ img, video { display: block; max-width: 100%; }
   color: var(--amber-deep); background: rgba(255,255,255,.7);
   padding: 6px 14px; border-radius: 999px;
 }
-
-.placeholder__grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 400px; }
-.tile {
-  font-size: 13.5px; font-weight: 500; padding: 9px 16px; border-radius: 12px;
-  background: rgba(255,255,255,.7); border: 1px solid var(--glass-line);
-  box-shadow: var(--shadow-sm);
-}
-.tile--add { color: var(--amber-deep); font-weight: 700; }
 
 .placeholder__safety { display: grid; gap: 8px; text-align: left; font-size: 13.5px; min-width: 250px; }
 .placeholder__safety p {
