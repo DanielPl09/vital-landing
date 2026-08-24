@@ -122,68 +122,19 @@
       }
     }
 
-    // Clicking a header toggles just that section. Sections are not
-    // mutually exclusive: see the scroll-driven opening below for why.
+    function openOnly(target, animate) {
+      items.forEach(function (item) { setOpen(item, item === target, animate); });
+    }
+
     items.forEach(function (item) {
       item.querySelector('.accordion__trigger').addEventListener('click', function () {
-        setOpen(item, !item.classList.contains('is-open'), true);
+        openOnly(item, true);
       });
     });
 
-    // Feature 1 starts open, the rest closed — set instantly, no animation,
-    // so the page doesn't visibly "open" on every load.
-    items.forEach(function (item, i) { setOpen(item, i === 0, false); });
-
-    // Each section then opens on its own as the reader scrolls to it, so
-    // nobody has to click to reach the next feature.
-    //
-    // Opening is deliberately one-way. Auto-closing the previous section
-    // would pull ~360px of content out from *above* the reading position,
-    // jumping the page mid-scroll — and since that jump drags the next
-    // header back across the trigger line, it can oscillate. Expanding only
-    // ever adds height below where the reader is looking, so nothing they
-    // can see moves.
-    //
-    // Only ever opens ONE section per frame. Collapsed headers sit ~85px
-    // apart, so a batch check would trip every remaining section at once
-    // and dump the whole list open in a single step. Opening one and
-    // stopping lets its expansion push the next header back down the page,
-    // so the reader has to actually scroll to earn each one.
-    if (!reduced) {
-      var ticking = false;
-      var lastOpenAt = null;
-      var MIN_SCROLL_BETWEEN = 220;
-
-      var openNextInView = function () {
-        ticking = false;
-        var y = window.scrollY;
-
-        // Hold off until the reader has actually travelled since the last
-        // section opened. Without this the pacing depends on how far the
-        // previous expansion happened to push the next header down, which
-        // varies with each section's height and with where the height
-        // animation is at the instant we measure.
-        if (lastOpenAt !== null && Math.abs(y - lastOpenAt) < MIN_SCROLL_BETWEEN) return;
-
-        var line = window.innerHeight * 0.72;
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].classList.contains('is-open')) continue;
-          if (items[i].getBoundingClientRect().top < line) {
-            setOpen(items[i], true, true);
-            lastOpenAt = y;
-            return;
-          }
-        }
-      };
-
-      var queueCheck = function () {
-        if (!ticking) { ticking = true; requestAnimationFrame(openNextInView); }
-      };
-
-      window.addEventListener('scroll', queueCheck, { passive: true });
-      window.addEventListener('resize', queueCheck);
-      queueCheck();
-    }
+    // Feature 1 starts open, matching its markup — set instantly, no
+    // animation, so the page doesn't visibly "open" on every load.
+    openOnly(items[0], false);
 
     // A video only plays once its own accordion section is open AND the
     // majority of the clip is actually on screen — not merely present in
@@ -205,6 +156,22 @@
 
       root.querySelectorAll('.media__video').forEach(function (v) { player.observe(v); });
     }
+
+    // Header/footer "Safety" link: open that section, then scroll to it.
+    document.querySelectorAll('a[href^="#feature-body-"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var id = link.getAttribute('href').slice(1);
+        var body = document.getElementById(id);
+        var item = body && body.closest('.accordion__item');
+        if (!item) return;
+        e.preventDefault();
+        openOnly(item, true);
+        requestAnimationFrame(function () {
+          item.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+        });
+        history.pushState(null, '', '#' + id);
+      });
+    });
   }
 
   /* ---------- demo form (front-end only for now) ---------- */
