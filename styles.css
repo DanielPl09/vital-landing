@@ -29,9 +29,14 @@
   --teal-deep:  #22545a;
   --sage:       #dcebee;
 
-  /* Lifted straight off the clips, for the frames that hold them. */
-  --slate:      #161f26;
-  --slate-line: rgba(120, 145, 160, .22);
+  /* Lifted straight off the clips, for the frames that hold them. A hue
+     histogram of the two dark films puts 63% of their saturated pixels at
+     190-200 degrees, mean #142d38, over a near-black #14161c. The old mat
+     was the right lightness but almost fully desaturated, so it read grey
+     against footage that is visibly petrol; these carry the chroma. */
+  --slate:      #142129;
+  --slate-line: rgba(96, 148, 165, .26);
+  --petrol:     #1d3a44;
 
   --glass:      rgba(255, 255, 255, .55);
   --glass-line: rgba(255, 255, 255, .65);
@@ -44,6 +49,17 @@
 
   --maxw:       1140px;
   --pad:        24px;
+  --header-h:   72px;
+
+  /* Everything that has to clear the fold below the hero: the features
+     padding (22), the one-line head (39), the rail (59), its gap (26) —
+     and then ~54px more, which buys the top edge of the open panel. The
+     hero is sized against this rather than against a fixed height, so the
+     rail lands near the bottom of the first screen whatever the window's
+     height is, with the panel it controls already breaking the fold. The
+     tabs alone would read as decoration; the sliver of panel under them
+     is what says they do something. */
+  --fold-tail:  200px;
 }
 
 /* ---------- base ---------- */
@@ -121,43 +137,93 @@ img, video { display: block; max-width: 100%; }
 .nav-toggle { display: none; }
 
 /* ---------- hero ----------
-   The vertical padding is deliberately viewport-relative and tight. The
-   hero is sized so the features rail crests the fold on a ~900px-tall
-   window: seeing the top of the tabs is what makes people scroll into
-   them, and a hero that exactly fills the screen is what stops them. */
-.hero { position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 64px) 0 clamp(24px, 3.5vh, 52px); }
+   Sized against the fold rather than against a fixed height: the hero
+   takes the screen less the header and less --fold-tail, which is exactly
+   the features head and rail. So the tabs sit on the bottom edge of the
+   first screen at any window height, and the hero can never grow to the
+   point where the fold holds nothing but the hero. min-height, not
+   height — a short window lets the content push past it instead of
+   clipping. */
+.hero {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+  min-height: calc(100svh - var(--header-h) - var(--fold-tail));
+  padding: clamp(18px, 3vh, 48px) 0 clamp(16px, 2.4vh, 36px);
+}
 
+/* Four layers, warm to cool: a light bloom top-left, the amber ground,
+   and — new — the footage's petrol pulled up into the bottom-right
+   corner. That corner is what stops the section reading as a slab of
+   orange, and it is the same 190-200 degree family the feature films are
+   shot on, so the fold and the clips below it share a palette instead of
+   merely sitting next to each other. The amber ramp is eased back a
+   little at the same time (#f7b47c from #f9b072) to leave the cool
+   corner somewhere to land. */
 .hero__bg {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
   background:
-    radial-gradient(90% 70% at 18% 4%, #fff7ec 0%, rgba(255,247,236,0) 62%),
-    linear-gradient(158deg, #ffeeda 0%, #ffdcb6 44%, #f9b072 100%);
+    radial-gradient(64% 58% at 97% 103%, rgba(29, 58, 68, .34) 0%, rgba(29, 58, 68, 0) 68%),
+    radial-gradient(90% 70% at 18% 4%, #fff9f0 0%, rgba(255,249,240,0) 62%),
+    linear-gradient(158deg, #fff1e1 0%, #ffdfbd 46%, #f7b47c 100%);
 }
 .hero__bg::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(253,248,243,0) 58%, var(--cream) 100%);
 }
-.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .8; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .72; }
 .blob--1 { width: 760px; height: 640px; right: -12%; top: -6%; background: radial-gradient(circle, var(--amber) 0%, rgba(232,118,47,0) 68%); }
 .blob--2 { width: 600px; height: 540px; right: 26%;  top: 30%; background: radial-gradient(circle, var(--amber-lite) 0%, rgba(255,184,119,0) 70%); }
 .blob--3 { width: 660px; height: 580px; left: -18%;  top: 26%; background: radial-gradient(circle, #ffe7cd 0%, rgba(255,231,205,0) 70%); }
 
+/* The techy half of the ground: a 34px measure drawn in the footage's
+   petrol rather than in black, so it reads as instrumentation and not as
+   graph paper. It sits above the blobs — their blur would otherwise eat
+   the lines — and is masked to the art side, fading out long before it
+   reaches the headline. Texture at the edge of vision, never a pattern
+   you have to read past. */
+.mesh {
+  position: absolute; inset: -1px;
+  background-image:
+    linear-gradient(to right,  rgba(29, 58, 68, .10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 58, 68, .10) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
+          mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
+}
+
+/* A trace of grain over the whole ground. Two things at once: it is what
+   keeps this much flat orange from banding across a wide display, and on
+   soft-light it gives the gradient the tooth of something photographed —
+   the lifestyle half of the brief, at a weight you notice only if the
+   layer is removed. */
+.grain {
+  position: absolute; inset: 0;
+  opacity: .38; mix-blend-mode: soft-light; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .hero__inner {
-  position: relative; z-index: 1;
+  position: relative; z-index: 1; width: 100%;
   display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: 56px; align-items: center;
 }
 
-.hero__title { font-size: clamp(36px, 4.7vw, 54px); margin: 16px 0 18px; max-width: 17ch; }
+/* The vh term is what lets a 720px-tall laptop keep the rail on screen:
+   the headline gives up size before the fold gives up the tabs. */
+.hero__title { font-size: clamp(33px, min(4.7vw, 6.6vh), 54px); margin: 14px 0 16px; max-width: 17ch; }
 .hero__sub   { font-size: 18.5px; color: var(--ink-soft); max-width: 52ch; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 14px; }
 .hero__note {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14.5px; font-weight: 500; color: var(--teal);
 }
 
 /* ---------- hero glass collage ---------- */
-.hero__art { position: relative; height: 460px; }
+/* Height follows the window so the collage compresses with the copy
+   instead of pinning the hero open. The floor is 420px: the wire routes
+   through a band 40px off the bottom, and below 420 that band climbs into
+   the database panel it is supposed to pass under. */
+.hero__art { position: relative; height: clamp(420px, 58vh, 460px); }
 
 .panel {
   position: absolute;
@@ -173,7 +239,7 @@ img, video { display: block; max-width: 100%; }
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px;
 }
 
-.panel--db { left: -8%; top: 96px; width: 244px; animation: float 9s ease-in-out infinite; }
+.panel--db { left: -8%; top: clamp(76px, 21%, 96px); width: 244px; animation: float 9s ease-in-out infinite; }
 .rows li {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   font-size: 12.5px; padding: 7px 0; border-top: 1px solid rgba(36,31,27,.07);
@@ -286,8 +352,18 @@ img, video { display: block; max-width: 100%; }
 
 /* Features runs tight against the hero on purpose — it is the section the
    fold is meant to cut into. Compliance keeps the full 96px rhythm. */
-#features { padding-top: clamp(24px, 3.5vh, 52px); }
-#features .section__head { margin-bottom: clamp(22px, 3vh, 40px); }
+#features { padding-top: 22px; }
+
+/* The section head is one line here rather than the usual eyebrow-plus-
+   display-title pair. The three tabs directly beneath it already name the
+   three things — a 40px heading saying there are three of them spends
+   ~140px of the fold restating the row under it. Demoted to a label, it
+   keeps the document structure and gives the rail its scent line. */
+.ftabs__head {
+  font-size: clamp(18px, 1.9vw, 22px); font-weight: 600;
+  letter-spacing: -.02em; color: var(--ink-soft);
+  margin-bottom: 14px;
+}
 
 /* ---------- features ---------- */
 .feature {
@@ -311,12 +387,20 @@ img, video { display: block; max-width: 100%; }
 .ftabs__rail { display: none; }
 
 /* The columns sit flush so one thumb can be exactly a third wide; the
-   6px padding is the inset the thumb floats inside. */
+   6px padding is the inset the thumb floats inside.
+
+   Sticky, not relative: the rail is now the last thing above the fold, so
+   the panel it controls is read *below* it. Pinning it under the header
+   for the length of the section means the control never leaves while the
+   thing it controls is on screen. sticky is still a positioned value, so
+   the absolute thumb keeps resolving against the rail exactly as before.
+   The white goes from .55 to .84 for the same reason — it now has page
+   content passing behind it rather than the hero's flat wash. */
 .js .ftabs__rail {
-  position: relative;
+  position: sticky; top: calc(var(--header-h) + 10px); z-index: 40;
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: 520px; margin-bottom: 48px; padding: 6px;
-  background: rgba(255, 255, 255, .55);
+  max-width: 520px; margin-bottom: 26px; padding: 6px;
+  background: rgba(255, 255, 255, .84);
   border: 1px solid var(--glass-line); border-radius: 999px;
   backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
   box-shadow: var(--shadow-sm);
@@ -386,47 +470,55 @@ img, video { display: block; max-width: 100%; }
   transform: rotate(-45deg);
 }
 
-/* media frame */
+/* ---------- media frame ----------
+   All three clips get the same frame, and that is the point. Two of them
+   are dark petrol renders and the third is a light warm one; when each
+   frame was styled to flatter its own footage, tabbing between them threw
+   the page from a dark rectangle to a cream one and the three stopped
+   reading as one product. So the frame is constant — petrol mat, petrol
+   hairline, the warm drop shadow the hero's glass panels sit on — and the
+   grading inside it is what varies. A dark screen against a cream page
+   then reads as a device, which is the intent. */
 .media {
   position: relative; isolation: isolate;
   margin: 0; border-radius: var(--radius-lg); overflow: hidden;
-  background: linear-gradient(150deg, var(--cream-2), #fff);
-  border: 1px solid var(--line); box-shadow: var(--shadow-md);
+  background: var(--slate);
+  border: 1px solid var(--slate-line); box-shadow: var(--shadow-lg);
   aspect-ratio: 16 / 9;
 }
 .media__video { width: 100%; height: 100%; object-fit: cover; }
 
-/* The light footage's orange runs darker and duller than the hero's amber.
-   `overlay` lifts that background toward the brand amber without washing
-   out the light UI chrome already in shot. */
+/* The default bloom, for the dark footage. Deliberately weak and pushed
+   to the corners: on `screen` it can only lighten, so it warms the dead
+   space around the UI without hazing the middle of the shot, where the
+   content is. The amber and the petrol are the two hues the clips are
+   actually built from, so this is lifting what is already there. */
 .media__tint {
   position: absolute; inset: 0;
-  background: var(--amber-lite);
-  mix-blend-mode: overlay;
-  opacity: .55;
   pointer-events: none;
-}
-
-/* The two intake clips are dark-UI footage. `overlay` would only crush
-   them further, so those frames drop the amber wash entirely: the mat is
-   set to --slate, sampled from the clips' own ground (#1a2226 / #141d24),
-   so the frame edge meets the footage instead of ringing it in cream.
-   The warm drop shadow is the one the hero's glass panels sit on, and it
-   is what keeps a dark rectangle from reading as a foreign object here.
-
-   The bloom that remains is deliberately weak and pushed to the corners:
-   on `screen` it can only lighten, so it warms the dead space around the
-   UI without hazing the middle of the shot, where the content is. */
-.media--dark {
-  background: var(--slate);
-  border-color: var(--slate-line);
-  box-shadow: var(--shadow-lg);
-}
-.media--dark .media__tint {
-  background: radial-gradient(88% 88% at 50% 46%,
-              transparent 34%, rgba(221, 132, 65, .13) 74%, rgba(232, 118, 47, .20) 100%);
+  background:
+    radial-gradient(70% 70% at 12% 8%, rgba(43, 106, 112, .16) 0%, transparent 62%),
+    radial-gradient(88% 88% at 50% 46%,
+      transparent 34%, rgba(221, 132, 65, .13) 74%, rgba(232, 118, 47, .20) 100%);
   mix-blend-mode: screen;
-  opacity: 1;
+}
+
+/* The scheduling clip is the odd one: a light render, 90% of its pixels
+   warm and saturated, dropped between two dark ones. `screen` would only
+   blow it out further, so it inverts the treatment — a petrol scrim on
+   `multiply` pulls its brightness and its orange back toward the other
+   two, and the slight desaturation stops it shouting next to them.
+
+   This is grading, not a fix. The clip is a different render style from
+   the other two and no overlay makes it the same one; re-rendering it on
+   the dark ground is what actually closes the gap. */
+.media--light .media__video {
+  filter: saturate(.88) contrast(1.05) brightness(.96);
+}
+.media--light .media__tint {
+  background: linear-gradient(158deg,
+    rgba(29, 58, 68, .10) 0%, rgba(20, 33, 41, .26) 100%);
+  mix-blend-mode: multiply;
 }
 
 /* ---------- safety + compliance ---------- */
@@ -489,8 +581,12 @@ img, video { display: block; max-width: 100%; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 940px) {
-  .hero { padding: 60px 0 72px; }
-  .hero__inner { grid-template-columns: 1fr; gap: 48px; }
+  /* Stacked, the hero is copy plus a 390px collage — the rail cannot join
+     it above the fold on a phone whatever the padding is. Tightening it
+     still moves the rail ~80px closer, which is roughly the difference
+     between one flick and two. */
+  .hero { padding: 34px 0 32px; }
+  .hero__inner { grid-template-columns: 1fr; gap: 30px; }
   .hero__title { max-width: none; }
   /* Stacked hero: the two panels overlap tightly at this width, leaving
      no channel for the wire to read in — so it is hidden rather than

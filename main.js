@@ -31,6 +31,10 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Matches `.js .ftabs__rail { top: calc(var(--header-h) + 10px) }` — the
+  // offset the feature rail pins itself at once the page scrolls.
+  var STICK_OFFSET = 82;
+
   /* ---------- reveal on scroll ---------- */
   var revealables = document.querySelectorAll('.reveal');
   if (reduced || !('IntersectionObserver' in window)) {
@@ -209,6 +213,25 @@
       });
     }
 
+    // The rail now sits at the bottom of the first screen, so a click on it
+    // is usually made with only a sliver of the panel showing. Bring the
+    // panel up to meet the click — scrolled to exactly the offset the rail
+    // sticks at, so the tabs stay put and only the content moves.
+    //
+    // Guarded twice: never when the panel is already fully visible, and
+    // never upward, so a click made further down the section can't yank the
+    // reader back up to the rail.
+    function revealStage() {
+      var stage = root.querySelector('.ftabs__stage');
+      if (!stage) return;
+      if (stage.getBoundingClientRect().bottom <= window.innerHeight) return;
+
+      var target = root.getBoundingClientRect().top + window.scrollY - STICK_OFFSET;
+      if (target <= window.scrollY + 4) return;
+
+      window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' });
+    }
+
     function select(index, focusTab) {
       current = index;
       rail.style.setProperty('--ftab-i', String(index));
@@ -230,7 +253,7 @@
     }
 
     tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(i, false); });
+      tab.addEventListener('click', function () { select(i, false); revealStage(); });
 
       tab.addEventListener('keydown', function (e) {
         var next = null;
