@@ -28,7 +28,7 @@
 
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#features">Features</a>
-      <a href="#feature-body-2">Safety</a>
+      <a href="#safety">Safety</a>
       <a href="#compliance">Compliance</a>
       <a class="btn btn--primary btn--sm nav__cta" href="#demo">Book a demo</a>
     </nav>
@@ -68,14 +68,24 @@
         </p>
       </div>
 
-      <!-- Glass panel collage, echoing the product UI -->
+      <!-- Glass panel collage, echoing the product UI. The wire and the
+           staged thread are driven by initHeroFlow() in main.js, which runs
+           the product narrative on a loop: a patient record opens a chat,
+           the chat settles the appointment, and the record comes back
+           marked Booked. The patient's identity lives in the chat header
+           rather than a separate card, so it is clear who is talking. -->
       <div class="hero__art" aria-hidden="true">
+        <svg class="wire" fill="none" preserveAspectRatio="none">
+          <path class="wire__track"></path>
+          <path class="wire__pulse" pathLength="1"></path>
+        </svg>
+
         <div class="panel panel--db">
           <p class="panel__label">Database</p>
           <ul class="rows">
             <li><span>Drin Name</span><b class="chip chip--ok">Cleared</b></li>
             <li><span>Jasen Alex</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Mary Ardilson</span><b class="chip">Intake</b></li>
+            <li data-flow-row><span>Mary Ardilson</span><b class="chip" data-flow-chip>Intake</b></li>
             <li><span>Clera Warson</span><b class="chip">Booked</b></li>
             <li><span>Alen Marys</span><b class="chip chip--ok">Cleared</b></li>
             <li><span>Larn Diaszer</span><b class="chip">Intake</b></li>
@@ -85,22 +95,19 @@
         <div class="panel panel--chat">
           <div class="panel__bar">
             <span class="avatar"></span>
-            <p class="panel__title">Chat</p>
+            <span class="panel__id">
+              <span class="panel__who">Clara E.</span>
+              <span class="panel__meta">Sports nutrition &middot; Week 6</span>
+            </span>
             <span class="dots">&#8942;</span>
           </div>
           <div class="thread">
-            <p class="bubble bubble--in">Hi Clara — ready to finish your intake?</p>
-            <p class="bubble bubble--out">Yes, and can I move Thursday?</p>
-            <p class="bubble bubble--in">Done. Tuesday 10:30 with Dr. Levy.</p>
+            <p class="bubble bubble--in"  data-flow-step>Hi Clara — ready to finish your intake?</p>
+            <p class="bubble bubble--out" data-flow-step>Yes, and can I move Thursday?</p>
+            <p class="bubble bubble--in"  data-flow-step>Done. Tuesday 10:30 with Dr. Levy.</p>
+            <p class="thread__booked"     data-flow-step>Appointment booked</p>
           </div>
           <div class="composer"><span></span><i class="send"></i></div>
-        </div>
-
-        <div class="panel panel--profile">
-          <p class="panel__label">User profile</p>
-          <div class="profile__face"></div>
-          <p class="profile__name">Clara E.</p>
-          <p class="profile__meta">Sports nutrition · Week 6</p>
         </div>
       </div>
     </div>
@@ -112,72 +119,131 @@
       <header class="section__head">
         <p class="eyebrow">Features</p>
         <h2 class="section__title">Three things your clinic gets on day one</h2>
-        <p class="section__sub">Built for dietitian practices — the clinic sets the protocol, Vital does the follow-through.</p>
       </header>
 
-      <!-- Vertical accordion: feature 1 open by default, the other two
-           collapse under their own sub-headers. Fully expanded and usable
-           without JS — see the .js-scoped rules in styles.css. -->
-      <div class="accordion" id="featureAccordion">
+      <!-- Horizontal tabs: icon + one word, with the whole feature below them.
+           Without JS the rail is hidden and all three panels stack in normal
+           flow, so every feature stays readable — the same "show everything"
+           fallback used for .reveal. Tab 0 ships selected and panel 0 ships
+           .is-active so the closed state paints on the first frame; the
+           styles hang off the .js class set inline in <head>. -->
+      <div class="ftabs" id="featureTabs">
+        <div class="ftabs__rail" role="tablist" aria-label="Features">
+          <span class="ftabs__thumb" aria-hidden="true"></span>
 
-        <!-- Feature 1 — chat / patient relationship (video, loads eagerly) -->
-        <article class="accordion__item is-open" data-index="0">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-0" id="feature-trigger-0">
-              <span class="accordion__num">01</span>
-              <span class="accordion__title">Chat that carries the patient relationship</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-0" role="region" aria-labelledby="feature-trigger-0">
+          <button class="ftab" type="button" role="tab" id="ftab-0"
+                  aria-controls="fpanel-0" aria-selected="true">
+            <span class="ftab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 12.4a7.4 7.4 0 0 1-10.7 6.6L4.5 20.2l1.2-4.2A7.4 7.4 0 1 1 20 12.4Z"/>
+                <path d="M9 10.9h6M9 14.1h4"/>
+              </svg>
+            </span>
+            <span class="ftab__label">Chat</span>
+          </button>
+
+          <button class="ftab" type="button" role="tab" id="ftab-1"
+                  aria-controls="fpanel-1" aria-selected="false">
+            <span class="ftab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4.5" width="6.4" height="6.4" rx="1.8"/>
+                <path d="m4.9 7.6 1.3 1.3 2.4-2.8"/>
+                <rect x="3" y="13.1" width="6.4" height="6.4" rx="1.8"/>
+                <path d="M12.8 7.7H21M12.8 16.3H21"/>
+              </svg>
+            </span>
+            <span class="ftab__label">Topics</span>
+          </button>
+
+          <button class="ftab" type="button" role="tab" id="ftab-2"
+                  aria-controls="fpanel-2" aria-selected="false">
+            <span class="ftab__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3.2" y="4.8" width="17.6" height="16" rx="3"/>
+                <path d="M3.2 9.7h17.6M8 3.2v3.2M16 3.2v3.2"/>
+                <path d="m9.2 14.7 2 2 4-4.4"/>
+              </svg>
+            </span>
+            <span class="ftab__label">Schedule</span>
+          </button>
+        </div>
+
+        <div class="ftabs__stage">
+
+          <!-- 01 — Chat: intake and questionnaires answered in plain language -->
+          <div class="fpanel is-active" id="fpanel-0" role="tabpanel" aria-labelledby="ftab-0">
             <div class="feature">
               <div class="feature__copy">
+                <h3 class="feature__title">Intake that reads like a conversation</h3>
                 <p class="feature__text">
-                  New patients are onboarded the moment they land — intake questions, history, goals,
-                  consent. From the same thread they book, move or confirm an appointment, and it
-                  lands straight in your clinic calendar. No forms to chase, no phone tag.
+                  New patients answer in their own words — history, goals, habits, consent. Vital
+                  runs your intake and questionnaires as a chat, then files each answer back to the
+                  patient record as a structured field. Your dietitian opens a finished picture
+                  instead of an empty form.
                 </p>
                 <ul class="ticks">
-                  <li>Guided intake and history in a conversation</li>
-                  <li>Appointment booking and rescheduling in-thread</li>
-                  <li>Every message written back to the patient record</li>
+                  <li>Intake and history captured in plain language</li>
+                  <li>Free-text answers mapped to the fields your clinic already tracks</li>
+                  <li>Follows up until nothing required is left blank</li>
                 </ul>
               </div>
-              <figure class="media">
+              <figure class="media media--dark">
                 <video
                   class="media__video"
-                  src="assets/video/chat-onboarding.mp4"
-                  poster="assets/img/chat-onboarding-poster.png"
-                  muted loop playsinline preload="metadata"
-                  aria-label="Vital chat onboarding a patient and setting an appointment"></video>
+                  data-src="assets/video/gemini_generated_video_71d5a173.mp4"
+                  muted loop playsinline preload="none"
+                  aria-label="A patient intake conversation filling in a structured insights panel beside it">
+                  <noscript><source src="assets/video/gemini_generated_video_71d5a173.mp4" type="video/mp4" /></noscript>
+                </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
             </div>
           </div>
-        </article>
 
-        <!-- Feature 2 — smart scheduling (video, hydrated in the background on idle) -->
-        <article class="accordion__item" data-index="1">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-1" id="feature-trigger-1">
-              <span class="accordion__num">02</span>
-              <span class="accordion__title">Scheduling that keeps the calendar full</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-1" role="region" aria-labelledby="feature-trigger-1">
-            <div class="feature feature--flip">
+          <!-- 02 — Topics: the clinic picks the scope the conversation may cover -->
+          <div class="fpanel" id="fpanel-1" role="tabpanel" aria-labelledby="ftab-1">
+            <div class="feature">
               <div class="feature__copy">
+                <h3 class="feature__title">You choose what it&rsquo;s allowed to raise</h3>
                 <p class="feature__text">
-                  The moment a patient is ready to book, Vital checks your real availability and
-                  proposes the next open slot — no coordinator in the loop. Confirmations,
-                  reschedules and cancellations sync straight back to the calendar your clinic
-                  already runs on.
+                  Sleep, training load, medical history, eating patterns — switch a topic on and it
+                  enters the conversation; switch it off and Vital never brings it up. The question
+                  set belongs to your clinic, and a change applies to the next conversation rather
+                  than disturbing one already under way.
                 </p>
                 <ul class="ticks">
-                  <li>Live sync with your clinic calendar and availability rules</li>
-                  <li>Automatic confirmations, reminders and reschedule requests</li>
-                  <li>Cancelled slots are re-offered to the next patient on the waitlist</li>
+                  <li>Pick topics from your clinic&rsquo;s own list — no prompt writing</li>
+                  <li>Off means out of scope, not merely discouraged</li>
+                  <li>Every patient gets the set you approved, whoever is on shift</li>
+                </ul>
+              </div>
+              <figure class="media media--dark">
+                <video
+                  class="media__video"
+                  data-src="assets/video/gemini_generated_video_acfe4eb5.mp4"
+                  muted loop playsinline preload="none"
+                  aria-label="Conversation topics being switched on and off in the clinic&rsquo;s question set">
+                  <noscript><source src="assets/video/gemini_generated_video_acfe4eb5.mp4" type="video/mp4" /></noscript>
+                </video>
+                <div class="media__tint" aria-hidden="true"></div>
+              </figure>
+            </div>
+          </div>
+
+          <!-- 03 — Schedule: booked in-thread, but held for a clinician to approve -->
+          <div class="fpanel" id="fpanel-2" role="tabpanel" aria-labelledby="ftab-2">
+            <div class="feature">
+              <div class="feature__copy">
+                <h3 class="feature__title">The calendar fills itself &mdash; you approve it</h3>
+                <p class="feature__text">
+                  When a patient is ready to book, Vital offers real openings from your clinic&rsquo;s
+                  availability and takes the slot inside the thread. Every booking arrives as a
+                  request waiting on a clinician, so nothing lands in the diary unapproved.
+                </p>
+                <ul class="ticks">
+                  <li>Offers only the slots your calendar actually has free</li>
+                  <li>Booked in the conversation, before the thread goes cold</li>
+                  <li>Confirmations and reschedules sync back to your clinic calendar</li>
                 </ul>
               </div>
               <figure class="media">
@@ -186,52 +252,15 @@
                   data-src="assets/video/smart-scheduling.mp4"
                   poster="assets/img/smart-scheduling-poster.png"
                   muted loop playsinline preload="none"
-                  aria-label="Vital's AI Clinician view proposing and confirming appointment slots on the clinic calendar">
+                  aria-label="Vital proposing and confirming appointment slots on the clinic calendar">
                   <noscript><source src="assets/video/smart-scheduling.mp4" type="video/mp4" /></noscript>
                 </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
             </div>
           </div>
-        </article>
 
-        <!-- Feature 3 — safety (video TBD: drop a <video> in place of .placeholder) -->
-        <article class="accordion__item" data-index="2">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-2" id="feature-trigger-2">
-              <span class="accordion__num">03</span>
-              <span class="accordion__title">Safety that a clinician can defend</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-2" role="region" aria-labelledby="feature-trigger-2">
-            <div class="feature">
-              <div class="feature__copy">
-                <p class="feature__text">
-                  Vital stays inside the boundary you draw. Red-flag language, out-of-scope medical
-                  questions and distress signals are escalated to a human dietitian in seconds, and
-                  every exchange is logged, reviewable and exportable for your records.
-                </p>
-                <ul class="ticks">
-                  <li>Red-flag detection with instant human handover</li>
-                  <li>Hard limits on diagnosis and medication advice</li>
-                  <li>Full audit trail on every conversation</li>
-                </ul>
-              </div>
-              <figure class="media media--placeholder" data-slot="feature-3-video">
-                <div class="placeholder">
-                  <div class="placeholder__safety">
-                    <p class="flag">Red flag detected</p>
-                    <p class="hand">Handed to Dr. Levy · 4s</p>
-                    <p class="log">Logged to audit trail</p>
-                  </div>
-                  <p class="placeholder__note">Video coming soon</p>
-                </div>
-              </figure>
-            </div>
-          </div>
-        </article>
-
+        </div>
       </div>
     </div>
   </section>
@@ -240,9 +269,28 @@
   <section class="section section--compliance" id="compliance">
     <div class="container">
       <header class="section__head">
-        <p class="eyebrow">Compliance</p>
-        <h2 class="section__title">Patient data handled the way regulators expect</h2>
+        <p class="eyebrow">Safety &amp; compliance</p>
+        <h2 class="section__title">Held to a standard your clinicians can defend</h2>
       </header>
+
+      <!-- The guardrails story, which used to be feature 03. It sits with the
+           audit and data-handling claims rather than in the product tour;
+           the header and footer "Safety" links point at #safety here. -->
+      <div class="safety reveal" id="safety">
+        <div class="safety__copy">
+          <h3 class="safety__title">Vital stays inside the boundary you draw</h3>
+          <p class="safety__text">
+            Red-flag language, out-of-scope medical questions and distress signals are escalated
+            to a human dietitian in seconds. Every exchange is logged, reviewable and exportable
+            for your records.
+          </p>
+        </div>
+        <ul class="ticks">
+          <li>Red-flag detection with instant human handover</li>
+          <li>Hard limits on diagnosis and medication advice</li>
+          <li>Full audit trail on every conversation</li>
+        </ul>
+      </div>
 
       <div class="badges">
         <div class="badge reveal">
@@ -289,7 +337,7 @@
     <p class="footer__brand">Vital</p>
     <nav class="footer__nav" aria-label="Footer">
       <a href="#features">Features</a>
-      <a href="#feature-body-2">Safety</a>
+      <a href="#safety">Safety</a>
       <a href="#compliance">Compliance</a>
       <a href="#demo">Book a demo</a>
     </nav>

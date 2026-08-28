@@ -11,14 +11,27 @@
   --cream-2:    #f7eee4;
   --line:       rgba(36, 31, 27, .10);
 
+  /* Warm side: unchanged. Sampling the three clips puts their dominant
+     accent at hue ~30° (#dd8441 in the topic film), which the existing
+     amber ramp already sits on — so the brand orange stays exactly as it
+     was, favicon and all. */
   --amber:      #e8762f;
   --amber-deep: #c8551c;
   --amber-lite: #ffb877;
   --peach:      #ffd9b0;
 
-  --teal:       #2e6b5e;
-  --teal-deep:  #23554a;
-  --sage:       #dcebe3;
+  /* Cool side: nudged to answer the footage. The clips' dark ground
+     samples at #1a2226 / #141d24 — a blue-slate around 205° — while the
+     old teal sat at 163°, visibly greener than anything on screen. These
+     move to ~187°: still a clinical teal, now the same family as the
+     video ground it appears beside. */
+  --teal:       #2b6a70;
+  --teal-deep:  #22545a;
+  --sage:       #dcebee;
+
+  /* Lifted straight off the clips, for the frames that hold them. */
+  --slate:      #161f26;
+  --slate-line: rgba(120, 145, 160, .22);
 
   --glass:      rgba(255, 255, 255, .55);
   --glass-line: rgba(255, 255, 255, .65);
@@ -107,8 +120,12 @@ img, video { display: block; max-width: 100%; }
 
 .nav-toggle { display: none; }
 
-/* ---------- hero ---------- */
-.hero { position: relative; overflow: hidden; padding: 84px 0 96px; }
+/* ---------- hero ----------
+   The vertical padding is deliberately viewport-relative and tight. The
+   hero is sized so the features rail crests the fold on a ~900px-tall
+   window: seeing the top of the tabs is what makes people scroll into
+   them, and a hero that exactly fills the screen is what stops them. */
+.hero { position: relative; overflow: hidden; padding: clamp(28px, 4.5vh, 64px) 0 clamp(24px, 3.5vh, 52px); }
 
 .hero__bg {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
@@ -131,9 +148,9 @@ img, video { display: block; max-width: 100%; }
   gap: 56px; align-items: center;
 }
 
-.hero__title { font-size: clamp(36px, 4.7vw, 54px); margin: 18px 0 20px; max-width: 17ch; }
+.hero__title { font-size: clamp(36px, 4.7vw, 54px); margin: 16px 0 18px; max-width: 17ch; }
 .hero__sub   { font-size: 18.5px; color: var(--ink-soft); max-width: 52ch; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 22px; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
 .hero__note {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: 14.5px; font-weight: 500; color: var(--teal);
@@ -156,15 +173,24 @@ img, video { display: block; max-width: 100%; }
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px;
 }
 
-.panel--db { left: -8%; top: 48px; width: 244px; animation: float 9s ease-in-out infinite; }
+.panel--db { left: -8%; top: 96px; width: 244px; animation: float 9s ease-in-out infinite; }
 .rows li {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   font-size: 12.5px; padding: 7px 0; border-top: 1px solid rgba(36,31,27,.07);
+  border-radius: 7px; transition: background-color .4s ease, box-shadow .4s ease;
 }
 .rows li:first-child { border-top: 0; }
+
+/* The row the wire leaves from, lit while the conversation is running. */
+.rows li.is-live {
+  background: rgba(232, 118, 47, .10);
+  box-shadow: 0 0 0 1px rgba(232, 118, 47, .22);
+}
+
 .chip {
   font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
   background: rgba(255,255,255,.75); color: var(--ink-soft);
+  transition: background-color .4s ease, color .4s ease;
 }
 .chip--ok { background: var(--sage); color: var(--teal); }
 
@@ -174,11 +200,22 @@ img, video { display: block; max-width: 100%; }
 }
 .panel__bar {
   display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px; border-bottom: 1px solid rgba(36,31,27,.07);
+  padding: 11px 14px; border-bottom: 1px solid rgba(36,31,27,.07);
   background: rgba(255,255,255,.5);
 }
-.panel__title { font-weight: 600; font-size: 15px; flex: 1; }
-.avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(140deg, var(--amber-lite), var(--amber)); }
+
+/* The patient's identity rides in the chat header — one panel, so it is
+   never ambiguous whose conversation this is. */
+.panel__id { flex: 1; display: grid; gap: 1px; min-width: 0; }
+.panel__who { font-weight: 600; font-size: 14px; letter-spacing: -.01em; }
+.panel__meta { font-size: 11px; color: var(--ink-soft); }
+
+.avatar {
+  width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%;
+  background: linear-gradient(150deg, var(--peach), var(--amber));
+  border: 2px solid rgba(255,255,255,.85);
+  box-shadow: 0 1px 4px rgba(160,74,20,.20);
+}
 .dots { color: var(--ink-soft); }
 
 .thread { padding: 14px; display: grid; gap: 8px; }
@@ -186,22 +223,56 @@ img, video { display: block; max-width: 100%; }
 .bubble--in  { background: rgba(255,255,255,.8); border: 1px solid rgba(36,31,27,.06); border-bottom-left-radius: 5px; }
 .bubble--out { background: var(--sage); color: var(--teal-deep); margin-left: auto; border-bottom-right-radius: 5px; }
 
+/* The outcome the whole narrative is aiming at. */
+.thread__booked {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11.5px; font-weight: 600; color: var(--teal);
+  background: var(--sage); border-radius: 10px; padding: 8px 11px;
+}
+.thread__booked::before {
+  content: ""; width: 6px; height: 10px; margin: -3px 1px 0 2px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(38deg);
+}
+
+/* Staged reveal: main.js walks these in as the conversation plays.
+
+   Hidden from the first frame via .js (set in <head>) rather than a class
+   main.js adds later, which would paint the finished thread and then fade
+   it out. Gated on no-preference so reduced motion — where main.js never
+   runs the sequence — still gets a complete, readable conversation, as
+   does a browser with JS off. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .thread > [data-flow-step] {
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .34s ease, transform .34s ease;
+  }
+  .js .thread > [data-flow-step].is-shown { opacity: 1; transform: none; }
+}
+
 .composer { display: flex; align-items: center; gap: 10px; margin: 4px 14px 14px; }
 .composer span { flex: 1; height: 34px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid rgba(36,31,27,.07); }
 .send { width: 0; height: 0; border-left: 12px solid var(--teal); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
 
-.panel--profile {
-  right: 12%; bottom: -8px; width: 190px; text-align: center;
-  animation: float 10s ease-in-out infinite 1.2s;
+/* ---------- hero wire ----------
+   Connects the patient record to the chat that acts on it. The path is
+   measured and written by main.js, because both panels are positioned in
+   a mix of % and px and their gap changes with the container width — no
+   static path could stay attached to them. */
+.wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.wire__track {
+  stroke: rgba(200, 85, 28, .28); stroke-width: 1.5;
+  stroke-dasharray: 3 4; stroke-linecap: round;
 }
-.panel--profile .panel__label { text-align: left; }
-.profile__face {
-  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 10px;
-  background: linear-gradient(150deg, var(--peach), var(--amber-lite));
-  border: 2px solid rgba(255,255,255,.8);
+.wire__pulse {
+  stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round;
+  /* pathLength="1" normalises the dash maths, so this one dash is 14% of
+     the path however long the measured path turns out to be. */
+  stroke-dasharray: .14 .86;
+  stroke-dashoffset: .14;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(232, 118, 47, .55));
 }
-.profile__name { font-weight: 600; font-size: 15px; }
-.profile__meta { font-size: 12px; color: var(--ink-soft); }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -211,64 +282,97 @@ img, video { display: block; max-width: 100%; }
 /* ---------- sections ---------- */
 .section { padding: 96px 0; }
 .section__head { max-width: 640px; margin-bottom: 64px; }
-.section__title { font-size: clamp(29px, 3.4vw, 40px); margin: 14px 0 14px; }
-.section__sub { color: var(--ink-soft); font-size: 17.5px; }
+.section__title { font-size: clamp(29px, 3.4vw, 40px); margin: 12px 0 0; }
+
+/* Features runs tight against the hero on purpose — it is the section the
+   fold is meant to cut into. Compliance keeps the full 96px rhythm. */
+#features { padding-top: clamp(24px, 3.5vh, 52px); }
+#features .section__head { margin-bottom: clamp(22px, 3vh, 40px); }
 
 /* ---------- features ---------- */
 .feature {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: 56px; align-items: center;
-  padding: 8px 0 44px;
 }
-.feature--flip .feature__copy { order: 2; }
+.feature__title { font-size: clamp(21px, 2.2vw, 26px); letter-spacing: -.02em; margin-bottom: 16px; }
 .feature__text { color: var(--ink-soft); margin-bottom: 22px; }
 
-/* ---------- feature accordion ----------
-   Default (no JS): every .accordion__body is fully expanded in normal
-   flow, so all three features are readable without any interaction —
-   this is the same "show everything" fallback used for .reveal above.
-   main.js adds .is-js once it has wired up real collapse/expand behavior,
-   which is the only thing that switches on the rules below. */
-.accordion__item { border-top: 1px solid var(--line); }
-.accordion__item:last-child { border-bottom: 1px solid var(--line); }
+/* ---------- feature tabs ----------
+   Icon + one word, three across, with the chosen feature rendered in full
+   underneath. Default (no JS): the rail is hidden and every .fpanel stays
+   in normal flow, so all three features read as a plain stacked list —
+   the same "show everything" fallback used for .reveal.
 
-.accordion__header { margin: 0; }
-.accordion__trigger {
-  width: 100%; display: flex; align-items: center; gap: 18px;
-  background: none; border: 0; padding: 28px 2px; margin: 0;
-  font: inherit; color: inherit; text-align: left; cursor: pointer;
-}
-.accordion__num {
-  flex-shrink: 0; width: 30px;
-  font-size: 13px; font-weight: 700; color: var(--amber); letter-spacing: .1em;
-}
-.accordion__title {
-  flex: 1; font-size: clamp(19px, 2.1vw, 23px); font-weight: 600; letter-spacing: -.01em;
-}
-.accordion__chevron {
-  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-  border: 1.5px solid var(--line); position: relative;
-  transition: background-color .2s ease, border-color .2s ease;
-}
-.accordion__chevron::before,
-.accordion__chevron::after {
-  content: ""; position: absolute; top: 50%; left: 50%;
-  background: var(--ink-soft); transform: translate(-50%, -50%);
-}
-.accordion__chevron::before { width: 10px; height: 1.6px; }
-.accordion__chevron::after  { width: 1.6px; height: 10px; transition: opacity .25s ease; }
+   These hook on .js, which is set on <html> by an inline script in <head>,
+   rather than on a class main.js adds at the end of body. The markup
+   already ships tab 0 selected and panel 0 .is-active, so the closed state
+   paints on the very first frame; waiting for main.js would show all three
+   panels stacked and then visibly collapse them. */
+.ftabs__rail { display: none; }
 
-.is-js .accordion__item.is-open .accordion__chevron { background: var(--teal); border-color: var(--teal); }
-.is-js .accordion__item.is-open .accordion__chevron::before,
-.is-js .accordion__item.is-open .accordion__chevron::after { background: #fff; }
-.is-js .accordion__item.is-open .accordion__chevron::after { opacity: 0; }
+/* The columns sit flush so one thumb can be exactly a third wide; the
+   6px padding is the inset the thumb floats inside. */
+.js .ftabs__rail {
+  position: relative;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 520px; margin-bottom: 48px; padding: 6px;
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid var(--glass-line); border-radius: 999px;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow-sm);
+}
 
-/* Height is driven by main.js (measuring scrollHeight, then animating to
-   it — the classic accordion recipe). The grid-template-rows 0fr/1fr trick
-   was tried first but a nested grid inside the animating row froze mid-
-   transition in Chromium, so this sticks to plain, reliable height. */
-.accordion__body { overflow: hidden; }
-.is-js .accordion__body { height: 0; transition: height .38s ease; }
+/* A single thumb slides between the three cells rather than each tab
+   painting its own background — that movement is what carries the change.
+   Its width is one column (the rail's padding box less the 12px inset),
+   and a translateX percentage resolves against the thumb's own width, so
+   one column across is exactly 100% and --ftab-i (set by main.js) is just
+   the column index. Flush columns are what keep that arithmetic this
+   simple; adding a gap would have to be added back in here too. */
+.ftabs__thumb {
+  position: absolute; z-index: 0; top: 6px; bottom: 6px; left: 6px;
+  width: calc((100% - 12px) / 3);
+  border-radius: 999px; background: #fff;
+  box-shadow: 0 0 0 1px rgba(232, 118, 47, .22), var(--shadow-sm);
+  transform: translateX(calc(var(--ftab-i, 0) * 100%));
+  transition: transform .34s cubic-bezier(.4, 0, .2, 1);
+}
+
+.ftab {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 11px 8px; margin: 0;
+  background: none; border: 0; border-radius: 999px;
+  font: inherit; font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink-soft); cursor: pointer;
+  transition: color .22s ease;
+}
+.ftab:hover { color: var(--ink); }
+.ftab:focus-visible { border-radius: 999px; outline-offset: 4px; }
+.ftab[aria-selected="true"] { color: var(--amber-deep); }
+
+.ftab__icon { display: flex; color: var(--ink-soft); transition: color .22s ease; }
+.ftab__icon svg { width: 19px; height: 19px; }
+.ftab:hover .ftab__icon { color: var(--ink); }
+.ftab[aria-selected="true"] .ftab__icon { color: var(--amber); }
+
+.fpanel + .fpanel { margin-top: 48px; }
+
+/* With JS every panel occupies the same grid cell, so the stage is always
+   as tall as the tallest one and switching tabs never shifts the page
+   under the rail. visibility (not display) keeps that height reserved
+   while still pulling the hidden panels out of the a11y tree and tab
+   order. */
+.js .ftabs__stage { display: grid; }
+.js .fpanel {
+  grid-area: 1 / 1; margin: 0;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+}
+.js .fpanel.is-active {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .3s ease, transform .3s ease, visibility 0s;
+}
 
 .ticks { display: grid; gap: 11px; font-size: 15.5px; }
 .ticks li { position: relative; padding-left: 30px; }
@@ -282,7 +386,7 @@ img, video { display: block; max-width: 100%; }
   transform: rotate(-45deg);
 }
 
-/* media frame — same shell for video and placeholder */
+/* media frame */
 .media {
   position: relative; isolation: isolate;
   margin: 0; border-radius: var(--radius-lg); overflow: hidden;
@@ -292,9 +396,9 @@ img, video { display: block; max-width: 100%; }
 }
 .media__video { width: 100%; height: 100%; object-fit: cover; }
 
-/* The source footage's orange runs darker/duller than the hero's amber.
-   `screen` only ever lightens, so it lifts that background toward the
-   brand amber without washing out the light UI chrome already in-shot. */
+/* The light footage's orange runs darker and duller than the hero's amber.
+   `overlay` lifts that background toward the brand amber without washing
+   out the light UI chrome already in shot. */
 .media__tint {
   position: absolute; inset: 0;
   background: var(--amber-lite);
@@ -303,29 +407,43 @@ img, video { display: block; max-width: 100%; }
   pointer-events: none;
 }
 
-.media--placeholder {
-  background: linear-gradient(150deg, #fff5e9, #ffe6cd 60%, #ffd9b0);
-  display: grid; place-items: center;
+/* The two intake clips are dark-UI footage. `overlay` would only crush
+   them further, so those frames drop the amber wash entirely: the mat is
+   set to --slate, sampled from the clips' own ground (#1a2226 / #141d24),
+   so the frame edge meets the footage instead of ringing it in cream.
+   The warm drop shadow is the one the hero's glass panels sit on, and it
+   is what keeps a dark rectangle from reading as a foreign object here.
+
+   The bloom that remains is deliberately weak and pushed to the corners:
+   on `screen` it can only lighten, so it warms the dead space around the
+   UI without hazing the middle of the shot, where the content is. */
+.media--dark {
+  background: var(--slate);
+  border-color: var(--slate-line);
+  box-shadow: var(--shadow-lg);
 }
-.placeholder { display: grid; gap: 18px; justify-items: center; width: 100%; padding: 28px; }
-.placeholder__note {
-  font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--amber-deep); background: rgba(255,255,255,.7);
-  padding: 6px 14px; border-radius: 999px;
+.media--dark .media__tint {
+  background: radial-gradient(88% 88% at 50% 46%,
+              transparent 34%, rgba(221, 132, 65, .13) 74%, rgba(232, 118, 47, .20) 100%);
+  mix-blend-mode: screen;
+  opacity: 1;
 }
 
-.placeholder__safety { display: grid; gap: 8px; text-align: left; font-size: 13.5px; min-width: 250px; }
-.placeholder__safety p {
-  background: rgba(255,255,255,.72); border: 1px solid var(--glass-line);
-  border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-sm);
-}
-.placeholder__safety .flag { color: var(--amber-deep); font-weight: 600; }
-.placeholder__safety .hand { margin-left: 22px; }
-.placeholder__safety .log  { color: var(--teal); font-weight: 600; margin-left: 44px; }
-
-/* ---------- compliance ---------- */
+/* ---------- safety + compliance ---------- */
 .section--compliance { background: var(--cream-2); }
 .section--compliance .section__head { margin-bottom: 44px; }
+
+/* The guardrails claim, sharing the card language of the badges below it
+   so the two read as one argument rather than two sections. */
+.safety {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 48px; align-items: start;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 32px; box-shadow: var(--shadow-sm);
+  margin-bottom: 22px;
+}
+.safety__title { font-size: 20px; letter-spacing: -.02em; margin-bottom: 12px; }
+.safety__text { color: var(--ink-soft); font-size: 16px; }
 
 .badges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .badge {
@@ -374,14 +492,16 @@ img, video { display: block; max-width: 100%; }
   .hero { padding: 60px 0 72px; }
   .hero__inner { grid-template-columns: 1fr; gap: 48px; }
   .hero__title { max-width: none; }
-  /* stacked hero: two panels fit cleanly, the third would collide */
-  .hero__art { height: 380px; max-width: 420px; }
+  /* Stacked hero: the two panels overlap tightly at this width, leaving
+     no channel for the wire to read in — so it is hidden rather than
+     drawn behind them. main.js stops measuring it here too. */
+  .hero__art { height: 390px; max-width: 420px; }
   .panel--db { left: 0; top: 74px; width: 208px; }
   .panel--chat { right: 0; top: 0; width: 224px; }
-  .panel--profile { display: none; }
+  .wire { display: none; }
 
-  .feature { grid-template-columns: 1fr; gap: 32px; padding: 36px 0; }
-  .feature--flip .feature__copy { order: 0; }
+  .feature { grid-template-columns: 1fr; gap: 32px; }
+  .safety { grid-template-columns: 1fr; gap: 22px; padding: 26px 24px; }
   .badges { grid-template-columns: 1fr; }
   .section { padding: 72px 0; }
   .section__head { margin-bottom: 44px; }
@@ -411,14 +531,26 @@ img, video { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .hero__art { height: 300px; }
+  /* Tall enough for the chat panel, which now carries the patient's
+     identity in its header and the booked confirmation in its thread —
+     the panels are absolutely positioned, so this height is not
+     computed for us. */
+  .hero__art { height: 390px; }
   .panel--db { left: 0; top: 60px; width: 178px; }
   .panel--chat { right: 0; width: 226px; }
   .cta__form input { max-width: none; }
+
+  /* Three tabs still fit across a phone once the label sits under the
+     icon; the thumb is inset from the rail edges, so it takes the taller
+     stacked height on its own. */
+  .js .ftabs__rail { max-width: none; margin-bottom: 36px; }
+  .ftab { flex-direction: column; gap: 6px; padding: 10px 4px; font-size: 13.5px; }
+  .ftab__icon svg { width: 20px; height: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .panel { animation: none; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  .ftabs__thumb, .js .fpanel { transition: none; }
 }
