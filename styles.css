@@ -50,16 +50,6 @@
   --maxw:       1140px;
   --pad:        24px;
   --header-h:   72px;
-
-  /* Everything that has to clear the fold below the hero: the features
-     padding (22), the one-line head (39), the rail (59), its gap (26) —
-     and then ~54px more, which buys the top edge of the open panel. The
-     hero is sized against this rather than against a fixed height, so the
-     rail lands near the bottom of the first screen whatever the window's
-     height is, with the panel it controls already breaking the fold. The
-     tabs alone would read as decoration; the sliver of panel under them
-     is what says they do something. */
-  --fold-tail:  200px;
 }
 
 /* ---------- base ---------- */
@@ -136,19 +126,23 @@ img, video { display: block; max-width: 100%; }
 
 .nav-toggle { display: none; }
 
+/* The hero runs wider than the reading measure the rest of the page uses.
+   1140 is sized for text columns; this section is carrying the product
+   film, and the extra 100px goes straight into it. */
+.hero .container { max-width: 1240px; }
+
 /* ---------- hero ----------
-   Sized against the fold rather than against a fixed height: the hero
-   takes the screen less the header and less --fold-tail, which is exactly
-   the features head and rail. So the tabs sit on the bottom edge of the
-   first screen at any window height, and the hero can never grow to the
-   point where the fold holds nothing but the hero. min-height, not
-   height — a short window lets the content push past it instead of
-   clipping. */
+   One screen, and the whole landing inside it. The section takes exactly
+   the viewport less the header, and everything it holds — headline, CTA,
+   tabs, film — is sized to fit that box rather than to overflow it, so
+   there is no half-visible element sitting on the cut. min-height, not
+   height: a short or zoomed window is allowed to push past instead of
+   clipping the film. */
 .hero {
   position: relative; overflow: hidden;
   display: flex; align-items: center;
-  min-height: calc(100svh - var(--header-h) - var(--fold-tail));
-  padding: clamp(18px, 3vh, 48px) 0 clamp(16px, 2.4vh, 36px);
+  min-height: calc(100svh - var(--header-h));
+  padding: clamp(20px, 3.4vh, 56px) 0 clamp(20px, 3.4vh, 56px);
 }
 
 /* Four layers, warm to cool: a light bloom top-left, the amber ground,
@@ -184,8 +178,8 @@ img, video { display: block; max-width: 100%; }
 .mesh {
   position: absolute; inset: -1px;
   background-image:
-    linear-gradient(to right,  rgba(29, 58, 68, .10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(29, 58, 68, .10) 1px, transparent 1px);
+    linear-gradient(to right,  rgba(29, 58, 68, .07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 58, 68, .07) 1px, transparent 1px);
   background-size: 34px 34px;
   -webkit-mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
           mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
@@ -204,174 +198,44 @@ img, video { display: block; max-width: 100%; }
 
 .hero__inner {
   position: relative; z-index: 1; width: 100%;
-  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: 56px; align-items: center;
+  display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  gap: clamp(40px, 4.4vw, 72px); align-items: center;
 }
 
-/* The vh term is what lets a 720px-tall laptop keep the rail on screen:
-   the headline gives up size before the fold gives up the tabs. */
-.hero__title { font-size: clamp(33px, min(4.7vw, 6.6vh), 54px); margin: 14px 0 16px; max-width: 17ch; }
-.hero__sub   { font-size: 18.5px; color: var(--ink-soft); max-width: 52ch; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 22px 0 14px; }
-.hero__note {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 14.5px; font-weight: 500; color: var(--teal);
+/* Display type, set to be read as a stack of short lines rather than a
+   paragraph that happens to be large. Two constraints decide the ceiling:
+   a vh term, so a short window shrinks the headline instead of pushing
+   the film off the screen, and 70px, which is the largest "Your ultimate"
+   can be set and still hold one line in this column (measured: ~422px of
+   a 453px column, tracking included). Raising the cap without widening
+   the column is what breaks the first line in two. */
+.hero__title {
+  font-size: clamp(38px, min(5.6vw, 9vh), 70px);
+  line-height: .98; letter-spacing: -.035em; font-weight: 700;
+  margin: 16px 0 20px;
+}
+.hero__line { display: block; }
+
+/* The line that changes voice. Instrument Serif runs optically smaller
+   and lighter than Inter at the same size, so it is nudged up and given
+   back its tracking; the teal is the one already carrying the buttons and
+   the video ground, so the accent reads as part of the system rather than
+   a third colour. font-style is set explicitly because the italic is a
+   separate face here, not a synthesised slant. */
+.hero__line--accent {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-style: italic; font-weight: 400;
+  font-size: 1.1em; letter-spacing: -.015em;
+  color: var(--teal-deep);
 }
 
-/* ---------- hero glass collage ---------- */
-/* Height follows the window so the collage compresses with the copy
-   instead of pinning the hero open. The floor is 420px: the wire routes
-   through a band 40px off the bottom, and below 420 that band climbs into
-   the database panel it is supposed to pass under. */
-.hero__art { position: relative; height: clamp(420px, 58vh, 460px); }
-
-.panel {
-  position: absolute;
-  background: var(--glass);
-  border: 1px solid var(--glass-line);
-  border-radius: var(--radius);
-  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  box-shadow: var(--shadow-lg);
-  padding: 16px;
-}
-.panel__label {
-  font-size: 11px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px;
-}
-
-.panel--db { left: -8%; top: clamp(76px, 21%, 96px); width: 244px; animation: float 9s ease-in-out infinite; }
-.rows li {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  font-size: 12.5px; padding: 7px 0; border-top: 1px solid rgba(36,31,27,.07);
-  border-radius: 7px; transition: background-color .4s ease, box-shadow .4s ease;
-}
-.rows li:first-child { border-top: 0; }
-
-/* The row the wire leaves from, lit while the conversation is running. */
-.rows li.is-live {
-  background: rgba(232, 118, 47, .10);
-  box-shadow: 0 0 0 1px rgba(232, 118, 47, .22);
-}
-
-.chip {
-  font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
-  background: rgba(255,255,255,.75); color: var(--ink-soft);
-  transition: background-color .4s ease, color .4s ease;
-}
-.chip--ok { background: var(--sage); color: var(--teal); }
-
-.panel--chat {
-  right: -4%; top: 0; width: 320px; padding: 0; overflow: hidden;
-  animation: float 11s ease-in-out infinite .6s;
-}
-.panel__bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 11px 14px; border-bottom: 1px solid rgba(36,31,27,.07);
-  background: rgba(255,255,255,.5);
-}
-
-/* The patient's identity rides in the chat header — one panel, so it is
-   never ambiguous whose conversation this is. */
-.panel__id { flex: 1; display: grid; gap: 1px; min-width: 0; }
-.panel__who { font-weight: 600; font-size: 14px; letter-spacing: -.01em; }
-.panel__meta { font-size: 11px; color: var(--ink-soft); }
-
-.avatar {
-  width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%;
-  background: linear-gradient(150deg, var(--peach), var(--amber));
-  border: 2px solid rgba(255,255,255,.85);
-  box-shadow: 0 1px 4px rgba(160,74,20,.20);
-}
-.dots { color: var(--ink-soft); }
-
-.thread { padding: 14px; display: grid; gap: 8px; }
-.bubble { font-size: 12.5px; line-height: 1.45; padding: 9px 12px; border-radius: 14px; max-width: 84%; }
-.bubble--in  { background: rgba(255,255,255,.8); border: 1px solid rgba(36,31,27,.06); border-bottom-left-radius: 5px; }
-.bubble--out { background: var(--sage); color: var(--teal-deep); margin-left: auto; border-bottom-right-radius: 5px; }
-
-/* The outcome the whole narrative is aiming at. */
-.thread__booked {
-  display: flex; align-items: center; gap: 7px;
-  font-size: 11.5px; font-weight: 600; color: var(--teal);
-  background: var(--sage); border-radius: 10px; padding: 8px 11px;
-}
-.thread__booked::before {
-  content: ""; width: 6px; height: 10px; margin: -3px 1px 0 2px;
-  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
-  transform: rotate(38deg);
-}
-
-/* Staged reveal: main.js walks these in as the conversation plays.
-
-   Hidden from the first frame via .js (set in <head>) rather than a class
-   main.js adds later, which would paint the finished thread and then fade
-   it out. Gated on no-preference so reduced motion — where main.js never
-   runs the sequence — still gets a complete, readable conversation, as
-   does a browser with JS off. */
-@media (prefers-reduced-motion: no-preference) {
-  .js .thread > [data-flow-step] {
-    opacity: 0; transform: translateY(6px);
-    transition: opacity .34s ease, transform .34s ease;
-  }
-  .js .thread > [data-flow-step].is-shown { opacity: 1; transform: none; }
-}
-
-.composer { display: flex; align-items: center; gap: 10px; margin: 4px 14px 14px; }
-.composer span { flex: 1; height: 34px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid rgba(36,31,27,.07); }
-.send { width: 0; height: 0; border-left: 12px solid var(--teal); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
-
-/* ---------- hero wire ----------
-   Connects the patient record to the chat that acts on it. The path is
-   measured and written by main.js, because both panels are positioned in
-   a mix of % and px and their gap changes with the container width — no
-   static path could stay attached to them. */
-.wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.wire__track {
-  stroke: rgba(200, 85, 28, .28); stroke-width: 1.5;
-  stroke-dasharray: 3 4; stroke-linecap: round;
-}
-.wire__pulse {
-  stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round;
-  /* pathLength="1" normalises the dash maths, so this one dash is 14% of
-     the path however long the measured path turns out to be. */
-  stroke-dasharray: .14 .86;
-  stroke-dashoffset: .14;
-  opacity: 0;
-  filter: drop-shadow(0 0 4px rgba(232, 118, 47, .55));
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
-}
+.hero__sub   { font-size: 17.5px; color: var(--ink-soft); max-width: 40ch; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 0; }
 
 /* ---------- sections ---------- */
 .section { padding: 96px 0; }
 .section__head { max-width: 640px; margin-bottom: 64px; }
 .section__title { font-size: clamp(29px, 3.4vw, 40px); margin: 12px 0 0; }
-
-/* Features runs tight against the hero on purpose — it is the section the
-   fold is meant to cut into. Compliance keeps the full 96px rhythm. */
-#features { padding-top: 22px; }
-
-/* The section head is one line here rather than the usual eyebrow-plus-
-   display-title pair. The three tabs directly beneath it already name the
-   three things — a 40px heading saying there are three of them spends
-   ~140px of the fold restating the row under it. Demoted to a label, it
-   keeps the document structure and gives the rail its scent line. */
-.ftabs__head {
-  font-size: clamp(18px, 1.9vw, 22px); font-weight: 600;
-  letter-spacing: -.02em; color: var(--ink-soft);
-  margin-bottom: 14px;
-}
-
-/* ---------- features ---------- */
-.feature {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 56px; align-items: center;
-}
-.feature__title { font-size: clamp(21px, 2.2vw, 26px); letter-spacing: -.02em; margin-bottom: 16px; }
-.feature__text { color: var(--ink-soft); margin-bottom: 22px; }
 
 /* ---------- feature tabs ----------
    Icon + one word, three across, with the chosen feature rendered in full
@@ -389,18 +253,15 @@ img, video { display: block; max-width: 100%; }
 /* The columns sit flush so one thumb can be exactly a third wide; the
    6px padding is the inset the thumb floats inside.
 
-   Sticky, not relative: the rail is now the last thing above the fold, so
-   the panel it controls is read *below* it. Pinning it under the header
-   for the length of the section means the control never leaves while the
-   thing it controls is on screen. sticky is still a positioned value, so
-   the absolute thumb keeps resolving against the rail exactly as before.
-   The white goes from .55 to .84 for the same reason — it now has page
-   content passing behind it rather than the hero's flat wash. */
+   Back to static positioning: the rail and the film it controls are in
+   the same screen now, so there is nothing to pin it against. It spans
+   its column rather than capping at 520px, which lines its ends up with
+   the film underneath it. */
 .js .ftabs__rail {
-  position: sticky; top: calc(var(--header-h) + 10px); z-index: 40;
+  position: relative;
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: 520px; margin-bottom: 26px; padding: 6px;
-  background: rgba(255, 255, 255, .84);
+  margin-bottom: 18px; padding: 6px;
+  background: rgba(255, 255, 255, .62);
   border: 1px solid var(--glass-line); border-radius: 999px;
   backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
   box-shadow: var(--shadow-sm);
@@ -440,7 +301,16 @@ img, video { display: block; max-width: 100%; }
 .ftab:hover .ftab__icon { color: var(--ink); }
 .ftab[aria-selected="true"] .ftab__icon { color: var(--amber); }
 
-.fpanel + .fpanel { margin-top: 48px; }
+.fpanel + .fpanel { margin-top: 40px; }
+
+/* One line under the film, and that is the whole of the feature copy.
+   Sized and coloured as a caption rather than a heading so it reads as a
+   label on the clip, not as a section title competing with the H1. */
+.fpanel__caption {
+  margin-top: 16px;
+  font-size: clamp(15px, 1.3vw, 17px); font-weight: 600;
+  letter-spacing: -.015em; color: var(--ink);
+}
 
 /* With JS every panel occupies the same grid cell, so the stage is always
    as tall as the tallest one and switching tabs never shifts the page
@@ -469,6 +339,16 @@ img, video { display: block; max-width: 100%; }
   width: 7px; height: 4px; border-left: 2px solid var(--teal); border-bottom: 2px solid var(--teal);
   transform: rotate(-45deg);
 }
+
+/* The film is capped against the viewport as well as against its column.
+   16/9 at full column width is taller than a short window can spare once
+   the rail and caption are counted, so on those the height leads and the
+   frame simply gets narrower — the alternative is the bottom of the clip
+   hanging below the fold, which is the thing this layout exists to
+   avoid. Centred so it stays aligned with the rail above it. */
+.hero__features .media { max-height: calc(100svh - var(--header-h) - 260px); }
+.hero__features .ftabs__stage { justify-items: center; }
+.hero__features .fpanel { width: 100%; }
 
 /* ---------- media frame ----------
    All three clips get the same frame, and that is the point. Two of them
@@ -581,22 +461,14 @@ img, video { display: block; max-width: 100%; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 940px) {
-  /* Stacked, the hero is copy plus a 390px collage — the rail cannot join
-     it above the fold on a phone whatever the padding is. Tightening it
-     still moves the rail ~80px closer, which is roughly the difference
-     between one flick and two. */
-  .hero { padding: 34px 0 32px; }
-  .hero__inner { grid-template-columns: 1fr; gap: 30px; }
-  .hero__title { max-width: none; }
-  /* Stacked hero: the two panels overlap tightly at this width, leaving
-     no channel for the wire to read in — so it is hidden rather than
-     drawn behind them. main.js stops measuring it here too. */
-  .hero__art { height: 390px; max-width: 420px; }
-  .panel--db { left: 0; top: 74px; width: 208px; }
-  .panel--chat { right: 0; top: 0; width: 224px; }
-  .wire { display: none; }
+  /* Stacked, the two columns cannot both hold the screen — copy first,
+     then the film under it. The one-screen constraint is dropped with
+     them: min-height goes back to auto so the section is simply as tall
+     as the two stacked halves, rather than a viewport box they overflow. */
+  .hero { min-height: 0; padding: 40px 0 48px; }
+  .hero__inner { grid-template-columns: 1fr; gap: 36px; }
+  .hero__title { font-size: clamp(38px, 9vw, 62px); }
 
-  .feature { grid-template-columns: 1fr; gap: 32px; }
   .safety { grid-template-columns: 1fr; gap: 22px; padding: 26px 24px; }
   .badges { grid-template-columns: 1fr; }
   .section { padding: 72px 0; }
@@ -627,26 +499,17 @@ img, video { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  /* Tall enough for the chat panel, which now carries the patient's
-     identity in its header and the booked confirmation in its thread —
-     the panels are absolutely positioned, so this height is not
-     computed for us. */
-  .hero__art { height: 390px; }
-  .panel--db { left: 0; top: 60px; width: 178px; }
-  .panel--chat { right: 0; width: 226px; }
   .cta__form input { max-width: none; }
 
   /* Three tabs still fit across a phone once the label sits under the
      icon; the thumb is inset from the rail edges, so it takes the taller
      stacked height on its own. */
-  .js .ftabs__rail { max-width: none; margin-bottom: 36px; }
   .ftab { flex-direction: column; gap: 6px; padding: 10px 4px; font-size: 13.5px; }
   .ftab__icon svg { width: 20px; height: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .panel { animation: none; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .ftabs__thumb, .js .fpanel { transition: none; }
 }

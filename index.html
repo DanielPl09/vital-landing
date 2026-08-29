@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8762F'/><path d='M9 12h4l3 8 3-8h4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -41,7 +41,12 @@
 
 <main id="main">
 
-  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <!-- ─────────────────────── Hero ───────────────────────
+       The whole landing is this one section: proposition on the left, the
+       product itself on the right. The features used to be a section below
+       the fold; they are the strongest thing on the page, so they are now
+       in the first screen rather than under it, and nothing is left
+       straddling the cut. -->
   <section class="hero" id="top">
     <div class="hero__bg" aria-hidden="true">
       <span class="blob blob--1"></span>
@@ -54,195 +59,114 @@
     <div class="container hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">Clinic software for dietitians</p>
-        <h1 class="hero__title">The patient relationship doesn&rsquo;t pause between appointments.</h1>
-        <p class="hero__sub">
-          Vital's AI chat layer onboards patients, books appointments, and keeps them engaged —
-          always steered by your clinic, never off protocol.
-        </p>
+
+        <!-- Three deliberate lines, broken as spans rather than <br> so the
+             break is structural and survives a reflow. The middle line
+             carries the whole idea, so it is the one that changes voice: an
+             editorial serif italic between two lines of tight sans. That
+             contrast is the headline's entire design — at this size a
+             single face reads as a wall. -->
+        <h1 class="hero__title">
+          <span class="hero__line">Your ultimate</span>
+          <span class="hero__line hero__line--accent">patient relationship</span>
+          <span class="hero__line">platform</span>
+        </h1>
+
+        <p class="hero__sub">Onboarding, scheduling, and engagement &mdash; always on your protocol.</p>
+
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#demo">Book a demo</a>
-        </div>
-        <p class="hero__note">
-          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5 13.5 4v4c0 3.2-2.3 5.7-5.5 6.5C4.8 13.7 2.5 11.2 2.5 8V4L8 1.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m5.8 8.1 1.6 1.6 3-3.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          HIPAA-ready and GDPR compliant by default
-        </p>
-      </div>
-
-      <!-- Glass panel collage, echoing the product UI. The wire and the
-           staged thread are driven by initHeroFlow() in main.js, which runs
-           the product narrative on a loop: a patient record opens a chat,
-           the chat settles the appointment, and the record comes back
-           marked Booked. The patient's identity lives in the chat header
-           rather than a separate card, so it is clear who is talking. -->
-      <div class="hero__art" aria-hidden="true">
-        <svg class="wire" fill="none" preserveAspectRatio="none">
-          <path class="wire__track"></path>
-          <path class="wire__pulse" pathLength="1"></path>
-        </svg>
-
-        <div class="panel panel--db">
-          <p class="panel__label">Database</p>
-          <ul class="rows">
-            <li><span>Drin Name</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Jasen Alex</span><b class="chip chip--ok">Cleared</b></li>
-            <li data-flow-row><span>Mary Ardilson</span><b class="chip" data-flow-chip>Intake</b></li>
-            <li><span>Clera Warson</span><b class="chip">Booked</b></li>
-            <li><span>Alen Marys</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Larn Diaszer</span><b class="chip">Intake</b></li>
-          </ul>
-        </div>
-
-        <div class="panel panel--chat">
-          <div class="panel__bar">
-            <span class="avatar"></span>
-            <span class="panel__id">
-              <span class="panel__who">Clara E.</span>
-              <span class="panel__meta">Sports nutrition &middot; Week 6</span>
-            </span>
-            <span class="dots">&#8942;</span>
-          </div>
-          <div class="thread">
-            <p class="bubble bubble--in"  data-flow-step>Hi Clara — ready to finish your intake?</p>
-            <p class="bubble bubble--out" data-flow-step>Yes, and can I move Thursday?</p>
-            <p class="bubble bubble--in"  data-flow-step>Done. Tuesday 10:30 with Dr. Levy.</p>
-            <p class="thread__booked"     data-flow-step>Appointment booked</p>
-          </div>
-          <div class="composer"><span></span><i class="send"></i></div>
+          <a class="btn btn--primary btn--lg" href="#demo">Book a demo</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ───────────────────────── Features ───────────────────────── -->
-  <section class="section" id="features">
-    <div class="container">
-      <h2 class="ftabs__head">Three things your clinic gets on day one</h2>
+      <!-- Features, in the hero's right column. Icon-and-a-word tabs over
+           the clip they select, and one line under it — the films show the
+           product working, so a paragraph beside them is a paragraph nobody
+           reads. The detail belongs in the demo.
 
-      <!-- Horizontal tabs: icon + one word, with the whole feature below them.
            Without JS the rail is hidden and all three panels stack in normal
-           flow, so every feature stays readable — the same "show everything"
-           fallback used for .reveal. Tab 0 ships selected and panel 0 ships
-           .is-active so the closed state paints on the first frame; the
-           styles hang off the .js class set inline in <head>. -->
-      <div class="ftabs" id="featureTabs">
-        <div class="ftabs__rail" role="tablist" aria-label="Features">
-          <span class="ftabs__thumb" aria-hidden="true"></span>
+           flow, so every feature stays reachable — the same "show
+           everything" fallback used for .reveal. Tab 0 ships selected and
+           panel 0 ships .is-active so the closed state paints on the first
+           frame; the styles hang off the .js class set inline in <head>. -->
+      <div class="hero__features" id="features">
+        <h2 class="sr-only">Features</h2>
 
-          <button class="ftab" type="button" role="tab" id="ftab-0"
-                  aria-controls="fpanel-0" aria-selected="true">
-            <span class="ftab__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 12.4a7.4 7.4 0 0 1-10.7 6.6L4.5 20.2l1.2-4.2A7.4 7.4 0 1 1 20 12.4Z"/>
-                <path d="M9 10.9h6M9 14.1h4"/>
-              </svg>
-            </span>
-            <span class="ftab__label">Chat</span>
-          </button>
+        <div class="ftabs" id="featureTabs">
+          <div class="ftabs__rail" role="tablist" aria-label="Features">
+            <span class="ftabs__thumb" aria-hidden="true"></span>
 
-          <button class="ftab" type="button" role="tab" id="ftab-1"
-                  aria-controls="fpanel-1" aria-selected="false">
-            <span class="ftab__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4.5" width="6.4" height="6.4" rx="1.8"/>
-                <path d="m4.9 7.6 1.3 1.3 2.4-2.8"/>
-                <rect x="3" y="13.1" width="6.4" height="6.4" rx="1.8"/>
-                <path d="M12.8 7.7H21M12.8 16.3H21"/>
-              </svg>
-            </span>
-            <span class="ftab__label">Topics</span>
-          </button>
+            <button class="ftab" type="button" role="tab" id="ftab-0"
+                    aria-controls="fpanel-0" aria-selected="true">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 12.4a7.4 7.4 0 0 1-10.7 6.6L4.5 20.2l1.2-4.2A7.4 7.4 0 1 1 20 12.4Z"/>
+                  <path d="M9 10.9h6M9 14.1h4"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Chat</span>
+            </button>
 
-          <button class="ftab" type="button" role="tab" id="ftab-2"
-                  aria-controls="fpanel-2" aria-selected="false">
-            <span class="ftab__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3.2" y="4.8" width="17.6" height="16" rx="3"/>
-                <path d="M3.2 9.7h17.6M8 3.2v3.2M16 3.2v3.2"/>
-                <path d="m9.2 14.7 2 2 4-4.4"/>
-              </svg>
-            </span>
-            <span class="ftab__label">Schedule</span>
-          </button>
-        </div>
+            <button class="ftab" type="button" role="tab" id="ftab-1"
+                    aria-controls="fpanel-1" aria-selected="false">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4.5" width="6.4" height="6.4" rx="1.8"/>
+                  <path d="m4.9 7.6 1.3 1.3 2.4-2.8"/>
+                  <rect x="3" y="13.1" width="6.4" height="6.4" rx="1.8"/>
+                  <path d="M12.8 7.7H21M12.8 16.3H21"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Topics</span>
+            </button>
 
-        <div class="ftabs__stage">
+            <button class="ftab" type="button" role="tab" id="ftab-2"
+                    aria-controls="fpanel-2" aria-selected="false">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3.2" y="4.8" width="17.6" height="16" rx="3"/>
+                  <path d="M3.2 9.7h17.6M8 3.2v3.2M16 3.2v3.2"/>
+                  <path d="m9.2 14.7 2 2 4-4.4"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Schedule</span>
+            </button>
+          </div>
 
-          <!-- 01 — Chat: intake and questionnaires answered in plain language -->
-          <div class="fpanel is-active" id="fpanel-0" role="tabpanel" aria-labelledby="ftab-0">
-            <div class="feature">
-              <div class="feature__copy">
-                <h3 class="feature__title">Intake that reads like a conversation</h3>
-                <p class="feature__text">
-                  New patients answer in their own words — history, goals, habits, consent. Vital
-                  runs your intake and questionnaires as a chat, then files each answer back to the
-                  patient record as a structured field. Your dietitian opens a finished picture
-                  instead of an empty form.
-                </p>
-                <ul class="ticks">
-                  <li>Intake and history captured in plain language</li>
-                  <li>Free-text answers mapped to the fields your clinic already tracks</li>
-                  <li>Follows up until nothing required is left blank</li>
-                </ul>
-              </div>
+          <div class="ftabs__stage">
+
+            <!-- 01 — Chat: intake answered in plain language -->
+            <div class="fpanel is-active" id="fpanel-0" role="tabpanel" aria-labelledby="ftab-0">
               <figure class="media">
                 <video
                   class="media__video"
-                  data-src="assets/video/gemini_generated_video_71d5a173.mp4"
+                  data-src="assets/video/Chat_feature_video.mp4"
                   muted loop playsinline preload="none"
                   aria-label="A patient intake conversation filling in a structured insights panel beside it">
-                  <noscript><source src="assets/video/gemini_generated_video_71d5a173.mp4" type="video/mp4" /></noscript>
+                  <noscript><source src="assets/video/Chat_feature_video.mp4" type="video/mp4" /></noscript>
                 </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
+              <p class="fpanel__caption">Intake that reads like a conversation</p>
             </div>
-          </div>
 
-          <!-- 02 — Topics: the clinic picks the scope the conversation may cover -->
-          <div class="fpanel" id="fpanel-1" role="tabpanel" aria-labelledby="ftab-1">
-            <div class="feature">
-              <div class="feature__copy">
-                <h3 class="feature__title">You choose what it&rsquo;s allowed to raise</h3>
-                <p class="feature__text">
-                  Sleep, training load, medical history, eating patterns — switch a topic on and it
-                  enters the conversation; switch it off and Vital never brings it up. The question
-                  set belongs to your clinic, and a change applies to the next conversation rather
-                  than disturbing one already under way.
-                </p>
-                <ul class="ticks">
-                  <li>Pick topics from your clinic&rsquo;s own list — no prompt writing</li>
-                  <li>Off means out of scope, not merely discouraged</li>
-                  <li>Every patient gets the set you approved, whoever is on shift</li>
-                </ul>
-              </div>
+            <!-- 02 — Topics: the clinic sets the scope -->
+            <div class="fpanel" id="fpanel-1" role="tabpanel" aria-labelledby="ftab-1">
               <figure class="media">
                 <video
                   class="media__video"
-                  data-src="assets/video/gemini_generated_video_acfe4eb5.mp4"
+                  data-src="assets/video/checklist_feature.mp4"
                   muted loop playsinline preload="none"
                   aria-label="Conversation topics being switched on and off in the clinic&rsquo;s question set">
-                  <noscript><source src="assets/video/gemini_generated_video_acfe4eb5.mp4" type="video/mp4" /></noscript>
+                  <noscript><source src="assets/video/checklist_feature.mp4" type="video/mp4" /></noscript>
                 </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
+              <p class="fpanel__caption">You choose what it&rsquo;s allowed to raise</p>
             </div>
-          </div>
 
-          <!-- 03 — Schedule: booked in-thread, but held for a clinician to approve -->
-          <div class="fpanel" id="fpanel-2" role="tabpanel" aria-labelledby="ftab-2">
-            <div class="feature">
-              <div class="feature__copy">
-                <h3 class="feature__title">The calendar fills itself &mdash; you approve it</h3>
-                <p class="feature__text">
-                  When a patient is ready to book, Vital offers real openings from your clinic&rsquo;s
-                  availability and takes the slot inside the thread. Every booking arrives as a
-                  request waiting on a clinician, so nothing lands in the diary unapproved.
-                </p>
-                <ul class="ticks">
-                  <li>Offers only the slots your calendar actually has free</li>
-                  <li>Booked in the conversation, before the thread goes cold</li>
-                  <li>Confirmations and reschedules sync back to your clinic calendar</li>
-                </ul>
-              </div>
+            <!-- 03 — Schedule: booked in-thread, held for approval -->
+            <div class="fpanel" id="fpanel-2" role="tabpanel" aria-labelledby="ftab-2">
               <figure class="media media--light">
                 <video
                   class="media__video"
@@ -254,9 +178,10 @@
                 </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
+              <p class="fpanel__caption">The calendar fills itself &mdash; you approve it</p>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>

@@ -11,9 +11,9 @@ python -m http.server 5173
 
 | File | What it holds |
 | --- | --- |
-| `index.html` | All page markup: header, hero, three features, compliance, CTA, footer |
+| `index.html` | All page markup: header, hero (which holds the features), compliance, CTA, footer |
 | `styles.css` | Full stylesheet, design tokens at the top under `:root` |
-| `main.js` | Mobile nav, scroll reveal, viewport-gated video playback, demo form |
+| `main.js` | Mobile nav, scroll reveal, feature tabs, viewport-gated video playback, demo form |
 | `assets/video/` | Feature videos |
 | `assets/img/` | Video posters |
 
@@ -32,18 +32,34 @@ The hero ground is four layers: a light bloom, the amber ramp, blurred blobs, th
 the techy half of the brief and the grain is the lifestyle half; both are deliberately at the
 threshold of noticeable.
 
-## The fold
+## One screen
 
-The hero is sized `100svh - --header-h - --fold-tail`, where `--fold-tail` is exactly the
-features head, the tab rail, and a sliver of the panel below it. So the rail lands near the
-bottom of the first screen at any window height, with the panel it controls already breaking
-the fold — the tabs alone read as decoration, the sliver of panel is what says they do
-something. Change `--fold-tail` and the hero resizes to match; don't set a hero height.
+The landing is a single section. `.hero` is `min-height: calc(100svh - --header-h)` and holds
+both halves — proposition on the left, the product film on the right — so the first screen is
+the whole pitch and nothing sits half-visible on the cut. `min-height`, not `height`: a short
+or zoomed window is allowed to push past it rather than clip the film.
 
-The rail is `position: sticky` beneath the header for the length of the section, so the
-control stays put while the panels it switches are read. Clicking a tab scrolls the panel up
-to meet the click, but never when it is already fully visible and never upward
-(`revealStage()` in `main.js`).
+Two things keep it inside that box. The headline's `clamp` caps its `vw` term with a `9vh`
+term, so a short window shrinks the type instead of shoving the film off the bottom; and
+`.hero__features .media` carries a `max-height` measured against the viewport, so on a short
+window the film's height leads and the frame simply gets narrower.
+
+Below 940px the two columns cannot both hold a screen, so they stack and `min-height` drops
+back to `0` — the section becomes as tall as its two halves rather than a viewport box they
+overflow.
+
+## The headline
+
+`Your ultimate / patient relationship / platform`, broken with `<span class="hero__line">`
+rather than `<br>` so the breaks are structural and survive a reflow. The middle line changes
+voice — Instrument Serif italic in `--teal-deep`, against Inter 700 on either side of it —
+which is the whole of the design; at this size a single face reads as a wall.
+
+The 70px cap on `.hero__title` is measured, not chosen: it is the largest "Your ultimate" can
+be set and still hold one line in a 453px column (~422px with tracking counted). Raise the cap
+without widening the column and the first line breaks in two, which reads as ragged rather
+than deliberate. The accent line is *meant* to wrap to two lines on desktop and fits on one at
+full mobile width.
 
 ## Feature media
 
@@ -51,6 +67,9 @@ All three clips share one frame — petrol mat, petrol hairline, warm drop shado
 grading inside it is what varies. Two of the clips are dark renders and take the default
 `screen` bloom; `assets/video/smart-scheduling.mp4` is a light warm render and carries
 `.media--light`, which inverts the treatment to a `multiply` petrol scrim.
+
+The clips map to the tabs by name: `Chat_feature_video.mp4` → Chat, `checklist_feature.mp4` →
+Topics (the clinic ticking topics on and off), `smart-scheduling.mp4` → Schedule.
 
 That last one is grading, not a fix: it is a different render style from the other two and no
 overlay makes it the same one. Re-rendering it on the dark ground is what actually closes the
