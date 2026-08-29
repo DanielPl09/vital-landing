@@ -187,6 +187,256 @@
     </div>
   </section>
 
+  <!-- ───────────────────────── How it works ─────────────────────────
+       The deep dive under the hero. Four horizontal rows, alternating
+       sides: three are one patient journey — intake, response, booking —
+       and the fourth is the guarantee running underneath all three, which
+       is why it takes the teal accent instead of the amber and hands off
+       into Safety & compliance directly below.
+
+       Every figure is inline SVG driven by currentColor and the brand
+       tokens, and every one of them reads correctly frozen. The animation
+       hangs off .reveal's .is-visible class, so a row plays once as it
+       arrives and then rests. -->
+  <section class="section proof" id="how">
+    <div class="container">
+      <header class="proof__head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="section__title">Between the first message and the first appointment</h2>
+      </header>
+
+      <!-- 01 — Intake. Branching happens BETWEEN assessments, never inside
+           one: a PSQI score needs all 19 of its items, so skipping items
+           would return a number the profession cannot accept. Skipping
+           whole batteries that do not apply is where the minutes come
+           from, and it is what the figure shows. -->
+      <article class="proof__row reveal" id="proof-intake">
+        <div class="proof__copy">
+          <p class="proof__n">01</p>
+          <ul class="proof__tags">
+            <li>PSQI</li>
+            <li>MEDAS</li>
+            <li>Family history</li>
+          </ul>
+          <h3 class="proof__title">Personalized intake, under three minutes</h3>
+          <p class="proof__text">
+            Vital decides which standard assessments a patient actually needs, then runs those
+            in full. Most answers are a tap, not a paragraph &mdash; so the intake finishes in
+            one sitting and every score still scores.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="An intake branching into three standard assessments — two selected and run in full, one skipped — beside a question being answered with a single tap">
+            <rect class="pf-node" x="14" y="14" width="92" height="26" rx="13"/>
+            <text class="pf-t" x="60" y="32">Intake</text>
+
+            <path class="pf-line" pathLength="1" d="M60 40 V186"/>
+            <path class="pf-line pf-line--b" pathLength="1" d="M60 66 H96 M60 118 H96 M60 170 H96"/>
+
+            <g class="pf-batt" style="--i:0">
+              <rect x="96" y="53" width="98" height="26" rx="13"/>
+              <text class="pf-t pf-t--on" x="145" y="71">PSQI</text>
+            </g>
+            <g class="pf-batt" style="--i:1">
+              <rect x="96" y="105" width="98" height="26" rx="13"/>
+              <text class="pf-t pf-t--on" x="145" y="123">MEDAS</text>
+            </g>
+
+            <g class="pf-batt pf-batt--off">
+              <rect x="96" y="157" width="98" height="26" rx="13" stroke-dasharray="4 4"/>
+              <text class="pf-t" x="137" y="175">IPAQ</text>
+              <path class="pf-x" d="M170 165 l10 10 M180 165 l-10 10"/>
+            </g>
+            <text class="pf-cap" x="145" y="202">not run</text>
+
+            <text class="pf-cap" x="228" y="30">tap to answer</text>
+            <rect class="pf-card" x="228" y="40" width="178" height="182" rx="14"/>
+            <rect class="pf-bar" x="248" y="62" width="120" height="6" rx="3"/>
+            <rect class="pf-bar" x="248" y="78" width="84" height="6" rx="3"/>
+
+            <g class="pf-chip" style="--i:0">
+              <rect x="248" y="100" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="120">Rarely</text>
+            </g>
+            <g class="pf-chip pf-chip--tap" style="--i:1">
+              <rect x="248" y="140" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="160">Sometimes</text>
+            </g>
+            <g class="pf-chip" style="--i:2">
+              <rect x="248" y="180" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="200">Most nights</text>
+            </g>
+
+            <circle class="pf-ripple" cx="370" cy="155" r="7"/>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 02 — Response. The claim is elapsed time, so the figure is two
+           tracks on one shared span: the difference is spatial and needs
+           no statistic. A measured open-rate figure, if one ever exists,
+           drops in as a label on the amber track. -->
+      <article class="proof__row proof__row--flip reveal" id="proof-response">
+        <div class="proof__copy">
+          <p class="proof__n">02</p>
+          <h3 class="proof__title">From invite to booked, in one sitting</h3>
+          <p class="proof__text">
+            Chat reaches patients where email doesn&rsquo;t. The gap between reaching out and
+            getting an answer collapses from days to minutes &mdash; and the first session starts
+            warm instead of starting from zero.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="Two timelines on the same span: an email invite crawling across days, and a Vital chat reaching a booking within one sitting">
+            <text class="pf-cap" x="16" y="48">Email invite</text>
+            <text class="pf-cap pf-cap--end" x="404" y="48">days</text>
+            <line class="pf-track" x1="16" y1="74" x2="404" y2="74" stroke-dasharray="5 5"/>
+            <circle class="pf-seed" cx="16" cy="74" r="5"/>
+            <circle class="pf-dot pf-dot--slow" cx="16" cy="74" r="5"/>
+
+            <text class="pf-cap pf-cap--amber" x="16" y="166">Vital chat</text>
+            <line class="pf-track" x1="16" y1="192" x2="404" y2="192" stroke-dasharray="5 5"/>
+            <line class="pf-prog" pathLength="1" x1="16" y1="192" x2="140" y2="192"/>
+            <circle class="pf-seed pf-seed--amber" cx="16" cy="192" r="5"/>
+            <circle class="pf-dot pf-dot--fast" cx="16" cy="192" r="5"/>
+
+            <g class="pf-booked">
+              <rect x="158" y="176" width="104" height="32" rx="11"/>
+              <path class="pf-tick" d="m176 192 5 5 10-11"/>
+              <text class="pf-t3" x="200" y="197">booked</text>
+            </g>
+            <text class="pf-cap pf-cap--amber" x="158" y="230">one sitting</text>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 03 — Booking. Deliberately not the word "triage": that is a
+           clinical act, and the footer promises clinical decisions stay
+           with the dietitian. "A formula you can read" claims the same
+           benefit and survives a procurement review. -->
+      <article class="proof__row reveal" id="proof-priority">
+        <div class="proof__copy">
+          <p class="proof__n">03</p>
+          <h3 class="proof__title">Priority you can actually read</h3>
+          <p class="proof__text">
+            One transparent formula weighs how long someone has waited against what their intake
+            says. Tune it, or write your own &mdash; and every booking still waits on a
+            clinician&rsquo;s approval.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="A formula combining waiting time and clinical background into a rank, above the queue it produces">
+            <g class="pf-fx" style="--i:0">
+              <rect class="pf-node" x="14" y="14" width="124" height="32" rx="9"/>
+              <text class="pf-t" x="76" y="35">waiting time</text>
+            </g>
+            <text class="pf-plus" x="152" y="37">+</text>
+            <g class="pf-fx" style="--i:1">
+              <rect class="pf-node" x="168" y="14" width="116" height="32" rx="9"/>
+              <text class="pf-t" x="226" y="35">background</text>
+            </g>
+            <path class="pf-arrow" d="M296 30 h18 m-6 -5 l6 5 l-6 5"/>
+            <g class="pf-fx pf-fx--rank" style="--i:2">
+              <rect x="322" y="14" width="84" height="32" rx="9"/>
+              <text class="pf-t pf-t--amber" x="364" y="35">rank</text>
+            </g>
+
+            <g class="pf-qrow pf-qrow--top">
+              <rect x="14" y="88" width="392" height="44" rx="13"/>
+              <circle class="pf-pip pf-pip--hi" cx="42" cy="110" r="6"/>
+              <rect class="pf-bar" x="64" y="101" width="148" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="114" width="94" height="5" rx="2.5"/>
+              <path class="pf-tick" d="m366 110 6 6 12-14"/>
+            </g>
+            <g class="pf-qrow">
+              <rect x="14" y="144" width="392" height="40" rx="13"/>
+              <circle class="pf-pip pf-pip--mid" cx="42" cy="164" r="6"/>
+              <rect class="pf-bar" x="64" y="156" width="118" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="168" width="72" height="5" rx="2.5"/>
+            </g>
+            <g class="pf-qrow pf-qrow--last">
+              <rect x="14" y="196" width="392" height="40" rx="13"/>
+              <circle class="pf-pip" cx="42" cy="216" r="6"/>
+              <rect class="pf-bar" x="64" y="208" width="96" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="220" width="58" height="5" rx="2.5"/>
+            </g>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 04 — The floor. Not "you choose the topics", which the hero's
+           Topics tab already shows: this is how you know it obeys. The
+           flagged cases are the proof, so the flag is the hero beat rather
+           than an error state, and the pause before the real patient
+           arrives is doing the actual work. -->
+      <article class="proof__row proof__row--flip proof__row--floor reveal" id="proof-safety">
+        <div class="proof__copy">
+          <p class="proof__n">04</p>
+          <h3 class="proof__title">It meets a thousand patients before it meets yours</h3>
+          <p class="proof__text">
+            Every build is rehearsed against simulated patients &mdash; including the difficult
+            ones. Steering, refusals and escalation are proven there, not in your waiting room.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="A field of simulated patients passing through a gate, two of them flagged and steering held, before a single real patient arrives">
+            <g class="pf-sims">
+              <circle class="pf-sim" style="--i:0" cx="22" cy="34" r="5"/>
+              <circle class="pf-sim" style="--i:1" cx="58" cy="56" r="5"/>
+              <circle class="pf-sim" style="--i:2" cx="26" cy="80" r="5"/>
+              <circle class="pf-sim pf-sim--flag" style="--i:3" cx="66" cy="104" r="5"/>
+              <circle class="pf-sim" style="--i:4" cx="24" cy="126" r="5"/>
+              <circle class="pf-sim" style="--i:5" cx="60" cy="150" r="5"/>
+              <circle class="pf-sim pf-sim--flag" style="--i:6" cx="28" cy="172" r="5"/>
+              <circle class="pf-sim" style="--i:7" cx="64" cy="196" r="5"/>
+              <circle class="pf-sim" style="--i:8" cx="30" cy="218" r="5"/>
+            </g>
+            <text class="pf-cap" x="16" y="244">simulated</text>
+
+            <g class="pf-gate">
+              <path d="M150 24 V226"/>
+              <path d="M150 24 h13 M150 226 h13"/>
+            </g>
+            <text class="pf-cap pf-cap--teal" x="132" y="244">gate</text>
+
+            <g class="pf-status pf-status--flag">
+              <rect x="196" y="50" width="184" height="34" rx="11"/>
+              <path class="pf-bang" d="M218 60 v9 M218 74 v.5"/>
+              <text class="pf-t3 pf-t3--amber" x="234" y="72">2 flagged</text>
+            </g>
+
+            <g class="pf-status pf-status--ok">
+              <rect x="196" y="100" width="184" height="34" rx="11"/>
+              <path class="pf-tick" d="m214 117 5 5 10-11"/>
+              <text class="pf-t3 pf-t3--teal" x="238" y="122">steering held</text>
+            </g>
+
+            <g class="pf-real">
+              <circle class="pf-real__halo" cx="214" cy="186" r="14"/>
+              <circle class="pf-real__dot" cx="214" cy="186" r="6"/>
+              <text class="pf-cap" x="240" y="191">then, a real one</text>
+            </g>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- Trust peaks right after the safety proof, and it is a long way
+           back to the hero button, so the one mid-page CTA sits here. -->
+      <div class="proof__cta reveal">
+        <p class="proof__cta-text">Want to see it running on your own protocols?</p>
+        <a class="btn btn--primary" href="#demo">Book a demo</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ───────────────────────── Compliance ───────────────────────── -->
   <section class="section section--compliance" id="compliance">
     <div class="container">

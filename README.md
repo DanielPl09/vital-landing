@@ -61,6 +61,43 @@ without widening the column and the first line breaks in two, which reads as rag
 than deliberate. The accent line is *meant* to wrap to two lines on desktop and fits on one at
 full mobile width.
 
+## Section two — how it works
+
+Four horizontal rows under the hero, alternating sides, in `#how`. Three of them are one
+patient journey — intake, response, booking — and the fourth is the guarantee running under all
+three, which is why it takes the teal accent rather than the amber and hands off into Safety &
+compliance directly below it.
+
+Each row is four elements and no more: instrument chips, title, two lines, figure. The figures
+are inline SVG built from the same tokens as the rest of the page.
+
+**Branching happens between assessments, never inside one.** A PSQI global score needs all 19
+of its items; skipping items returns a number no dietitian can use. So the product picks which
+batteries to run and runs each in full, and row 01's figure shows exactly that — two selected,
+one struck out and labelled *not run*. Any future copy here has to keep that distinction.
+
+Instrument names on the page imply the clinic licenses and runs them faithfully. IPAQ, MEDAS
+and SCOFF are freely published; PSQI needs a licence for commercial use; MNA is trademarked;
+EAT-26 and TFEQ carry terms. Confirm before adding a chip.
+
+The word *triage* is deliberately absent from row 03. Triage is a clinical act and the footer
+promises clinical decisions stay with the dietitian.
+
+## Section two animation
+
+Each row's figure animates once, hooked to `.is-visible` — the class the existing `.reveal`
+observer adds and never removes. Two rules make the whole set safe:
+
+- Every figure's **resting state is its finished state**. Reduced motion, JS off, or an
+  observer that never fires all show the completed drawing rather than an empty frame.
+- Every initial state and every `animation` sits inside
+  `@media (prefers-reduced-motion: no-preference)` and is gated on `.js`, so under `reduce`
+  none of it applies and the base styles are what paint.
+
+That is why the two travelling dots in row 02 carry their end `transform` in the base rule and
+animate with `both` rather than `forwards` — with `forwards` they would rest at the start line
+whenever motion was off.
+
 ## Feature media
 
 All three clips share one frame — petrol mat, petrol hairline, warm drop shadow — and the

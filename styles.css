@@ -401,6 +401,234 @@ img, video { display: block; max-width: 100%; }
   mix-blend-mode: multiply;
 }
 
+/* ---------- how it works ----------
+   Four horizontal rows under the hero, alternating sides. The section sits
+   on the plain cream ground: the hero above it is a full amber wash and
+   compliance below is cream-2, so leaving this one unpainted is what gives
+   the page its light-heavy-light rhythm and lets the figures carry the
+   colour instead of competing with a background. */
+.proof__head { max-width: 620px; margin-bottom: clamp(48px, 6vh, 76px); }
+.proof__head .section__title { margin-top: 10px; }
+
+.proof__row {
+  display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: clamp(32px, 5vw, 72px); align-items: center;
+}
+.proof__row + .proof__row { margin-top: clamp(64px, 9vh, 116px); }
+
+/* Alternating sides. Reordering the grid children rather than reversing
+   the column template keeps the copy first in the DOM on every row, so
+   the reading order stays copy-then-figure for a screen reader and for
+   the stacked layout. */
+.proof__row--flip .proof__copy { grid-column: 2; }
+.proof__row--flip .proof__fig  { grid-column: 1; grid-row: 1; }
+
+.proof__n {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+  color: var(--amber-deep); margin-bottom: 14px;
+}
+.proof__row--floor .proof__n { color: var(--teal); }
+
+/* The instrument names. Small, quiet, and set apart from the sentence —
+   they are a credential, not a claim, and they only earn their place if
+   the clinic actually runs those batteries. */
+.proof__tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+.proof__tags li {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+  color: var(--teal); background: var(--sage);
+  border-radius: 999px; padding: 4px 11px;
+}
+
+.proof__title { font-size: clamp(23px, 2.6vw, 31px); letter-spacing: -.025em; margin-bottom: 16px; }
+.proof__text  { color: var(--ink-soft); font-size: 16.5px; max-width: 46ch; }
+
+/* The figure frame borrows the warm card language the compliance cards
+   already use, rather than the dark video mat — these are drawings on the
+   page, not footage in a screen. */
+.proof__fig {
+  margin: 0; padding: clamp(16px, 2.2vw, 28px);
+  background: linear-gradient(150deg, var(--cream-2), #fff);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.pfig { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* ---------- shared figure language ---------- */
+.pfig text { font-family: inherit; }
+.pf-t   { font-size: 12px; font-weight: 600; fill: var(--ink); text-anchor: middle; letter-spacing: -.01em; }
+.pf-t--on   { fill: var(--teal-deep); }
+.pf-t--amber{ fill: var(--amber-deep); }
+.pf-t2  { font-size: 12.5px; font-weight: 500; fill: var(--ink); }
+.pf-t3  { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.pf-t3--amber { fill: var(--amber-deep); }
+.pf-t3--teal  { fill: var(--teal-deep); }
+.pf-cap { font-size: 10.5px; font-weight: 500; fill: var(--ink-soft); opacity: .75; }
+.pf-cap--end   { text-anchor: end; }
+.pf-cap--amber { fill: var(--amber-deep); opacity: 1; }
+.pf-cap--teal  { fill: var(--teal); opacity: 1; }
+
+.pf-node  { stroke: rgba(36,31,27,.2); stroke-width: 1.4; fill: #fff; }
+.pf-card  { fill: #fff; stroke: rgba(36,31,27,.12); stroke-width: 1.4; }
+.pf-line  { stroke: rgba(36,31,27,.3); stroke-width: 1.4; }
+.pf-bar   { fill: rgba(36,31,27,.26); }
+.pf-bar--soft { fill: rgba(36,31,27,.14); }
+.pf-tick  { stroke: var(--teal); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- 01 · branching between batteries ---------- */
+.pf-batt rect { stroke: var(--teal); stroke-width: 1.7; fill: rgba(220,235,238,.5); }
+.pf-batt--off rect { stroke: rgba(36,31,27,.3); fill: none; }
+.pf-batt--off { opacity: .4; }
+.pf-batt--off .pf-t { fill: var(--ink-soft); }
+.pf-x { stroke: var(--ink-soft); stroke-width: 1.6; stroke-linecap: round; }
+
+/* The pre-made answers. One is shown mid-tap, because "most answers are a
+   tap" is the speed claim and a row of untouched buttons does not say it. */
+.pf-chip rect { fill: #fff; stroke: rgba(36,31,27,.16); stroke-width: 1.4; }
+.pf-chip--tap rect { fill: var(--amber); stroke: var(--amber); }
+.pf-chip--tap .pf-t2 { fill: #fff; }
+.pf-ripple { fill: none; stroke: var(--amber); stroke-width: 2; opacity: 0; }
+
+/* ---------- 02 · the gap collapsing ---------- */
+.pf-track { stroke: rgba(36,31,27,.22); stroke-width: 1.4; }
+.pf-seed  { fill: rgba(36,31,27,.3); }
+.pf-seed--amber { fill: var(--amber); }
+.pf-prog  { stroke: var(--amber); stroke-width: 3.4; stroke-linecap: round; }
+.pf-dot--slow { fill: rgba(36,31,27,.45); transform: translateX(372px); }
+.pf-dot--fast { fill: var(--amber); transform: translateX(124px); }
+.pf-booked rect { fill: var(--sage); stroke: none; }
+
+/* ---------- 03 · formula and queue ---------- */
+.pf-plus  { font-size: 15px; font-weight: 600; fill: var(--amber-deep); text-anchor: middle; }
+.pf-arrow { stroke: rgba(36,31,27,.35); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.pf-fx--rank rect { fill: rgba(232,118,47,.10); stroke: var(--amber); stroke-width: 1.7; }
+
+.pf-qrow rect { fill: #fff; stroke: rgba(36,31,27,.12); stroke-width: 1.3; }
+.pf-qrow--top rect { stroke: var(--amber); stroke-width: 1.9; }
+.pf-pip { fill: rgba(36,31,27,.22); }
+.pf-pip--hi  { fill: var(--amber); }
+.pf-pip--mid { fill: var(--teal); }
+
+/* ---------- 04 · simulation before release ---------- */
+.pf-sim { fill: rgba(36,31,27,.22); }
+.pf-sim--flag { fill: var(--amber); }
+.pf-gate { stroke: var(--teal); stroke-width: 1.8; stroke-linecap: round; }
+.pf-status--flag rect { fill: rgba(232,118,47,.09); stroke: var(--amber); stroke-width: 1.5; }
+.pf-status--ok   rect { fill: var(--sage); stroke: none; }
+.pf-bang { stroke: var(--amber-deep); stroke-width: 2.2; stroke-linecap: round; }
+/* The real patient is the same mark as a simulated one, solid and ringed
+   — a person glyph at this size just reads as a face. */
+.pf-real__halo { stroke: var(--teal); stroke-width: 1.6; fill: none; opacity: .45; }
+.pf-real__dot  { fill: var(--teal); }
+
+/* ---------- mid-section CTA ---------- */
+.proof__cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 18px 24px; text-align: center;
+  margin-top: clamp(64px, 9vh, 116px); padding-top: clamp(38px, 5vh, 56px);
+  border-top: 1px solid var(--line);
+}
+.proof__cta-text { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+
+/* ---------- figure animation ----------
+   Gated on .js and on no-preference, and driven by .is-visible, which the
+   existing .reveal observer already adds once and never removes. Every
+   figure's resting state is its finished state, so a browser with JS off,
+   an observer that never fires, or reduced motion all show the completed
+   drawing rather than an empty frame — the animation only replays the way
+   it got there. */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* percentage transform-origins need a box to resolve against */
+  .js .pfig .pf-batt, .js .pfig .pf-chip, .js .pfig .pf-fx,
+  .js .pfig .pf-ripple, .js .pfig .pf-booked, .js .pfig .pf-status,
+  .js .pfig .pf-real, .js .pfig .pf-sim {
+    transform-box: fill-box; transform-origin: center;
+  }
+
+  /* --- 01 --- */
+  .js #proof-intake .pf-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-intake.is-visible .pf-line   { animation: pfDraw .5s ease forwards .1s; }
+  .js #proof-intake.is-visible .pf-line--b { animation-delay: .4s; }
+
+  .js #proof-intake .pf-batt { opacity: 0; transform: translateX(-8px); }
+  .js #proof-intake.is-visible .pf-batt {
+    animation: pfSlideIn .4s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(.6s + var(--i) * .14s);
+  }
+  .js #proof-intake .pf-batt--off { --i: 2; }
+  .js #proof-intake.is-visible .pf-batt--off { animation-name: pfSlideDim; }
+
+  .js #proof-intake .pf-chip { opacity: 0; transform: translateY(8px); }
+  .js #proof-intake.is-visible .pf-chip {
+    animation: pfPop .34s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(1.05s + var(--i) * .12s);
+  }
+  /* `backwards` holds the untapped look through the delay, then the tap
+     lands and the element's own amber styles take over on completion. */
+  .js #proof-intake.is-visible .pf-chip--tap rect { animation: pfTap .3s ease 1.65s backwards; }
+  .js #proof-intake.is-visible .pf-chip--tap .pf-t2 { animation: pfTapText .3s ease 1.65s backwards; }
+  .js #proof-intake.is-visible .pf-ripple { animation: pfRipple .6s ease-out 1.62s; }
+
+  /* --- 02 --- */
+  .js #proof-response .pf-prog { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-response.is-visible .pf-prog { animation: pfDraw .85s cubic-bezier(.3,.7,.3,1) forwards .25s; }
+  .js #proof-response.is-visible .pf-dot--fast { animation: pfRunFast .85s cubic-bezier(.3,.7,.3,1) both .25s; }
+  .js #proof-response.is-visible .pf-dot--slow { animation: pfRunSlow 2.7s linear both .25s; }
+
+  .js #proof-response .pf-booked { opacity: 0; transform: scale(.9); }
+  .js #proof-response.is-visible .pf-booked { animation: pfPopIn .38s cubic-bezier(.32,.72,.35,1) forwards 1.1s; }
+
+  /* --- 03 --- */
+  .js #proof-priority .pf-fx { opacity: 0; transform: translateY(-6px); }
+  .js #proof-priority.is-visible .pf-fx {
+    animation: pfPop .36s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(.15s + var(--i) * .16s);
+  }
+  /* The re-sort is the feature, so the top and bottom rows start swapped
+     and travel to their ranked positions. transform only — animating the
+     row heights would reflow the whole drawing. */
+  .js #proof-priority .pf-qrow--top  { transform: translateY(108px); }
+  .js #proof-priority .pf-qrow--last { transform: translateY(-108px); }
+  .js #proof-priority.is-visible .pf-qrow--top,
+  .js #proof-priority.is-visible .pf-qrow--last {
+    animation: pfSettle .7s cubic-bezier(.36,.66,.3,1) forwards .7s;
+  }
+  .js #proof-priority .pf-tick { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-priority.is-visible .pf-tick { animation: pfDraw .3s ease forwards 1.55s; }
+
+  /* --- 04 --- */
+  .js #proof-safety .pf-sim { opacity: 0; transform: translateX(-14px); }
+  .js #proof-safety.is-visible .pf-sim {
+    animation: pfDrift .5s ease-out forwards;
+    animation-delay: calc(.1s + var(--i) * .07s);
+  }
+  .js #proof-safety .pf-gate path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-safety.is-visible .pf-gate path { animation: pfDraw .5s ease forwards .15s; }
+
+  .js #proof-safety .pf-status { opacity: 0; transform: translateX(10px); }
+  .js #proof-safety.is-visible .pf-status--flag { animation: pfSlideIn .4s ease forwards .95s; }
+  .js #proof-safety.is-visible .pf-status--ok   { animation: pfSlideIn .4s ease forwards 1.25s; }
+
+  /* The beat of nothing before the real patient is the point of the whole
+     figure — it is why the delay here is so much longer than the others. */
+  .js #proof-safety .pf-real { opacity: 0; }
+  .js #proof-safety.is-visible .pf-real { animation: pfFade .5s ease forwards 2.05s; }
+}
+
+@keyframes pfDraw    { to { stroke-dashoffset: 0; } }
+@keyframes pfSlideIn { to { opacity: 1; transform: none; } }
+@keyframes pfSlideDim{ to { opacity: .4; transform: none; } }
+@keyframes pfPop     { to { opacity: 1; transform: none; } }
+@keyframes pfPopIn   { to { opacity: 1; transform: scale(1); } }
+@keyframes pfFade    { to { opacity: 1; } }
+@keyframes pfSettle  { to { transform: translateY(0); } }
+@keyframes pfDrift   { to { opacity: 1; transform: none; } }
+@keyframes pfRunFast { from { transform: translateX(0); } to { transform: translateX(124px); } }
+@keyframes pfRunSlow { from { transform: translateX(0); } to { transform: translateX(372px); } }
+@keyframes pfRipple  { from { opacity: .7; transform: scale(.4); } to { opacity: 0; transform: scale(2.6); } }
+@keyframes pfTap     { from { fill: #fff; stroke: rgba(36,31,27,.16); } }
+@keyframes pfTapText { from { fill: var(--ink); } }
+
 /* ---------- safety + compliance ---------- */
 .section--compliance { background: var(--cream-2); }
 .section--compliance .section__head { margin-bottom: 44px; }
@@ -468,6 +696,13 @@ img, video { display: block; max-width: 100%; }
   .hero { min-height: 0; padding: 40px 0 48px; }
   .hero__inner { grid-template-columns: 1fr; gap: 36px; }
   .hero__title { font-size: clamp(38px, 9vw, 62px); }
+
+  /* Stacked, the alternating placement has nothing to alternate across,
+     and the explicit grid-column would fight the single-column template. */
+  .proof__row { grid-template-columns: 1fr; gap: 28px; }
+  .proof__row--flip .proof__copy { grid-column: 1; }
+  .proof__row--flip .proof__fig  { grid-column: 1; grid-row: auto; }
+  .proof__text { max-width: none; }
 
   .safety { grid-template-columns: 1fr; gap: 22px; padding: 26px 24px; }
   .badges { grid-template-columns: 1fr; }
