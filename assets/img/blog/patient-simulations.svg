@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Three cohort panels of simulated patients, with two cases flagged in one segment">
+  <defs>
+    <linearGradient id="ps-ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1e1"/>
+      <stop offset="46%" stop-color="#ffdfbd"/>
+      <stop offset="100%" stop-color="#f7b47c"/>
+    </linearGradient>
+    <radialGradient id="ps-petrol" cx="97%" cy="103%" r="72%">
+      <stop offset="0" stop-color="#1d3a44" stop-opacity=".38"/>
+      <stop offset="70%" stop-color="#1d3a44" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ps-bloom" cx="16%" cy="6%" r="62%">
+      <stop offset="0" stop-color="#fff9f0"/>
+      <stop offset="100%" stop-color="#fff9f0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="ps-mesh" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#1d3a44" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#ps-ground)"/>
+  <rect width="1200" height="675" fill="url(#ps-bloom)"/>
+  <rect width="1200" height="675" fill="url(#ps-mesh)"/>
+  <rect width="1200" height="675" fill="url(#ps-petrol)"/>
+
+  <rect x="150" y="168" width="290" height="340" rx="22" fill="#ffffff" fill-opacity=".62" stroke="#22545a" stroke-opacity=".22"/>
+  <rect x="455" y="168" width="290" height="340" rx="22" fill="#ffffff" fill-opacity=".62" stroke="#22545a" stroke-opacity=".22"/>
+  <rect x="760" y="168" width="290" height="340" rx="22" fill="#142129" fill-opacity=".9" stroke="#6094a5" stroke-opacity=".35"/>
+
+  <g fill="#2b6a70" fill-opacity=".5">
+    <circle cx="196" cy="222" r="11"/><circle cx="246" cy="222" r="11"/><circle cx="296" cy="222" r="11"/><circle cx="346" cy="222" r="11"/><circle cx="396" cy="222" r="11"/>
+    <circle cx="196" cy="278" r="11"/><circle cx="246" cy="278" r="11"/><circle cx="296" cy="278" r="11"/><circle cx="346" cy="278" r="11"/><circle cx="396" cy="278" r="11"/>
+    <circle cx="196" cy="334" r="11"/><circle cx="246" cy="334" r="11"/><circle cx="296" cy="334" r="11"/><circle cx="346" cy="334" r="11"/><circle cx="396" cy="334" r="11"/>
+    <circle cx="196" cy="390" r="11"/><circle cx="246" cy="390" r="11"/><circle cx="296" cy="390" r="11"/><circle cx="346" cy="390" r="11"/><circle cx="396" cy="390" r="11"/>
+    <circle cx="196" cy="446" r="11"/><circle cx="246" cy="446" r="11"/><circle cx="296" cy="446" r="11"/><circle cx="346" cy="446" r="11"/><circle cx="396" cy="446" r="11"/>
+  </g>
+
+  <g fill="#2b6a70" fill-opacity=".5">
+    <circle cx="501" cy="222" r="11"/><circle cx="551" cy="222" r="11"/><circle cx="601" cy="222" r="11"/><circle cx="651" cy="222" r="11"/><circle cx="701" cy="222" r="11"/>
+    <circle cx="501" cy="278" r="11"/><circle cx="551" cy="278" r="11"/><circle cx="651" cy="278" r="11"/><circle cx="701" cy="278" r="11"/>
+    <circle cx="501" cy="334" r="11"/><circle cx="551" cy="334" r="11"/><circle cx="601" cy="334" r="11"/><circle cx="651" cy="334" r="11"/><circle cx="701" cy="334" r="11"/>
+    <circle cx="501" cy="390" r="11"/><circle cx="601" cy="390" r="11"/><circle cx="651" cy="390" r="11"/><circle cx="701" cy="390" r="11"/>
+    <circle cx="501" cy="446" r="11"/><circle cx="551" cy="446" r="11"/><circle cx="601" cy="446" r="11"/><circle cx="651" cy="446" r="11"/><circle cx="701" cy="446" r="11"/>
+  </g>
+  <g fill="#e8762f">
+    <circle cx="601" cy="278" r="15"/>
+    <circle cx="551" cy="390" r="15"/>
+  </g>
+
+  <g fill="#dcebee" fill-opacity=".55">
+    <circle cx="806" cy="222" r="11"/><circle cx="856" cy="222" r="11"/><circle cx="906" cy="222" r="11"/><circle cx="956" cy="222" r="11"/><circle cx="1006" cy="222" r="11"/>
+    <circle cx="806" cy="278" r="11"/><circle cx="856" cy="278" r="11"/><circle cx="906" cy="278" r="11"/><circle cx="956" cy="278" r="11"/><circle cx="1006" cy="278" r="11"/>
+    <circle cx="806" cy="334" r="11"/><circle cx="856" cy="334" r="11"/><circle cx="906" cy="334" r="11"/><circle cx="956" cy="334" r="11"/><circle cx="1006" cy="334" r="11"/>
+    <circle cx="806" cy="390" r="11"/><circle cx="856" cy="390" r="11"/><circle cx="906" cy="390" r="11"/><circle cx="956" cy="390" r="11"/><circle cx="1006" cy="390" r="11"/>
+    <circle cx="806" cy="446" r="11"/><circle cx="856" cy="446" r="11"/><circle cx="906" cy="446" r="11"/><circle cx="956" cy="446" r="11"/><circle cx="1006" cy="446" r="11"/>
+  </g>
+</svg>

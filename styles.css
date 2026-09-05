@@ -696,6 +696,261 @@ img, video { display: block; max-width: 100%; }
 .footer__nav a:hover { color: var(--ink); }
 .footer__legal { flex-basis: 100%; font-size: 13px; color: var(--ink-soft); }
 
+/* ============================================================
+   Blog — index + article
+   Shares the landing page's ground (cream, amber, petrol) but
+   drops to a reading measure: the index is a card grid at the
+   full container width, the article is a single column with the
+   furniture hung off it.
+   ============================================================ */
+
+/* Inline padding comes from .container, which this shares a element with. */
+.blog { padding-block: clamp(48px, 7vw, 88px) clamp(64px, 8vw, 104px); }
+
+.blog__empty {
+  max-width: 620px; margin-inline: auto; padding: 80px 0;
+  text-align: center; color: var(--ink-soft);
+}
+.blog__empty .blog__title { margin-bottom: 12px; }
+.blog__empty .btn { margin-top: 20px; }
+
+/* ---------- index head ---------- */
+.blog__head { max-width: 720px; margin-bottom: clamp(36px, 5vw, 56px); }
+.blog__head .eyebrow { margin-bottom: 14px; }
+.blog__title { font-size: clamp(34px, 5vw, 52px); letter-spacing: -.03em; }
+.blog__lede {
+  margin-top: 16px; max-width: 60ch;
+  font-size: clamp(17px, 1.5vw, 19px); color: var(--ink-soft);
+}
+
+/* ---------- cards ---------- */
+.postlist { display: grid; gap: 28px; }
+.postlist--lead { margin-bottom: 28px; }
+/* auto-fit, not auto-fill: with two posts left after the lead card, the
+   third track collapses and the pair widens to fill the row instead of
+   leaving a hole where a post is not yet written. */
+.postlist--grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+.postcard {
+  display: flex; flex-direction: column; height: 100%;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.postcard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(36,31,27,.16); }
+
+/* The thumbnail is the only art on the card, so it gets a fixed 16:9 box
+   rather than whatever aspect the file happens to be — three posts side by
+   side have to line up on the title, not on the image. */
+.postcard__thumb {
+  display: block; position: relative; overflow: hidden;
+  aspect-ratio: 16 / 9; background: var(--cream-2);
+  border-bottom: 1px solid var(--line);
+}
+.postcard__thumb img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .35s ease;
+}
+.postcard:hover .postcard__thumb img { transform: scale(1.02); }
+
+.postcard__body {
+  display: flex; flex-direction: column; flex: 1;
+  padding: 24px 26px 26px;
+}
+.postcard__title {
+  margin-top: 10px; font-size: 21px; letter-spacing: -.022em; line-height: 1.24;
+}
+.postcard__excerpt {
+  margin-top: 10px; color: var(--ink-soft); font-size: 15.5px; line-height: 1.62;
+}
+.postcard__more {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: auto; padding-top: 18px;
+  font-size: 14.5px; font-weight: 600; color: var(--teal);
+}
+.postcard__more svg { transition: transform .2s ease; }
+.postcard:hover .postcard__more svg { transform: translateX(3px); }
+
+/* The newest post, given the whole row: image on the left, copy on the
+   right, and one size up on the title. Same markup as the grid cards —
+   only the axis and the type scale change. */
+.postcard--lead { flex-direction: row; align-items: stretch; }
+.postcard--lead .postcard__thumb {
+  flex: 0 0 52%; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid var(--line);
+}
+.postcard--lead .postcard__body { padding: clamp(28px, 3.4vw, 44px); justify-content: center; }
+.postcard--lead .postcard__title { font-size: clamp(25px, 2.9vw, 34px); }
+.postcard--lead .postcard__excerpt { font-size: 16.5px; max-width: 44ch; }
+.postcard--lead .postcard__more { margin-top: 0; padding-top: 22px; }
+
+/* ---------- meta row ---------- */
+.post__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--ink-soft);
+}
+.post__tag {
+  padding: 4px 11px; border-radius: 999px;
+  background: var(--sage); color: var(--teal-deep);
+  font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+}
+.post__meta > * + *::before {
+  content: "·"; margin-right: 10px; color: rgba(36,31,27,.28);
+}
+
+/* ---------- article ---------- */
+.post { max-width: 760px; margin-inline: auto; }
+
+.post__back {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-bottom: 30px; font-size: 14.5px; font-weight: 600; color: var(--ink-soft);
+  transition: color .15s ease;
+}
+.post__back:hover { color: var(--teal); }
+.post__back svg { transition: transform .2s ease; }
+.post__back:hover svg { transform: translateX(-3px); }
+
+.post__head { margin-bottom: 30px; }
+.post__title {
+  margin-top: 16px;
+  font-size: clamp(32px, 4.6vw, 48px); letter-spacing: -.032em; line-height: 1.1;
+}
+.post__dek {
+  margin-top: 18px; max-width: 58ch;
+  font-size: clamp(18px, 1.7vw, 20px); line-height: 1.55; color: var(--ink-soft);
+}
+
+.post__cover {
+  margin: 0 0 clamp(32px, 4vw, 48px);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.post__cover img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* ---------- article body ---------- */
+.post__body { font-size: 18px; line-height: 1.75; }
+.post__body > * + * { margin-top: 1.15em; }
+
+.post__body h2 {
+  margin-top: 2em; font-size: clamp(23px, 2.6vw, 28px); letter-spacing: -.025em;
+  line-height: 1.22; scroll-margin-top: 96px;
+}
+.post__body h3 { margin-top: 1.7em; font-size: 20px; letter-spacing: -.018em; }
+.post__body h2 + *, .post__body h3 + * { margin-top: .7em; }
+
+.post__body strong { font-weight: 600; color: var(--ink); }
+
+.post__body a {
+  color: var(--teal-deep); font-weight: 500;
+  text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 3px; text-decoration-color: rgba(43,106,112,.35);
+  transition: text-decoration-color .15s ease;
+}
+.post__body a:hover { text-decoration-color: var(--teal); }
+
+.post__body ol { padding-left: 1.35em; list-style: decimal; }
+.post__body ul { list-style: none; padding-left: 0; }
+.post__body ul li { position: relative; padding-left: 1.5em; }
+.post__body ul li::before {
+  content: ""; position: absolute; left: .35em; top: .72em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+}
+.post__body li + li { margin-top: .5em; }
+.post__body li::marker { color: var(--ink-soft); font-weight: 600; }
+
+.post__body blockquote {
+  margin-inline: 0; padding: 4px 0 4px 26px;
+  border-left: 3px solid var(--amber);
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 23px; line-height: 1.45; letter-spacing: -.01em;
+}
+.post__body blockquote p { margin: 0; }
+
+.post__body code {
+  padding: 2px 6px; border-radius: 6px;
+  background: var(--cream-2); border: 1px solid var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em;
+}
+
+.post__body hr {
+  margin: 2.4em 0; border: 0; height: 1px;
+  background: linear-gradient(to right, var(--line), rgba(36,31,27,.03));
+}
+
+/* Inline illustrations. These break the measure slightly on wide screens —
+   the diagrams are doing part of the arguing, so they get to be a beat in
+   the page rather than an inset. The caption is the only text in the frame;
+   the art itself carries no labels. */
+.post__figure {
+  margin: 2.2em 0;
+}
+.post__figure img {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.post__figure figcaption {
+  margin-top: 14px; padding-inline: 2px;
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-soft);
+}
+.post__body > .post__figure + * { margin-top: 2.2em; }
+
+@media (min-width: 1040px) {
+  .post__figure { margin-inline: -56px; }
+  .post__figure figcaption { padding-inline: 56px; }
+}
+
+/* The citation line under a question heading. Small, uppercase, amber —
+   it reads as an attribution rather than as the first sentence of the
+   answer, which is the whole reason it is not just a paragraph. */
+.post__source {
+  margin-top: .55em;
+  font-size: 12.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--amber-deep);
+}
+.post__body h2 + .post__source { margin-top: .8em; }
+
+/* Where the essay stops reporting and says what we did. Teal side, tinted
+   ground — deliberately the clinical half of the palette, since these are
+   the product commitments rather than the research. */
+.callout {
+  margin-top: 1.6em; padding: 22px 26px;
+  background: var(--sage); border-left: 3px solid var(--teal);
+  border-radius: 4px var(--radius) var(--radius) 4px;
+  font-size: 17px;
+}
+.callout > * + * { margin-top: .8em; }
+.callout p { line-height: 1.65; }
+.callout__label {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--teal-deep);
+}
+.callout__label + p { margin-top: .5em; }
+
+/* ---------- blog responsive ---------- */
+@media (max-width: 940px) {
+  .postcard--lead { flex-direction: column; }
+  .postcard--lead .postcard__thumb {
+    flex: none; aspect-ratio: 16 / 9;
+    border-right: 0; border-bottom: 1px solid var(--line);
+  }
+  .postcard--lead .postcard__more { margin-top: auto; }
+}
+
+@media (max-width: 640px) {
+  .postlist--grid { grid-template-columns: 1fr; }
+  .postcard__body { padding: 20px 22px 22px; }
+  .post__body { font-size: 17px; }
+  .post__body blockquote { font-size: 21px; padding-left: 20px; }
+  .post__figure figcaption { font-size: 13.5px; }
+  .callout { padding: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .postcard, .postcard__thumb img, .postcard__more svg, .post__back svg { transition: none; }
+  .postcard:hover { transform: none; }
+  .postcard:hover .postcard__thumb img { transform: none; }
+}
+
 /* ---------- reveal on scroll (only when JS can undo it) ---------- */
 .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .js .reveal.is-visible { opacity: 1; transform: none; }
