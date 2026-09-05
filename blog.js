@@ -26,9 +26,20 @@
 (function () {
   'use strict';
 
-  var INDEX = 'content/posts.json';
-  var DIR = 'content/posts/';
-  var FALLBACK_IMG = 'assets/img/blog/five-lessons.svg';
+  /* This file runs from two places: blog.html at the site root, and the
+     generated posts/<slug>.html one directory down. The generated page states
+     its own depth in <meta name="site-base">, so every path below is written
+     once and resolves from either. Root pages have no such tag and get ''. */
+  function metaContent(name) {
+    var el = document.querySelector('meta[name="' + name + '"]');
+    return el ? el.getAttribute('content') : null;
+  }
+
+  var BASE = metaContent('site-base') || '';
+
+  var INDEX = BASE + 'content/posts.json';
+  var DIR = BASE + 'content/posts/';
+  var FALLBACK_IMG = BASE + 'assets/img/blog/five-lessons.svg';
 
   /* ---------- markdown ---------- */
 
@@ -194,7 +205,8 @@
   // as a URL.
   function imageOf(post) {
     var src = post.meta.image;
-    return src && safeHref(src) ? src : FALLBACK_IMG;
+    if (!src || !safeHref(src)) return FALLBACK_IMG;
+    return /^https?:\/\//i.test(src) ? src : BASE + src;
   }
 
   function setMeta(selector, attr, value) {
@@ -268,7 +280,9 @@
     '<path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg>';
 
   function card(post, variant) {
-    var href = 'blog.html?post=' + encodeURIComponent(post.slug);
+    // The generated page, not blog.html?post=, so that sharing a card's link
+    // gives a preview carrying that post's own headline.
+    var href = BASE + 'posts/' + encodeURIComponent(post.slug) + '.html';
     var cls = 'postcard' + (variant ? ' postcard--' + variant : '');
     return '<li class="postlist__item' + (variant ? ' postlist__item--' + variant : '') + '">' +
       '<a class="' + cls + '" href="' + href + '">' +
@@ -313,6 +327,11 @@
     var title = post.meta.title || post.slug;
     document.title = title + ' — Vital';
 
+    /* These are for the browser — the tab title, and anything reading the DOM
+       after load. They are NOT what produces a link preview: crawlers never
+       run this file. The shareable tags are baked into posts/<slug>.html by
+       tools/build.mjs. Kept because blog.html?post= is still a valid URL and
+       should still retitle itself. */
     if (post.meta.excerpt) {
       setMeta('meta[name="description"]', 'content', post.meta.excerpt);
       setMeta('meta[property="og:description"]', 'content', post.meta.excerpt);
@@ -324,7 +343,7 @@
 
     root.innerHTML =
       '<article class="post">' +
-        '<a class="post__back" href="blog.html">' +
+        '<a class="post__back" href="' + BASE + 'blog.html">' +
           '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" ' +
             'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
             '<path d="M13 8H4M7.5 4.5 4 8l3.5 3.5"/></svg>All writing</a>' +
@@ -347,7 +366,9 @@
       '</div>';
   }
 
-  var slug = new URLSearchParams(location.search).get('post');
+  /* A generated page names its post in the document; blog.html?post=<slug>
+     still works, so links shared before those pages existed keep resolving. */
+  var slug = metaContent('post-slug') || new URLSearchParams(location.search).get('post');
 
   if (slug) {
     loadPost(slug).then(renderArticle).catch(function (e) {

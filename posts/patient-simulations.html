@@ -3,31 +3,31 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- share:start — everything between these markers is replaced per post by
-     tools/build.mjs when it writes posts/<slug>.html. Link previews are read
-     by crawlers that never run JavaScript, so blog.js rewriting these at
-     runtime is invisible to WhatsApp, Slack and the rest; the generated page
-     is what makes a shared post link show its own headline. Edit the markers
-     or this block by hand, then re-run the build. -->
-<title>Writing — Vital</title>
-<meta name="description" content="Method notes from the team building Vital: how intake branching works, how we simulate patients before release, and what we will not claim." />
-<link rel="canonical" href="https://danielpl09.github.io/vital-landing/blog.html" />
+<title>We test on a thousand patients who don't exist — Vital</title>
+<meta name="description" content="The unsafe way to learn how an assistant handles a difficult patient is to let it meet one. So before a build reaches a clinic, it meets a population built from published national statistics." />
+<link rel="canonical" href="https://danielpl09.github.io/vital-landing/posts/patient-simulations.html" />
 <meta property="og:site_name" content="Vital" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://danielpl09.github.io/vital-landing/blog.html" />
-<meta property="og:title" content="Writing — Vital" />
-<meta property="og:description" content="Method notes from the team building Vital." />
-<meta property="og:image" content="https://danielpl09.github.io/vital-landing/assets/img/blog/og/index.png" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://danielpl09.github.io/vital-landing/posts/patient-simulations.html" />
+<meta property="og:title" content="We test on a thousand patients who don't exist" />
+<meta property="og:description" content="The unsafe way to learn how an assistant handles a difficult patient is to let it meet one. So before a build reaches a clinic, it meets a population built from published national statistics." />
+<meta property="og:image" content="https://danielpl09.github.io/vital-landing/assets/img/blog/og/patient-simulations.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content="We test on a thousand patients who don't exist" />
+<meta property="article:published_time" content="2026-08-30" />
 <meta name="twitter:card" content="summary_large_image" />
-<!-- share:end -->
+<meta name="twitter:title" content="We test on a thousand patients who don't exist" />
+<meta name="twitter:description" content="The unsafe way to learn how an assistant handles a difficult patient is to let it meet one. So before a build reaches a clinic, it meets a population built from published national statistics." />
+<meta name="twitter:image" content="https://danielpl09.github.io/vital-landing/assets/img/blog/og/patient-simulations.png" />
+<meta name="site-base" content="../" />
+<meta name="post-slug" content="patient-simulations" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8762F'/><path d='M9 12h4l3 8 3-8h4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="../styles.css" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -36,7 +36,7 @@
 
 <header class="site-header" id="siteHeader">
   <div class="container header__inner">
-    <a class="brand" href="index.html" aria-label="Vital home">
+    <a class="brand" href="../index.html" aria-label="Vital home">
       <span class="brand__mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M9 12h4l3 8 3-8h4" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
@@ -44,11 +44,11 @@
     </a>
 
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="index.html#features">Features</a>
-      <a href="index.html#safety">Safety</a>
-      <a href="index.html#compliance">Compliance</a>
-      <a href="blog.html" aria-current="page">Blog</a>
-      <a class="btn btn--primary btn--sm nav__cta" href="index.html#demo">Book a demo</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#safety">Safety</a>
+      <a href="../index.html#compliance">Compliance</a>
+      <a href="../blog.html" aria-current="page">Blog</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="../index.html#demo">Book a demo</a>
     </nav>
 
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
@@ -68,7 +68,7 @@
     <div class="container cta__inner">
       <h2 class="cta__title">See it on your own protocols</h2>
       <p class="cta__text">Twenty minutes, with someone who knows dietetics.</p>
-      <a class="btn btn--primary btn--lg" href="index.html#demo">Book a demo</a>
+      <a class="btn btn--primary btn--lg" href="../index.html#demo">Book a demo</a>
     </div>
   </section>
 </main>
@@ -77,20 +77,20 @@
   <div class="container footer__inner">
     <p class="footer__brand">Vital</p>
     <nav class="footer__nav" aria-label="Footer">
-      <a href="index.html#features">Features</a>
-      <a href="index.html#safety">Safety</a>
-      <a href="index.html#compliance">Compliance</a>
-      <a href="blog.html">Blog</a>
-      <a href="index.html#demo">Book a demo</a>
+      <a href="../index.html#features">Features</a>
+      <a href="../index.html#safety">Safety</a>
+      <a href="../index.html#compliance">Compliance</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../index.html#demo">Book a demo</a>
     </nav>
     <p class="footer__legal">© <span id="year">2026</span> Vital Health Software. Not a medical device. Clinical decisions stay with your dietitians.</p>
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script src="../main.js"></script>
 <!-- Versioned so a browser holding an older copy picks up renderer changes.
      Bump on any edit to blog.js that posts depend on — the post markdown is
      already fetched with no-cache, but the renderer itself was not. -->
-<script src="blog.js?v=3"></script>
+<script src="../blog.js?v=3"></script>
 </body>
 </html>

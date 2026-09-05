@@ -2,3 +2,7 @@
 Thumbs.db
 node_modules/
 *.log
+
+# build-time only; the site ships no dependencies
+tools/node_modules/
+tools/package-lock.json

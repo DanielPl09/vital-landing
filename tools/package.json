@@ -1,0 +1,12 @@
+{
+  "name": "vital-landing-tools",
+  "private": true,
+  "type": "module",
+  "description": "Build-time only. The site itself still ships zero dependencies — nothing in here is served.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.4"
+  }
+}
