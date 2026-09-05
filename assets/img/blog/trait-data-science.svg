@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Scattered raw data points enter a data-science agent, come out as one clean trend, feed the coach and the domain expert, pass the orchestrator, and the measured result steps up">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Two panels. Left: a coach and a domain expert above a short bar. Right: the same two plus a data-science agent above a much taller bar.">
   <defs>
     <linearGradient id="ds-ground" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#fff1e1"/>
@@ -23,65 +23,53 @@
   <rect width="1200" height="675" fill="url(#ds-mesh)"/>
   <rect width="1200" height="675" fill="url(#ds-petrol)"/>
 
-  <!-- raw wearable points: no story yet -->
-  <g fill="#2b6a70" fill-opacity=".5">
-    <circle cx="82" cy="300" r="6"/><circle cx="118" cy="372" r="6"/><circle cx="96" cy="410" r="6"/>
-    <circle cx="140" cy="286" r="6"/><circle cx="160" cy="336" r="6"/><circle cx="108" cy="330" r="6"/>
-    <circle cx="176" cy="392" r="6"/><circle cx="136" cy="356" r="6"/><circle cx="188" cy="270" r="6"/>
-    <circle cx="74" cy="352" r="6"/><circle cx="166" cy="304" r="6"/><circle cx="122" cy="262" r="6"/>
-    <circle cx="150" cy="420" r="6"/><circle cx="196" cy="346" r="6"/>
-  </g>
-  <path d="M206 338H258" fill="none" stroke="#22545a" stroke-opacity=".32" stroke-width="2.8" stroke-linecap="round"/>
+  <rect x="100" y="110" width="460" height="460" rx="26" fill="#ffffff" fill-opacity=".44" stroke="#22545a" stroke-opacity=".2" stroke-width="1.5"/>
+  <rect x="640" y="110" width="460" height="460" rx="26" fill="#ffffff" fill-opacity=".78" stroke="#c8551c" stroke-opacity=".38" stroke-width="1.8"/>
 
-  <!-- the third seat, plugged in -->
-  <circle cx="310" cy="338" r="46" fill="#e8762f"/>
-  <circle cx="310" cy="338" r="58" fill="none" stroke="#c8551c" stroke-opacity=".5" stroke-width="2" stroke-dasharray="7 8"/>
-  <path d="M296 320h28l-17 18 17 18h-28" fill="none" stroke="#fff9f0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <path d="M368 338H408" fill="none" stroke="#c8551c" stroke-opacity=".6" stroke-width="3.2" stroke-linecap="round"/>
-
-  <!-- the same points, now one coherent story -->
-  <rect x="410" y="296" width="100" height="84" rx="14" fill="#ffffff" fill-opacity=".86" stroke="#22545a" stroke-opacity=".28" stroke-width="1.5"/>
-  <path d="M428 362l20-18 18 8 26-36" fill="none" stroke="#2b6a70" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
-
-  <!-- reusable context for the other two, and straight through to the gate -->
-  <g fill="none" stroke="#c8551c" stroke-opacity=".55" stroke-width="3" stroke-linecap="round">
-    <path d="M510 338C560 338 580 210 616 210"/>
-    <path d="M510 338C560 338 580 466 616 466"/>
-    <path d="M510 338H790"/>
-  </g>
-  <g fill="none" stroke="#22545a" stroke-opacity=".32" stroke-width="2.8" stroke-linecap="round">
-    <path d="M704 210C750 210 760 250 790 250"/>
-    <path d="M704 466C750 466 760 426 790 426"/>
-  </g>
-
+  <!-- two obvious seats -->
   <g>
-    <circle cx="660" cy="210" r="44" fill="#ffffff" fill-opacity=".84"/>
-    <circle cx="660" cy="210" r="44" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
-    <path d="M640 192h40a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8h-22l-10 8v-8h-8a8 8 0 0 1-8-8v-14a8 8 0 0 1 8-8z"
-          fill="none" stroke="#2b6a70" stroke-width="3.1" stroke-linejoin="round"/>
+    <circle cx="250" cy="215" r="52" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="250" cy="215" r="52" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M226 191h48a10 10 0 0 1 10 10v18a10 10 0 0 1-10 10h-26l-12 10v-10h-10a10 10 0 0 1-10-10v-18a10 10 0 0 1 10-10z"
+          fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linejoin="round"/>
   </g>
   <g>
-    <circle cx="660" cy="466" r="44" fill="#ffffff" fill-opacity=".84"/>
-    <circle cx="660" cy="466" r="44" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
-    <g fill="none" stroke="#2b6a70" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M660 453c-5-5-14-6-20-5v31c6-1 15 0 20 5 5-5 14-6 20-5v-31c-6-1-15 0-20 5z"/>
-      <path d="M660 453v31"/>
+    <circle cx="410" cy="215" r="52" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="410" cy="215" r="52" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <g fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M410 202c-5-5-14-6-20-5v31c6-1 15 0 20 5 5-5 14-6 20-5v-31c-6-1-15 0-20 5z"/>
+      <path d="M410 202v31"/>
     </g>
   </g>
 
-  <!-- orchestrator: nothing reaches the person until it has been through here -->
-  <rect x="790" y="190" width="44" height="296" rx="22" fill="#142129"/>
-  <rect x="790" y="190" width="44" height="296" rx="22" fill="none" stroke="#6094a5" stroke-opacity=".45" stroke-width="1.5"/>
-  <path d="M812 226v224" fill="none" stroke="#6094a5" stroke-opacity=".5" stroke-width="2" stroke-dasharray="4 10" stroke-linecap="round"/>
+  <path d="M160 505H500" fill="none" stroke="#22545a" stroke-opacity=".28" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="280" y="365" width="100" height="140" rx="8" fill="#2b6a70" fill-opacity=".32"/>
 
-  <!-- the orchestrated answer, laid down as the measured baseline -->
-  <path d="M834 338C870 338 880 520 910 520H1120" fill="none" stroke="#2b6a70" stroke-width="4.5" stroke-linecap="round"/>
-
-  <rect x="930" y="380" width="70" height="140" rx="9" fill="#2b6a70" fill-opacity=".32"/>
-  <rect x="1020" y="323" width="70" height="197" rx="9" fill="#e8762f"/>
-  <path d="M930 380H1100" fill="none" stroke="#22545a" stroke-opacity=".28" stroke-width="2" stroke-dasharray="7 9" stroke-linecap="round"/>
-  <g fill="none" stroke="#c8551c" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1112 378v-46M1102 342l10-10 10 10"/>
+  <!-- the same two, plus the seat you would not have guessed -->
+  <g>
+    <circle cx="730" cy="215" r="52" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="730" cy="215" r="52" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M706 191h48a10 10 0 0 1 10 10v18a10 10 0 0 1-10 10h-26l-12 10v-10h-10a10 10 0 0 1-10-10v-18a10 10 0 0 1 10-10z"
+          fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linejoin="round"/>
   </g>
+  <g>
+    <circle cx="870" cy="215" r="52" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="870" cy="215" r="52" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <g fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M870 202c-5-5-14-6-20-5v31c6-1 15 0 20 5 5-5 14-6 20-5v-31c-6-1-15 0-20 5z"/>
+      <path d="M870 202v31"/>
+    </g>
+  </g>
+  <g>
+    <circle cx="1010" cy="215" r="52" fill="#e8762f"/>
+    <circle cx="1010" cy="215" r="63" fill="none" stroke="#c8551c" stroke-opacity=".5" stroke-width="2" stroke-dasharray="7 8"/>
+    <g fill="none" stroke="#fff9f0" stroke-width="4.2" stroke-linecap="round">
+      <path d="M994 229v-18M1010 229v-32M1026 229v-11"/>
+    </g>
+    <circle cx="1048" cy="180" r="15" fill="#c8551c"/>
+    <path d="M1041 180h14M1048 173v14" fill="none" stroke="#fff9f0" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <path d="M700 505H1040" fill="none" stroke="#22545a" stroke-opacity=".28" stroke-width="2.5" stroke-linecap="round"/>
+  <rect x="820" y="308" width="100" height="197" rx="8" fill="#e8762f"/>
 </svg>

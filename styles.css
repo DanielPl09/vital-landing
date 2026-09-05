@@ -876,10 +876,10 @@ img, video { display: block; max-width: 100%; }
   background: linear-gradient(to right, var(--line), rgba(36,31,27,.03));
 }
 
-/* Inline illustrations. These break the measure slightly on wide screens —
-   the diagrams are doing part of the arguing, so they get to be a beat in
-   the page rather than an inset. The caption is the only text in the frame;
-   the art itself carries no labels. */
+/* Inline illustrations. Flush with the text column, both edges — the diagram
+   sits inside the argument rather than beside it, so it lines up with the
+   prose above and below it. The caption is the only text in the frame; the
+   art itself carries no labels. */
 .post__figure {
   margin: 2.2em 0;
 }
@@ -893,11 +893,6 @@ img, video { display: block; max-width: 100%; }
   font-size: 14.5px; line-height: 1.55; color: var(--ink-soft);
 }
 .post__body > .post__figure + * { margin-top: 2.2em; }
-
-@media (min-width: 1040px) {
-  .post__figure { margin-inline: -56px; }
-  .post__figure figcaption { padding-inline: 56px; }
-}
 
 /* The citation line under a question heading. Small, uppercase, amber —
    it reads as an attribution rather than as the first sentence of the

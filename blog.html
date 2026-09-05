@@ -78,6 +78,9 @@
 </footer>
 
 <script src="main.js"></script>
-<script src="blog.js"></script>
+<!-- Versioned so a browser holding an older copy picks up renderer changes.
+     Bump on any edit to blog.js that posts depend on — the post markdown is
+     already fetched with no-cache, but the renderer itself was not. -->
+<script src="blog.js?v=2"></script>
 </body>
 </html>

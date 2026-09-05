@@ -164,7 +164,12 @@
   /* ---------- frontmatter ---------- */
 
   function parse(text) {
-    var m = /^---\n([\s\S]*?)\n---\n?/.exec(text.replace(/^﻿/, ''));
+    // A post written on Windows — or checked out with autocrlf — arrives with
+    // CRLF. The body renderer already normalises; this has to as well, or the
+    // frontmatter block silently fails to match and the post loses its title,
+    // cover and excerpt to the fallbacks without raising anything.
+    text = text.replace(/^﻿/, '').replace(/\r\n?/g, '\n');
+    var m = /^---\n([\s\S]*?)\n---\n?/.exec(text);
     if (!m) return { meta: {}, body: text };
     var meta = {};
     m[1].split('\n').forEach(function (line) {
