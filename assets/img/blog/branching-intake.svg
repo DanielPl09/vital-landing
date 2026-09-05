@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="A decision tree where most branches are pruned and one path stays lit">
+  <defs>
+    <linearGradient id="bi-ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1e1"/>
+      <stop offset="46%" stop-color="#ffdfbd"/>
+      <stop offset="100%" stop-color="#f7b47c"/>
+    </linearGradient>
+    <radialGradient id="bi-petrol" cx="97%" cy="103%" r="72%">
+      <stop offset="0" stop-color="#1d3a44" stop-opacity=".38"/>
+      <stop offset="70%" stop-color="#1d3a44" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bi-bloom" cx="16%" cy="6%" r="62%">
+      <stop offset="0" stop-color="#fff9f0"/>
+      <stop offset="100%" stop-color="#fff9f0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="bi-mesh" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#1d3a44" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bi-ground)"/>
+  <rect width="1200" height="675" fill="url(#bi-bloom)"/>
+  <rect width="1200" height="675" fill="url(#bi-mesh)"/>
+  <rect width="1200" height="675" fill="url(#bi-petrol)"/>
+
+  <g fill="none" stroke="#22545a" stroke-opacity=".2" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 12">
+    <path d="M232 338 H352 Q382 338 382 182 Q382 152 412 152 H540"/>
+    <path d="M612 152 H720 Q750 152 750 122 H880"/>
+    <path d="M612 152 H720 Q750 152 750 182 H880"/>
+    <path d="M232 338 H352 Q382 338 382 500 Q382 530 412 530 H540"/>
+    <path d="M612 530 H720 Q750 530 750 560 H880"/>
+  </g>
+
+  <g fill="none" stroke="#2b6a70" stroke-width="4.5" stroke-linecap="round">
+    <path d="M232 338 H540"/>
+    <path d="M612 338 H720 Q750 338 750 268 Q750 238 780 238 H880"/>
+    <path d="M612 338 H720 Q750 338 750 408 Q750 438 780 438 H880"/>
+  </g>
+
+  <circle cx="190" cy="338" r="42" fill="#142129"/>
+  <circle cx="190" cy="338" r="42" fill="none" stroke="#6094a5" stroke-opacity=".45" stroke-width="1.5"/>
+  <path d="M173 331h11l6 17 6-17h11" fill="none" stroke="#dcebee" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="540" y="122" width="72" height="60" rx="14" fill="#ffffff" fill-opacity=".42" stroke="#22545a" stroke-opacity=".16" stroke-width="1.5"/>
+  <rect x="540" y="500" width="72" height="60" rx="14" fill="#ffffff" fill-opacity=".42" stroke="#22545a" stroke-opacity=".16" stroke-width="1.5"/>
+  <rect x="540" y="308" width="72" height="60" rx="14" fill="#ffffff" fill-opacity=".86" stroke="#22545a" stroke-opacity=".28" stroke-width="1.5"/>
+  <path d="M562 338h28M578 326l12 12-12 12" fill="none" stroke="#2b6a70" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="880" y="208" width="150" height="60" rx="16" fill="#e8762f"/>
+  <rect x="880" y="408" width="150" height="60" rx="16" fill="#e8762f"/>
+  <path d="M906 238h98M906 438h98" fill="none" stroke="#fff9f0" stroke-width="4" stroke-linecap="round"/>
+
+  <path d="M880 122h98M880 182h98M880 560h98" fill="none" stroke="#22545a" stroke-opacity=".18" stroke-width="4" stroke-linecap="round"/>
+</svg>

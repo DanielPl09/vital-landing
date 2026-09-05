@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="A persona carrying a hidden seed speaks vaguely; the coach asks, and asks again, until the same seed is out in the open">
+  <defs>
+    <linearGradient id="pl-ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1e1"/>
+      <stop offset="46%" stop-color="#ffdfbd"/>
+      <stop offset="100%" stop-color="#f7b47c"/>
+    </linearGradient>
+    <radialGradient id="pl-petrol" cx="97%" cy="103%" r="72%">
+      <stop offset="0" stop-color="#1d3a44" stop-opacity=".38"/>
+      <stop offset="70%" stop-color="#1d3a44" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pl-bloom" cx="16%" cy="6%" r="62%">
+      <stop offset="0" stop-color="#fff9f0"/>
+      <stop offset="100%" stop-color="#fff9f0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="pl-mesh" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#1d3a44" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#pl-ground)"/>
+  <rect width="1200" height="675" fill="url(#pl-bloom)"/>
+  <rect width="1200" height="675" fill="url(#pl-mesh)"/>
+  <rect width="1200" height="675" fill="url(#pl-petrol)"/>
+
+  <!-- the seed that comes out is the seed that went in -->
+  <path d="M950 268C950 176 170 176 170 268" fill="none" stroke="#c8551c" stroke-opacity=".55" stroke-width="3"
+        stroke-linecap="round" stroke-dasharray="2 11"/>
+
+  <!-- ask again: the loop runs until the barrier is out in the open -->
+  <path d="M950 408C950 486 670 486 670 404" fill="none" stroke="#22545a" stroke-opacity=".32" stroke-width="2.6"
+        stroke-linecap="round" stroke-dasharray="8 10"/>
+  <path d="M660 414l10-10 10 10" fill="none" stroke="#22545a" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g fill="none" stroke="#22545a" stroke-opacity=".34" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M236 338H360M350 328l10 10-10 10"/>
+    <path d="M474 338H608M598 328l10 10-10 10"/>
+    <path d="M724 338H878M868 328l10 10-10 10"/>
+  </g>
+
+  <circle cx="170" cy="338" r="62" fill="#142129"/>
+  <circle cx="170" cy="338" r="62" fill="none" stroke="#6094a5" stroke-opacity=".45" stroke-width="1.5"/>
+  <path d="M170 314c15 0 22 17 15 33-6 12-24 12-30 0-7-16 0-33 15-33z"
+        fill="none" stroke="#6094a5" stroke-width="3" stroke-dasharray="6 7" stroke-linejoin="round"/>
+
+  <g>
+    <circle cx="420" cy="338" r="50" fill="#ffffff" fill-opacity=".84"/>
+    <circle cx="420" cy="338" r="50" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M396 312h48a10 10 0 0 1 10 10v18a10 10 0 0 1-10 10h-28l-12 10v-10h-8a10 10 0 0 1-10-10v-18a10 10 0 0 1 10-10z"
+          fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M400 331q7-6 14 0t14 0" fill="none" stroke="#2b6a70" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <circle cx="670" cy="338" r="50" fill="#ffffff" fill-opacity=".84"/>
+    <circle cx="670" cy="338" r="50" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M659 329a11 11 0 1 1 14.7 9.2c-3.7 2.2-5.5 4.8-5.5 9.2" fill="none" stroke="#2b6a70" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="668.2" cy="356" r="3" fill="#2b6a70"/>
+  </g>
+
+  <g>
+    <circle cx="950" cy="338" r="62" fill="#e8762f"/>
+    <circle cx="950" cy="338" r="72" fill="none" stroke="#c8551c" stroke-opacity=".45" stroke-width="2"/>
+    <path d="M950 314c15 0 22 17 15 33-6 12-24 12-30 0-7-16 0-33 15-33z" fill="#fff9f0"/>
+  </g>
+</svg>

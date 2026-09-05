@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="Two routes from a client's opening line — a short one straight to advice, stopped by a bar, and a longer one through three questions that reaches it">
+  <defs>
+    <linearGradient id="at-ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1e1"/>
+      <stop offset="46%" stop-color="#ffdfbd"/>
+      <stop offset="100%" stop-color="#f7b47c"/>
+    </linearGradient>
+    <radialGradient id="at-petrol" cx="97%" cy="103%" r="72%">
+      <stop offset="0" stop-color="#1d3a44" stop-opacity=".38"/>
+      <stop offset="70%" stop-color="#1d3a44" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="at-bloom" cx="16%" cy="6%" r="62%">
+      <stop offset="0" stop-color="#fff9f0"/>
+      <stop offset="100%" stop-color="#fff9f0" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="at-mesh" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0v34" fill="none" stroke="#1d3a44" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#at-ground)"/>
+  <rect width="1200" height="675" fill="url(#at-bloom)"/>
+  <rect width="1200" height="675" fill="url(#at-mesh)"/>
+  <rect width="1200" height="675" fill="url(#at-petrol)"/>
+
+  <!-- the reflex: straight to the answer. Locked off before it gets there. -->
+  <path d="M236 316C340 240 430 186 560 186H784"
+        fill="none" stroke="#22545a" stroke-opacity=".28" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 12"/>
+  <path d="M806 146v80" fill="none" stroke="#c8551c" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- basic questioning 101: the only route that arrives -->
+  <path d="M236 360C300 430 320 482 400 482H840C900 482 920 430 920 372"
+        fill="none" stroke="#2b6a70" stroke-width="4.5" stroke-linecap="round"/>
+
+  <circle cx="190" cy="338" r="44" fill="#142129"/>
+  <circle cx="190" cy="338" r="44" fill="none" stroke="#6094a5" stroke-opacity=".45" stroke-width="1.5"/>
+  <path d="M168 312h44a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10h-26l-14 12v-12h-4a10 10 0 0 1-10-10v-20a10 10 0 0 1 10-10z"
+        fill="none" stroke="#dcebee" stroke-width="3.4" stroke-linejoin="round"/>
+
+  <g>
+    <circle cx="490" cy="482" r="30" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="490" cy="482" r="30" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M482 473a8 8 0 1 1 10.7 6.7c-2.7 1.6-4 3.5-4 6.7" fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="488.7" cy="495" r="2.4" fill="#2b6a70"/>
+  </g>
+  <g>
+    <circle cx="620" cy="482" r="30" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="620" cy="482" r="30" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M612 473a8 8 0 1 1 10.7 6.7c-2.7 1.6-4 3.5-4 6.7" fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="618.7" cy="495" r="2.4" fill="#2b6a70"/>
+  </g>
+  <g>
+    <circle cx="750" cy="482" r="30" fill="#ffffff" fill-opacity=".9"/>
+    <circle cx="750" cy="482" r="30" fill="none" stroke="#22545a" stroke-opacity=".3" stroke-width="1.5"/>
+    <path d="M742 473a8 8 0 1 1 10.7 6.7c-2.7 1.6-4 3.5-4 6.7" fill="none" stroke="#2b6a70" stroke-width="3.2" stroke-linecap="round"/>
+    <circle cx="748.7" cy="495" r="2.4" fill="#2b6a70"/>
+  </g>
+
+  <rect x="920" y="302" width="150" height="72" rx="18" fill="#e8762f"/>
+  <path d="M948 328h94M948 350h58" fill="none" stroke="#fff9f0" stroke-width="4" stroke-linecap="round"/>
+</svg>
