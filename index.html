@@ -4,11 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vital — Clinic software for dietitians</title>
-<meta name="description" content="Vital is clinic software for dietitians. It chats with your patients between visits — onboarding new ones, booking appointments, and following up on the topics you choose, from your clinic's own protocols." />
+<meta name="description" content="Vital is clinic software for dietitians: an AI chat layer that onboards patients, books appointments, and keeps them engaged between visits — steered by your clinic." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23E8762F'/><path d='M9 12h4l3 8 3-8h4' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
@@ -28,7 +28,9 @@
 
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#features">Features</a>
-      <a href="#compliance">Safety &amp; compliance</a>
+      <a href="#safety">Safety</a>
+      <a href="#compliance">Compliance</a>
+      <a href="blog.html">Blog</a>
       <a class="btn btn--primary btn--sm nav__cta" href="#demo">Book a demo</a>
     </nav>
 
@@ -40,196 +42,412 @@
 
 <main id="main">
 
-  <!-- ───────────────────────── Hero ───────────────────────── -->
+  <!-- ─────────────────────── Hero ───────────────────────
+       The whole landing is this one section: proposition on the left, the
+       product itself on the right. The features used to be a section below
+       the fold; they are the strongest thing on the page, so they are now
+       in the first screen rather than under it, and nothing is left
+       straddling the cut. -->
   <section class="hero" id="top">
     <div class="hero__bg" aria-hidden="true">
       <span class="blob blob--1"></span>
       <span class="blob blob--2"></span>
       <span class="blob blob--3"></span>
+      <span class="mesh"></span>
+      <span class="grain"></span>
     </div>
 
     <div class="container hero__inner">
       <div class="hero__copy">
         <p class="eyebrow">Clinic software for dietitians</p>
-        <h1 class="hero__title">Engaged patients, a full calendar, no extra admin.</h1>
-        <p class="hero__sub">
-          Vital chats with your patients between visits — onboarding new ones, booking their
-          appointments, and following up on the topics you choose. It works from your
-          clinic&rsquo;s own protocols, so it never goes off-script.
-        </p>
+
+        <!-- Three deliberate lines, broken as spans rather than <br> so the
+             break is structural and survives a reflow. The middle line
+             carries the whole idea, so it is the one that changes voice: an
+             editorial serif italic between two lines of tight sans. That
+             contrast is the headline's entire design — at this size a
+             single face reads as a wall. -->
+        <h1 class="hero__title">
+          <span class="hero__line">Your ultimate</span>
+          <span class="hero__line hero__line--accent">patient relationship</span>
+          <span class="hero__line">platform</span>
+        </h1>
+
+        <p class="hero__sub">Onboarding, scheduling, and engagement &mdash; always on your protocol.</p>
+
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#demo">Book a demo</a>
-          <a class="btn btn--ghost" href="#features">See how it works</a>
-        </div>
-        <p class="hero__note">
-          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5 13.5 4v4c0 3.2-2.3 5.7-5.5 6.5C4.8 13.7 2.5 11.2 2.5 8V4L8 1.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="m5.8 8.1 1.6 1.6 3-3.4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          HIPAA-ready and GDPR compliant by default
-        </p>
-      </div>
-
-      <!-- Glass panel collage, echoing the product UI -->
-      <div class="hero__art" aria-hidden="true">
-        <div class="panel panel--db">
-          <p class="panel__label">Database</p>
-          <ul class="rows">
-            <li><span>Drin Name</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Jasen Alex</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Mary Ardilson</span><b class="chip">Intake</b></li>
-            <li><span>Clera Warson</span><b class="chip">Booked</b></li>
-            <li><span>Alen Marys</span><b class="chip chip--ok">Cleared</b></li>
-            <li><span>Larn Diaszer</span><b class="chip">Intake</b></li>
-          </ul>
-        </div>
-
-        <div class="panel panel--chat">
-          <div class="panel__bar">
-            <span class="avatar"></span>
-            <p class="panel__title">Chat</p>
-            <span class="dots">&#8942;</span>
-          </div>
-          <div class="thread">
-            <p class="bubble bubble--in">Hi Clara — ready to finish your intake?</p>
-            <p class="bubble bubble--out">Yes, and can I move Thursday?</p>
-            <p class="bubble bubble--in">Done. Tuesday 10:30 with Dr. Levy.</p>
-          </div>
-          <div class="composer"><span></span><i class="send"></i></div>
-        </div>
-
-        <div class="panel panel--profile">
-          <p class="panel__label">User profile</p>
-          <div class="profile__face"></div>
-          <p class="profile__name">Clara E.</p>
-          <p class="profile__meta">Sports nutrition · Week 6</p>
+          <a class="btn btn--primary btn--lg" href="#demo">Book a demo</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ───────────────────────── Features ───────────────────────── -->
-  <section class="section" id="features">
-    <div class="container">
-      <header class="section__head">
-        <p class="eyebrow">Features</p>
-        <h2 class="section__title">Three things your clinic gets on day one</h2>
-        <p class="section__sub">Built for dietitian practices — the clinic sets the protocol, Vital does the follow-through.</p>
-      </header>
+      <!-- Features, in the hero's right column. Icon-and-a-word tabs over
+           the clip they select, and one line under it — the films show the
+           product working, so a paragraph beside them is a paragraph nobody
+           reads. The detail belongs in the demo.
 
-      <!-- Vertical accordion: feature 1 open by default, the other two
-           collapse under their own sub-headers. Fully expanded and usable
-           without JS — see the .js-scoped rules in styles.css. -->
-      <div class="accordion" id="featureAccordion">
+           Without JS the rail is hidden and all three panels stack in normal
+           flow, so every feature stays reachable — the same "show
+           everything" fallback used for .reveal. Tab 0 ships selected and
+           panel 0 ships .is-active so the closed state paints on the first
+           frame; the styles hang off the .js class set inline in <head>. -->
+      <div class="hero__features" id="features">
+        <h2 class="sr-only">Features</h2>
 
-        <!-- Feature 1 — chat / patient relationship (video, loads eagerly) -->
-        <article class="accordion__item is-open" data-index="0">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-0" id="feature-trigger-0">
-              <span class="accordion__num">01</span>
-              <span class="accordion__title">The patient relationship, carried between visits</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
+        <div class="ftabs" id="featureTabs">
+          <div class="ftabs__rail" role="tablist" aria-label="Features">
+            <span class="ftabs__thumb" aria-hidden="true"></span>
+
+            <button class="ftab" type="button" role="tab" id="ftab-0"
+                    aria-controls="fpanel-0" aria-selected="true">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 12.4a7.4 7.4 0 0 1-10.7 6.6L4.5 20.2l1.2-4.2A7.4 7.4 0 1 1 20 12.4Z"/>
+                  <path d="M9 10.9h6M9 14.1h4"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Chat</span>
             </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-0" role="region" aria-labelledby="feature-trigger-0">
-            <div class="feature">
-              <div class="feature__copy">
-                <p class="feature__text">
-                  New patients are onboarded the moment they land — intake questions, history, goals,
-                  consent. From the same thread they book, move or confirm an appointment, and it
-                  lands straight in your clinic calendar. No forms to chase, no phone tag.
-                </p>
-                <ul class="ticks">
-                  <li>Guided intake and history in a conversation</li>
-                  <li>Appointment booking and rescheduling in-thread</li>
-                  <li>Every message written back to the patient record</li>
-                </ul>
-              </div>
+
+            <button class="ftab" type="button" role="tab" id="ftab-1"
+                    aria-controls="fpanel-1" aria-selected="false">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4.5" width="6.4" height="6.4" rx="1.8"/>
+                  <path d="m4.9 7.6 1.3 1.3 2.4-2.8"/>
+                  <rect x="3" y="13.1" width="6.4" height="6.4" rx="1.8"/>
+                  <path d="M12.8 7.7H21M12.8 16.3H21"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Topics</span>
+            </button>
+
+            <button class="ftab" type="button" role="tab" id="ftab-2"
+                    aria-controls="fpanel-2" aria-selected="false">
+              <span class="ftab__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3.2" y="4.8" width="17.6" height="16" rx="3"/>
+                  <path d="M3.2 9.7h17.6M8 3.2v3.2M16 3.2v3.2"/>
+                  <path d="m9.2 14.7 2 2 4-4.4"/>
+                </svg>
+              </span>
+              <span class="ftab__label">Schedule</span>
+            </button>
+          </div>
+
+          <div class="ftabs__stage">
+
+            <!-- 01 — Chat: intake answered in plain language -->
+            <div class="fpanel is-active" id="fpanel-0" role="tabpanel" aria-labelledby="ftab-0">
               <figure class="media">
                 <video
                   class="media__video"
-                  src="assets/video/chat-onboarding.mp4"
-                  poster="assets/img/chat-onboarding-poster.png"
-                  muted loop playsinline preload="metadata"
-                  aria-label="Vital chat onboarding a patient and setting an appointment"></video>
+                  data-src="assets/video/Chat_feature_video.mp4"
+                  muted loop playsinline preload="none"
+                  aria-label="A patient intake conversation filling in a structured insights panel beside it">
+                  <noscript><source src="assets/video/Chat_feature_video.mp4" type="video/mp4" /></noscript>
+                </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
+              <p class="fpanel__caption">Intake that reads like a conversation</p>
             </div>
-          </div>
-        </article>
 
-        <!-- Feature 2 — smart scheduling (video, hydrated in the background on idle) -->
-        <article class="accordion__item" data-index="1">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-1" id="feature-trigger-1">
-              <span class="accordion__num">02</span>
-              <span class="accordion__title">Smart scheduling, in one click</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-1" role="region" aria-labelledby="feature-trigger-1">
-            <div class="feature feature--flip">
-              <div class="feature__copy">
-                <p class="feature__text">
-                  When a patient is ready to book, Vital reads your real availability and
-                  recommends the best slot — the patient confirms in one tap. Reschedules and
-                  cancellations sync straight back to the calendar your clinic already runs on.
-                </p>
-                <ul class="ticks">
-                  <li>AI-recommended slots, based on your real availability and rules</li>
-                  <li>Patients confirm, move or cancel in one tap</li>
-                  <li>Two-way sync with the calendar you already use</li>
-                </ul>
-              </div>
+            <!-- 02 — Topics: the clinic sets the scope -->
+            <div class="fpanel" id="fpanel-1" role="tabpanel" aria-labelledby="ftab-1">
               <figure class="media">
+                <video
+                  class="media__video"
+                  data-src="assets/video/checklist_feature.mp4"
+                  muted loop playsinline preload="none"
+                  aria-label="Conversation topics being switched on and off in the clinic&rsquo;s question set">
+                  <noscript><source src="assets/video/checklist_feature.mp4" type="video/mp4" /></noscript>
+                </video>
+                <div class="media__tint" aria-hidden="true"></div>
+              </figure>
+              <p class="fpanel__caption">You choose what it&rsquo;s allowed to raise</p>
+            </div>
+
+            <!-- 03 — Schedule: booked in-thread, held for approval -->
+            <div class="fpanel" id="fpanel-2" role="tabpanel" aria-labelledby="ftab-2">
+              <figure class="media media--light">
                 <video
                   class="media__video"
                   data-src="assets/video/smart-scheduling.mp4"
                   poster="assets/img/smart-scheduling-poster.png"
                   muted loop playsinline preload="none"
-                  aria-label="Vital's AI Clinician view proposing and confirming appointment slots on the clinic calendar">
+                  aria-label="Vital proposing and confirming appointment slots on the clinic calendar">
                   <noscript><source src="assets/video/smart-scheduling.mp4" type="video/mp4" /></noscript>
                 </video>
                 <div class="media__tint" aria-hidden="true"></div>
               </figure>
+              <p class="fpanel__caption">The calendar fills itself &mdash; you approve it</p>
             </div>
-          </div>
-        </article>
 
-        <!-- Feature 3 — customization (video TBD: drop a <video> in place of .placeholder) -->
-        <article class="accordion__item" data-index="2">
-          <h3 class="accordion__header">
-            <button class="accordion__trigger" type="button" aria-controls="feature-body-2" id="feature-trigger-2">
-              <span class="accordion__num">03</span>
-              <span class="accordion__title">Your topics, your questions, your protocols</span>
-              <span class="accordion__chevron" aria-hidden="true"></span>
-            </button>
-          </h3>
-          <div class="accordion__body" id="feature-body-2" role="region" aria-labelledby="feature-trigger-2">
-            <div class="feature">
-              <div class="feature__copy">
-                <p class="feature__text">
-                  Sleep, sports nutrition, weight management, GI, pregnancy — you choose which
-                  topics Vital covers and exactly what it asks. Build questionnaires from your own
-                  protocols, set the tone, and decide when a patient is handed back to a dietitian.
-                </p>
-                <ul class="ticks">
-                  <li>Custom questionnaires per topic — sleep, sport, GI, pregnancy and more</li>
-                  <li>Your wording, your tone, your clinical protocol</li>
-                  <li>Assign topics per patient and per programme stage</li>
-                </ul>
-              </div>
-              <figure class="media media--placeholder" data-slot="feature-3-video">
-                <div class="placeholder">
-                  <div class="placeholder__grid">
-                    <span class="tile">Sleep</span><span class="tile">Sports</span>
-                    <span class="tile">Weight</span><span class="tile">GI</span>
-                    <span class="tile">Pregnancy</span><span class="tile tile--add">+</span>
-                  </div>
-                  <p class="placeholder__note">Video coming soon</p>
-                </div>
-              </figure>
-            </div>
           </div>
-        </article>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ───────────────────────── How it works ─────────────────────────
+       The deep dive under the hero. Four horizontal rows, alternating
+       sides: three are one patient journey — intake, response, booking —
+       and the fourth is the guarantee running underneath all three, which
+       is why it takes the teal accent instead of the amber and hands off
+       into Safety & compliance directly below.
+
+       Every figure is inline SVG driven by currentColor and the brand
+       tokens, and every one of them reads correctly frozen. The animation
+       hangs off .reveal's .is-visible class, so a row plays once as it
+       arrives and then rests. -->
+  <section class="section proof" id="how">
+    <div class="container">
+      <header class="proof__head">
+        <p class="eyebrow">How it works</p>
+        <h2 class="section__title">Between the first message and the first appointment</h2>
+      </header>
+
+      <!-- 01 — Intake. Branching happens BETWEEN assessments, never inside
+           one: a PSQI score needs all 19 of its items, so skipping items
+           would return a number the profession cannot accept. Skipping
+           whole batteries that do not apply is where the minutes come
+           from, and it is what the figure shows. -->
+      <article class="proof__row reveal" id="proof-intake">
+        <div class="proof__copy">
+          <p class="proof__n">01</p>
+          <ul class="proof__tags">
+            <li>PSQI</li>
+            <li>MEDAS</li>
+            <li>Family history</li>
+          </ul>
+          <h3 class="proof__title">Personalized intake, under three minutes</h3>
+          <p class="proof__text">
+            Vital picks which standard assessments a patient actually needs and runs those in
+            full. Most answers are a tap, not a paragraph &mdash; so intake finishes in one
+            sitting, and every score stays valid.
+          </p>
+          <a class="proof__link" href="blog.html?post=branching-intake">
+            How the branching works
+            <svg viewBox="0 0 16 16" aria-hidden="true" width="15" height="15" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/>
+            </svg>
+          </a>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="An intake branching into three standard assessments — two selected and run in full, one skipped — beside a question being answered with a single tap">
+            <rect class="pf-node" x="14" y="14" width="92" height="26" rx="13"/>
+            <text class="pf-t" x="60" y="32">Intake</text>
+
+            <path class="pf-line" pathLength="1" d="M60 40 V186"/>
+            <path class="pf-line pf-line--b" pathLength="1" d="M60 66 H96 M60 118 H96 M60 170 H96"/>
+
+            <g class="pf-batt" style="--i:0">
+              <rect x="96" y="53" width="98" height="26" rx="13"/>
+              <text class="pf-t pf-t--on" x="145" y="71">PSQI</text>
+            </g>
+            <g class="pf-batt" style="--i:1">
+              <rect x="96" y="105" width="98" height="26" rx="13"/>
+              <text class="pf-t pf-t--on" x="145" y="123">MEDAS</text>
+            </g>
+
+            <g class="pf-batt pf-batt--off">
+              <rect x="96" y="157" width="98" height="26" rx="13" stroke-dasharray="4 4"/>
+              <text class="pf-t" x="137" y="175">IPAQ</text>
+              <path class="pf-x" d="M170 165 l10 10 M180 165 l-10 10"/>
+            </g>
+            <text class="pf-cap" x="145" y="202">not run</text>
+
+            <text class="pf-cap" x="228" y="30">tap to answer</text>
+            <rect class="pf-card" x="228" y="40" width="178" height="182" rx="14"/>
+            <rect class="pf-bar" x="248" y="62" width="120" height="6" rx="3"/>
+            <rect class="pf-bar" x="248" y="78" width="84" height="6" rx="3"/>
+
+            <g class="pf-chip" style="--i:0">
+              <rect x="248" y="100" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="120">Rarely</text>
+            </g>
+            <g class="pf-chip pf-chip--tap" style="--i:1">
+              <rect x="248" y="140" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="160">Sometimes</text>
+            </g>
+            <g class="pf-chip" style="--i:2">
+              <rect x="248" y="180" width="138" height="30" rx="15"/>
+              <text class="pf-t2" x="268" y="200">Most nights</text>
+            </g>
+
+            <circle class="pf-ripple" cx="370" cy="155" r="7"/>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 02 — Response. The claim is elapsed time, so the figure is two
+           tracks on one shared span: the difference is spatial and needs
+           no statistic. A measured open-rate figure, if one ever exists,
+           drops in as a label on the amber track. -->
+      <article class="proof__row proof__row--flip reveal" id="proof-response">
+        <div class="proof__copy">
+          <p class="proof__n">02</p>
+          <h3 class="proof__title">From invite to booked, in one sitting</h3>
+          <p class="proof__text">
+            Chat reaches patients where email doesn&rsquo;t. The gap between reaching out and
+            getting an answer collapses from days to minutes &mdash; and the first session starts
+            warm instead of starting from zero.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="Two timelines on the same span: an email invite crawling across days, and a Vital chat reaching a booking within one sitting">
+            <text class="pf-cap" x="16" y="48">Email invite</text>
+            <text class="pf-cap pf-cap--end" x="404" y="48">days</text>
+            <line class="pf-track" x1="16" y1="74" x2="404" y2="74" stroke-dasharray="5 5"/>
+            <circle class="pf-seed" cx="16" cy="74" r="5"/>
+            <circle class="pf-dot pf-dot--slow" cx="16" cy="74" r="5"/>
+
+            <text class="pf-cap pf-cap--amber" x="16" y="166">Vital chat</text>
+            <line class="pf-track" x1="16" y1="192" x2="404" y2="192" stroke-dasharray="5 5"/>
+            <line class="pf-prog" pathLength="1" x1="16" y1="192" x2="140" y2="192"/>
+            <circle class="pf-seed pf-seed--amber" cx="16" cy="192" r="5"/>
+            <circle class="pf-dot pf-dot--fast" cx="16" cy="192" r="5"/>
+
+            <g class="pf-booked">
+              <rect x="158" y="176" width="104" height="32" rx="11"/>
+              <path class="pf-tick" d="m176 192 5 5 10-11"/>
+              <text class="pf-t3" x="200" y="197">booked</text>
+            </g>
+            <text class="pf-cap pf-cap--amber" x="158" y="230">one sitting</text>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 03 — Booking. Deliberately not the word "triage": that is a
+           clinical act, and the footer promises clinical decisions stay
+           with the dietitian. "A formula you can read" claims the same
+           benefit and survives a procurement review. -->
+      <article class="proof__row reveal" id="proof-priority">
+        <div class="proof__copy">
+          <p class="proof__n">03</p>
+          <h3 class="proof__title">Who to see first, and why</h3>
+          <p class="proof__text">
+            One transparent formula weighs how long someone has waited against what their intake
+            says. Tune it, or write your own &mdash; and every booking still waits on a
+            clinician&rsquo;s approval.
+          </p>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="A formula combining waiting time and clinical background into a rank, above the queue it produces">
+            <g class="pf-fx" style="--i:0">
+              <rect class="pf-node" x="14" y="14" width="124" height="32" rx="9"/>
+              <text class="pf-t" x="76" y="35">waiting time</text>
+            </g>
+            <text class="pf-plus" x="152" y="37">+</text>
+            <g class="pf-fx" style="--i:1">
+              <rect class="pf-node" x="168" y="14" width="116" height="32" rx="9"/>
+              <text class="pf-t" x="226" y="35">background</text>
+            </g>
+            <path class="pf-arrow" d="M296 30 h18 m-6 -5 l6 5 l-6 5"/>
+            <g class="pf-fx pf-fx--rank" style="--i:2">
+              <rect x="322" y="14" width="84" height="32" rx="9"/>
+              <text class="pf-t pf-t--amber" x="364" y="35">rank</text>
+            </g>
+
+            <g class="pf-qrow pf-qrow--top">
+              <rect x="14" y="88" width="392" height="44" rx="13"/>
+              <circle class="pf-pip pf-pip--hi" cx="42" cy="110" r="6"/>
+              <rect class="pf-bar" x="64" y="101" width="148" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="114" width="94" height="5" rx="2.5"/>
+              <path class="pf-tick" d="m366 110 6 6 12-14"/>
+            </g>
+            <g class="pf-qrow">
+              <rect x="14" y="144" width="392" height="40" rx="13"/>
+              <circle class="pf-pip pf-pip--mid" cx="42" cy="164" r="6"/>
+              <rect class="pf-bar" x="64" y="156" width="118" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="168" width="72" height="5" rx="2.5"/>
+            </g>
+            <g class="pf-qrow pf-qrow--last">
+              <rect x="14" y="196" width="392" height="40" rx="13"/>
+              <circle class="pf-pip" cx="42" cy="216" r="6"/>
+              <rect class="pf-bar" x="64" y="208" width="96" height="6" rx="3"/>
+              <rect class="pf-bar pf-bar--soft" x="64" y="220" width="58" height="5" rx="2.5"/>
+            </g>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- 04 — The floor. Not "you choose the topics", which the hero's
+           Topics tab already shows: this is how you know it obeys. The
+           flagged cases are the proof, so the flag is the hero beat rather
+           than an error state, and the pause before the real patient
+           arrives is doing the actual work. -->
+      <article class="proof__row proof__row--flip proof__row--floor reveal" id="proof-safety">
+        <div class="proof__copy">
+          <p class="proof__n">04</p>
+          <h3 class="proof__title">It meets a thousand patients before it meets yours</h3>
+          <p class="proof__text">
+            Every build is rehearsed against simulated patients &mdash; including the difficult
+            ones. Steering, refusals and escalation are proven there, not in your waiting room.
+          </p>
+          <a class="proof__link proof__link--floor" href="blog.html?post=patient-simulations">
+            How we build the simulations
+            <svg viewBox="0 0 16 16" aria-hidden="true" width="15" height="15" fill="none"
+                 stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/>
+            </svg>
+          </a>
+        </div>
+
+        <figure class="proof__fig">
+          <svg class="pfig" viewBox="0 0 420 250" fill="none" role="img"
+               aria-label="A field of simulated patients passing through a gate, two of them flagged and steering held, before a single real patient arrives">
+            <g class="pf-sims">
+              <circle class="pf-sim" style="--i:0" cx="22" cy="34" r="5"/>
+              <circle class="pf-sim" style="--i:1" cx="58" cy="56" r="5"/>
+              <circle class="pf-sim" style="--i:2" cx="26" cy="80" r="5"/>
+              <circle class="pf-sim pf-sim--flag" style="--i:3" cx="66" cy="104" r="5"/>
+              <circle class="pf-sim" style="--i:4" cx="24" cy="126" r="5"/>
+              <circle class="pf-sim" style="--i:5" cx="60" cy="150" r="5"/>
+              <circle class="pf-sim pf-sim--flag" style="--i:6" cx="28" cy="172" r="5"/>
+              <circle class="pf-sim" style="--i:7" cx="64" cy="196" r="5"/>
+              <circle class="pf-sim" style="--i:8" cx="30" cy="218" r="5"/>
+            </g>
+            <text class="pf-cap" x="16" y="244">simulated</text>
+
+            <g class="pf-gate">
+              <path d="M150 24 V226"/>
+              <path d="M150 24 h13 M150 226 h13"/>
+            </g>
+            <text class="pf-cap pf-cap--teal" x="132" y="244">gate</text>
+
+            <g class="pf-status pf-status--flag">
+              <rect x="196" y="50" width="184" height="34" rx="11"/>
+              <path class="pf-bang" d="M218 60 v9 M218 74 v.5"/>
+              <text class="pf-t3 pf-t3--amber" x="234" y="72">2 flagged</text>
+            </g>
+
+            <g class="pf-status pf-status--ok">
+              <rect x="196" y="100" width="184" height="34" rx="11"/>
+              <path class="pf-tick" d="m214 117 5 5 10-11"/>
+              <text class="pf-t3 pf-t3--teal" x="238" y="122">steering held</text>
+            </g>
+
+            <g class="pf-real">
+              <circle class="pf-real__halo" cx="214" cy="186" r="14"/>
+              <circle class="pf-real__dot" cx="214" cy="186" r="6"/>
+              <text class="pf-cap" x="240" y="191">then, a real one</text>
+            </g>
+          </svg>
+        </figure>
+      </article>
+
+      <!-- Trust peaks right after the safety proof, and it is a long way
+           back to the hero button, so the one mid-page CTA sits here. -->
+      <div class="proof__cta reveal">
+        <p class="proof__cta-text">Want to see it running on your own protocols?</p>
+        <a class="btn btn--primary" href="#demo">Book a demo</a>
       </div>
     </div>
   </section>
@@ -239,8 +457,27 @@
     <div class="container">
       <header class="section__head">
         <p class="eyebrow">Safety &amp; compliance</p>
-        <h2 class="section__title">Patient data and patient safety, handled properly</h2>
+        <h2 class="section__title">Held to a standard your clinicians can defend</h2>
       </header>
+
+      <!-- The guardrails story, which used to be feature 03. It sits with the
+           audit and data-handling claims rather than in the product tour;
+           the header and footer "Safety" links point at #safety here. -->
+      <div class="safety reveal" id="safety">
+        <div class="safety__copy">
+          <h3 class="safety__title">Vital stays inside the boundary you draw</h3>
+          <p class="safety__text">
+            Red-flag language, out-of-scope medical questions and distress signals are escalated
+            to a human dietitian in seconds. Every exchange is logged, reviewable and exportable
+            for your records.
+          </p>
+        </div>
+        <ul class="ticks">
+          <li>Red-flag detection with instant human handover</li>
+          <li>Hard limits on diagnosis and medication advice</li>
+          <li>Full audit trail on every conversation</li>
+        </ul>
+      </div>
 
       <div class="badges">
         <div class="badge reveal">
@@ -260,16 +497,6 @@
           <div>
             <p class="badge__name">GDPR</p>
             <p class="badge__text">EU data residency, consent captured in-chat, export and erasure on request.</p>
-          </div>
-        </div>
-
-        <div class="badge reveal">
-          <div class="badge__seal" aria-hidden="true">
-            <svg viewBox="0 0 48 48" width="40" height="40"><path d="M24 5v38M24 5c-5 4-11 5-15 5v14c0 8 6 14 15 19 9-5 15-11 15-19V10c-4 0-10-1-15-5Z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/></svg>
-          </div>
-          <div>
-            <p class="badge__name">Clinical guardrails</p>
-            <p class="badge__text">Red-flag language and out-of-scope medical questions escalate to a human dietitian in seconds. No diagnosis, no medication advice, and a full audit trail on every conversation.</p>
           </div>
         </div>
       </div>
@@ -297,7 +524,8 @@
     <p class="footer__brand">Vital</p>
     <nav class="footer__nav" aria-label="Footer">
       <a href="#features">Features</a>
-      <a href="#compliance">Safety &amp; compliance</a>
+      <a href="#safety">Safety</a>
+      <a href="#compliance">Compliance</a>
       <a href="#demo">Book a demo</a>
     </nav>
     <p class="footer__legal">© <span id="year">2026</span> Vital Health Software. Not a medical device. Clinical decisions stay with your dietitians.</p>

@@ -11,14 +11,32 @@
   --cream-2:    #f7eee4;
   --line:       rgba(36, 31, 27, .10);
 
+  /* Warm side: unchanged. Sampling the three clips puts their dominant
+     accent at hue ~30° (#dd8441 in the topic film), which the existing
+     amber ramp already sits on — so the brand orange stays exactly as it
+     was, favicon and all. */
   --amber:      #e8762f;
   --amber-deep: #c8551c;
   --amber-lite: #ffb877;
   --peach:      #ffd9b0;
 
-  --teal:       #2e6b5e;
-  --teal-deep:  #23554a;
-  --sage:       #dcebe3;
+  /* Cool side: nudged to answer the footage. The clips' dark ground
+     samples at #1a2226 / #141d24 — a blue-slate around 205° — while the
+     old teal sat at 163°, visibly greener than anything on screen. These
+     move to ~187°: still a clinical teal, now the same family as the
+     video ground it appears beside. */
+  --teal:       #2b6a70;
+  --teal-deep:  #22545a;
+  --sage:       #dcebee;
+
+  /* Lifted straight off the clips, for the frames that hold them. A hue
+     histogram of the two dark films puts 63% of their saturated pixels at
+     190-200 degrees, mean #142d38, over a near-black #14161c. The old mat
+     was the right lightness but almost fully desaturated, so it read grey
+     against footage that is visibly petrol; these carry the chroma. */
+  --slate:      #142129;
+  --slate-line: rgba(96, 148, 165, .26);
+  --petrol:     #1d3a44;
 
   --glass:      rgba(255, 255, 255, .55);
   --glass-line: rgba(255, 255, 255, .65);
@@ -31,6 +49,7 @@
 
   --maxw:       1140px;
   --pad:        24px;
+  --header-h:   72px;
 }
 
 /* ---------- base ---------- */
@@ -107,168 +126,207 @@ img, video { display: block; max-width: 100%; }
 
 .nav-toggle { display: none; }
 
-/* ---------- hero ---------- */
-.hero { position: relative; overflow: hidden; padding: 84px 0 96px; }
+/* The hero runs wider than the reading measure the rest of the page uses.
+   1140 is sized for text columns; this section is carrying the product
+   film, and the extra 100px goes straight into it. */
+.hero .container { max-width: 1240px; }
 
+/* ---------- hero ----------
+   One screen, and the whole landing inside it. The section takes exactly
+   the viewport less the header, and everything it holds — headline, CTA,
+   tabs, film — is sized to fit that box rather than to overflow it, so
+   there is no half-visible element sitting on the cut. min-height, not
+   height: a short or zoomed window is allowed to push past instead of
+   clipping the film. */
+.hero {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+  min-height: calc(100svh - var(--header-h));
+  padding: clamp(20px, 3.4vh, 56px) 0 clamp(20px, 3.4vh, 56px);
+}
+
+/* Four layers, warm to cool: a light bloom top-left, the amber ground,
+   and — new — the footage's petrol pulled up into the bottom-right
+   corner. That corner is what stops the section reading as a slab of
+   orange, and it is the same 190-200 degree family the feature films are
+   shot on, so the fold and the clips below it share a palette instead of
+   merely sitting next to each other. The amber ramp is eased back a
+   little at the same time (#f7b47c from #f9b072) to leave the cool
+   corner somewhere to land. */
 .hero__bg {
   position: absolute; inset: 0; z-index: 0; overflow: hidden;
   background:
-    radial-gradient(90% 70% at 18% 4%, #fff7ec 0%, rgba(255,247,236,0) 62%),
-    linear-gradient(158deg, #ffeeda 0%, #ffdcb6 44%, #f9b072 100%);
+    radial-gradient(64% 58% at 97% 103%, rgba(29, 58, 68, .34) 0%, rgba(29, 58, 68, 0) 68%),
+    radial-gradient(90% 70% at 18% 4%, #fff9f0 0%, rgba(255,249,240,0) 62%),
+    linear-gradient(158deg, #fff1e1 0%, #ffdfbd 46%, #f7b47c 100%);
 }
 .hero__bg::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(253,248,243,0) 58%, var(--cream) 100%);
 }
-.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .8; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .72; }
 .blob--1 { width: 760px; height: 640px; right: -12%; top: -6%; background: radial-gradient(circle, var(--amber) 0%, rgba(232,118,47,0) 68%); }
 .blob--2 { width: 600px; height: 540px; right: 26%;  top: 30%; background: radial-gradient(circle, var(--amber-lite) 0%, rgba(255,184,119,0) 70%); }
 .blob--3 { width: 660px; height: 580px; left: -18%;  top: 26%; background: radial-gradient(circle, #ffe7cd 0%, rgba(255,231,205,0) 70%); }
 
+/* The techy half of the ground: a 34px measure drawn in the footage's
+   petrol rather than in black, so it reads as instrumentation and not as
+   graph paper. It sits above the blobs — their blur would otherwise eat
+   the lines — and is masked to the art side, fading out long before it
+   reaches the headline. Texture at the edge of vision, never a pattern
+   you have to read past. */
+.mesh {
+  position: absolute; inset: -1px;
+  background-image:
+    linear-gradient(to right,  rgba(29, 58, 68, .07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 58, 68, .07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
+          mask-image: radial-gradient(58% 76% at 84% 44%, #000 0%, rgba(0,0,0,.5) 44%, transparent 76%);
+}
+
+/* A trace of grain over the whole ground. Two things at once: it is what
+   keeps this much flat orange from banding across a wide display, and on
+   soft-light it gives the gradient the tooth of something photographed —
+   the lifestyle half of the brief, at a weight you notice only if the
+   layer is removed. */
+.grain {
+  position: absolute; inset: 0;
+  opacity: .38; mix-blend-mode: soft-light; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 .hero__inner {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: 56px; align-items: center;
+  position: relative; z-index: 1; width: 100%;
+  display: grid; grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  gap: clamp(40px, 4.4vw, 72px); align-items: center;
 }
 
-.hero__title { font-size: clamp(36px, 4.7vw, 54px); margin: 18px 0 20px; max-width: 21ch; }
-.hero__sub   { font-size: 18.5px; color: var(--ink-soft); max-width: 52ch; }
-.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 22px; }
-.hero__note {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 14.5px; font-weight: 500; color: var(--teal);
+/* Display type, set to be read as a stack of short lines rather than a
+   paragraph that happens to be large. Two constraints decide the ceiling:
+   a vh term, so a short window shrinks the headline instead of pushing
+   the film off the screen, and 70px, which is the largest "Your ultimate"
+   can be set and still hold one line in this column (measured: ~422px of
+   a 453px column, tracking included). Raising the cap without widening
+   the column is what breaks the first line in two. */
+.hero__title {
+  font-size: clamp(38px, min(5.6vw, 9vh), 70px);
+  line-height: .98; letter-spacing: -.035em; font-weight: 700;
+  margin: 16px 0 20px;
+}
+.hero__line { display: block; }
+
+/* The line that changes voice. Instrument Serif runs optically smaller
+   and lighter than Inter at the same size, so it is nudged up and given
+   back its tracking; the teal is the one already carrying the buttons and
+   the video ground, so the accent reads as part of the system rather than
+   a third colour. font-style is set explicitly because the italic is a
+   separate face here, not a synthesised slant. */
+.hero__line--accent {
+  font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+  font-style: italic; font-weight: 400;
+  font-size: 1.1em; letter-spacing: -.015em;
+  color: var(--teal-deep);
 }
 
-/* ---------- hero glass collage ---------- */
-.hero__art { position: relative; height: 460px; }
-
-.panel {
-  position: absolute;
-  background: var(--glass);
-  border: 1px solid var(--glass-line);
-  border-radius: var(--radius);
-  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
-  box-shadow: var(--shadow-lg);
-  padding: 16px;
-}
-.panel__label {
-  font-size: 11px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px;
-}
-
-.panel--db { left: -8%; top: 48px; width: 244px; animation: float 9s ease-in-out infinite; }
-.rows li {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  font-size: 12.5px; padding: 7px 0; border-top: 1px solid rgba(36,31,27,.07);
-}
-.rows li:first-child { border-top: 0; }
-.chip {
-  font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
-  background: rgba(255,255,255,.75); color: var(--ink-soft);
-}
-.chip--ok { background: var(--sage); color: var(--teal); }
-
-.panel--chat {
-  right: -4%; top: 0; width: 320px; padding: 0; overflow: hidden;
-  animation: float 11s ease-in-out infinite .6s;
-}
-.panel__bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px; border-bottom: 1px solid rgba(36,31,27,.07);
-  background: rgba(255,255,255,.5);
-}
-.panel__title { font-weight: 600; font-size: 15px; flex: 1; }
-.avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(140deg, var(--amber-lite), var(--amber)); }
-.dots { color: var(--ink-soft); }
-
-.thread { padding: 14px; display: grid; gap: 8px; }
-.bubble { font-size: 12.5px; line-height: 1.45; padding: 9px 12px; border-radius: 14px; max-width: 84%; }
-.bubble--in  { background: rgba(255,255,255,.8); border: 1px solid rgba(36,31,27,.06); border-bottom-left-radius: 5px; }
-.bubble--out { background: var(--sage); color: var(--teal-deep); margin-left: auto; border-bottom-right-radius: 5px; }
-
-.composer { display: flex; align-items: center; gap: 10px; margin: 4px 14px 14px; }
-.composer span { flex: 1; height: 34px; border-radius: 999px; background: rgba(255,255,255,.7); border: 1px solid rgba(36,31,27,.07); }
-.send { width: 0; height: 0; border-left: 12px solid var(--teal); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
-
-.panel--profile {
-  right: 12%; bottom: -8px; width: 190px; text-align: center;
-  animation: float 10s ease-in-out infinite 1.2s;
-}
-.panel--profile .panel__label { text-align: left; }
-.profile__face {
-  width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 10px;
-  background: linear-gradient(150deg, var(--peach), var(--amber-lite));
-  border: 2px solid rgba(255,255,255,.8);
-}
-.profile__name { font-weight: 600; font-size: 15px; }
-.profile__meta { font-size: 12px; color: var(--ink-soft); }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-9px); }
-}
+.hero__sub   { font-size: 17.5px; color: var(--ink-soft); max-width: 40ch; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 0; }
 
 /* ---------- sections ---------- */
 .section { padding: 96px 0; }
 .section__head { max-width: 640px; margin-bottom: 64px; }
-.section__title { font-size: clamp(29px, 3.4vw, 40px); margin: 14px 0 14px; }
-.section__sub { color: var(--ink-soft); font-size: 17.5px; }
+.section__title { font-size: clamp(29px, 3.4vw, 40px); margin: 12px 0 0; }
 
-/* ---------- features ---------- */
-.feature {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 56px; align-items: center;
-  padding: 8px 0 44px;
-}
-.feature--flip .feature__copy { order: 2; }
-.feature__text { color: var(--ink-soft); margin-bottom: 22px; }
+/* ---------- feature tabs ----------
+   Icon + one word, three across, with the chosen feature rendered in full
+   underneath. Default (no JS): the rail is hidden and every .fpanel stays
+   in normal flow, so all three features read as a plain stacked list —
+   the same "show everything" fallback used for .reveal.
 
-/* ---------- feature accordion ----------
-   Default (no JS): every .accordion__body is fully expanded in normal
-   flow, so all three features are readable without any interaction —
-   this is the same "show everything" fallback used for .reveal above.
-   main.js adds .is-js once it has wired up real collapse/expand behavior,
-   which is the only thing that switches on the rules below. */
-.accordion__item { border-top: 1px solid var(--line); }
-.accordion__item:last-child { border-bottom: 1px solid var(--line); }
+   These hook on .js, which is set on <html> by an inline script in <head>,
+   rather than on a class main.js adds at the end of body. The markup
+   already ships tab 0 selected and panel 0 .is-active, so the closed state
+   paints on the very first frame; waiting for main.js would show all three
+   panels stacked and then visibly collapse them. */
+.ftabs__rail { display: none; }
 
-.accordion__header { margin: 0; }
-.accordion__trigger {
-  width: 100%; display: flex; align-items: center; gap: 18px;
-  background: none; border: 0; padding: 28px 2px; margin: 0;
-  font: inherit; color: inherit; text-align: left; cursor: pointer;
-}
-.accordion__num {
-  flex-shrink: 0; width: 30px;
-  font-size: 13px; font-weight: 700; color: var(--amber); letter-spacing: .1em;
-}
-.accordion__title {
-  flex: 1; font-size: clamp(19px, 2.1vw, 23px); font-weight: 600; letter-spacing: -.01em;
-}
-.accordion__chevron {
-  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-  border: 1.5px solid var(--line); position: relative;
-  transition: background-color .2s ease, border-color .2s ease;
-}
-.accordion__chevron::before,
-.accordion__chevron::after {
-  content: ""; position: absolute; top: 50%; left: 50%;
-  background: var(--ink-soft); transform: translate(-50%, -50%);
-}
-.accordion__chevron::before { width: 10px; height: 1.6px; }
-.accordion__chevron::after  { width: 1.6px; height: 10px; transition: opacity .25s ease; }
+/* The columns sit flush so one thumb can be exactly a third wide; the
+   6px padding is the inset the thumb floats inside.
 
-.is-js .accordion__item.is-open .accordion__chevron { background: var(--teal); border-color: var(--teal); }
-.is-js .accordion__item.is-open .accordion__chevron::before,
-.is-js .accordion__item.is-open .accordion__chevron::after { background: #fff; }
-.is-js .accordion__item.is-open .accordion__chevron::after { opacity: 0; }
+   Back to static positioning: the rail and the film it controls are in
+   the same screen now, so there is nothing to pin it against. It spans
+   its column rather than capping at 520px, which lines its ends up with
+   the film underneath it. */
+.js .ftabs__rail {
+  position: relative;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px; padding: 6px;
+  background: rgba(255, 255, 255, .62);
+  border: 1px solid var(--glass-line); border-radius: 999px;
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow-sm);
+}
 
-/* Height is driven by main.js (measuring scrollHeight, then animating to
-   it — the classic accordion recipe). The grid-template-rows 0fr/1fr trick
-   was tried first but a nested grid inside the animating row froze mid-
-   transition in Chromium, so this sticks to plain, reliable height. */
-.accordion__body { overflow: hidden; }
-.is-js .accordion__body { height: 0; transition: height .38s ease; }
+/* A single thumb slides between the three cells rather than each tab
+   painting its own background — that movement is what carries the change.
+   Its width is one column (the rail's padding box less the 12px inset),
+   and a translateX percentage resolves against the thumb's own width, so
+   one column across is exactly 100% and --ftab-i (set by main.js) is just
+   the column index. Flush columns are what keep that arithmetic this
+   simple; adding a gap would have to be added back in here too. */
+.ftabs__thumb {
+  position: absolute; z-index: 0; top: 6px; bottom: 6px; left: 6px;
+  width: calc((100% - 12px) / 3);
+  border-radius: 999px; background: #fff;
+  box-shadow: 0 0 0 1px rgba(232, 118, 47, .22), var(--shadow-sm);
+  transform: translateX(calc(var(--ftab-i, 0) * 100%));
+  transition: transform .34s cubic-bezier(.4, 0, .2, 1);
+}
+
+.ftab {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 11px 8px; margin: 0;
+  background: none; border: 0; border-radius: 999px;
+  font: inherit; font-size: 15px; font-weight: 600; letter-spacing: -.01em;
+  color: var(--ink-soft); cursor: pointer;
+  transition: color .22s ease;
+}
+.ftab:hover { color: var(--ink); }
+.ftab:focus-visible { border-radius: 999px; outline-offset: 4px; }
+.ftab[aria-selected="true"] { color: var(--amber-deep); }
+
+.ftab__icon { display: flex; color: var(--ink-soft); transition: color .22s ease; }
+.ftab__icon svg { width: 19px; height: 19px; }
+.ftab:hover .ftab__icon { color: var(--ink); }
+.ftab[aria-selected="true"] .ftab__icon { color: var(--amber); }
+
+.fpanel + .fpanel { margin-top: 40px; }
+
+/* One line under the film, and that is the whole of the feature copy.
+   Sized and coloured as a caption rather than a heading so it reads as a
+   label on the clip, not as a section title competing with the H1. */
+.fpanel__caption {
+  margin-top: 16px;
+  font-size: clamp(15px, 1.3vw, 17px); font-weight: 600;
+  letter-spacing: -.015em; color: var(--ink);
+}
+
+/* With JS every panel occupies the same grid cell, so the stage is always
+   as tall as the tallest one and switching tabs never shifts the page
+   under the rail. visibility (not display) keeps that height reserved
+   while still pulling the hidden panels out of the a11y tree and tab
+   order. */
+.js .ftabs__stage { display: grid; }
+.js .fpanel {
+  grid-area: 1 / 1; margin: 0;
+  opacity: 0; visibility: hidden; transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+}
+.js .fpanel.is-active {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .3s ease, transform .3s ease, visibility 0s;
+}
 
 .ticks { display: grid; gap: 11px; font-size: 15.5px; }
 .ticks li { position: relative; padding-left: 30px; }
@@ -282,51 +340,325 @@ img, video { display: block; max-width: 100%; }
   transform: rotate(-45deg);
 }
 
-/* media frame — same shell for video and placeholder */
+/* The film is capped against the viewport as well as against its column.
+   16/9 at full column width is taller than a short window can spare once
+   the rail and caption are counted, so on those the height leads and the
+   frame simply gets narrower — the alternative is the bottom of the clip
+   hanging below the fold, which is the thing this layout exists to
+   avoid. Centred so it stays aligned with the rail above it. */
+.hero__features .media { max-height: calc(100svh - var(--header-h) - 260px); }
+.hero__features .ftabs__stage { justify-items: center; }
+.hero__features .fpanel { width: 100%; }
+
+/* ---------- media frame ----------
+   All three clips get the same frame, and that is the point. Two of them
+   are dark petrol renders and the third is a light warm one; when each
+   frame was styled to flatter its own footage, tabbing between them threw
+   the page from a dark rectangle to a cream one and the three stopped
+   reading as one product. So the frame is constant — petrol mat, petrol
+   hairline, the warm drop shadow the hero's glass panels sit on — and the
+   grading inside it is what varies. A dark screen against a cream page
+   then reads as a device, which is the intent. */
 .media {
   position: relative; isolation: isolate;
   margin: 0; border-radius: var(--radius-lg); overflow: hidden;
-  background: linear-gradient(150deg, var(--cream-2), #fff);
-  border: 1px solid var(--line); box-shadow: var(--shadow-md);
+  background: var(--slate);
+  border: 1px solid var(--slate-line); box-shadow: var(--shadow-lg);
   aspect-ratio: 16 / 9;
 }
 .media__video { width: 100%; height: 100%; object-fit: cover; }
 
-/* The source footage's orange runs darker/duller than the hero's amber.
-   `screen` only ever lightens, so it lifts that background toward the
-   brand amber without washing out the light UI chrome already in-shot. */
+/* The default bloom, for the dark footage. Deliberately weak and pushed
+   to the corners: on `screen` it can only lighten, so it warms the dead
+   space around the UI without hazing the middle of the shot, where the
+   content is. The amber and the petrol are the two hues the clips are
+   actually built from, so this is lifting what is already there. */
 .media__tint {
   position: absolute; inset: 0;
-  background: var(--amber-lite);
-  mix-blend-mode: overlay;
-  opacity: .55;
   pointer-events: none;
+  background:
+    radial-gradient(70% 70% at 12% 8%, rgba(43, 106, 112, .16) 0%, transparent 62%),
+    radial-gradient(88% 88% at 50% 46%,
+      transparent 34%, rgba(221, 132, 65, .13) 74%, rgba(232, 118, 47, .20) 100%);
+  mix-blend-mode: screen;
 }
 
-.media--placeholder {
-  background: linear-gradient(150deg, #fff5e9, #ffe6cd 60%, #ffd9b0);
-  display: grid; place-items: center;
+/* The scheduling clip is the odd one: a light render, 90% of its pixels
+   warm and saturated, dropped between two dark ones. `screen` would only
+   blow it out further, so it inverts the treatment — a petrol scrim on
+   `multiply` pulls its brightness and its orange back toward the other
+   two, and the slight desaturation stops it shouting next to them.
+
+   This is grading, not a fix. The clip is a different render style from
+   the other two and no overlay makes it the same one; re-rendering it on
+   the dark ground is what actually closes the gap. */
+.media--light .media__video {
+  filter: saturate(.88) contrast(1.05) brightness(.96);
 }
-.placeholder { display: grid; gap: 18px; justify-items: center; width: 100%; padding: 28px; }
-.placeholder__note {
-  font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--amber-deep); background: rgba(255,255,255,.7);
-  padding: 6px 14px; border-radius: 999px;
+.media--light .media__tint {
+  background: linear-gradient(158deg,
+    rgba(29, 58, 68, .10) 0%, rgba(20, 33, 41, .26) 100%);
+  mix-blend-mode: multiply;
 }
 
-.placeholder__grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 400px; }
-.tile {
-  font-size: 13.5px; font-weight: 500; padding: 9px 16px; border-radius: 12px;
-  background: rgba(255,255,255,.7); border: 1px solid var(--glass-line);
-  box-shadow: var(--shadow-sm);
-}
-.tile--add { color: var(--amber-deep); font-weight: 700; }
+/* ---------- how it works ----------
+   Four horizontal rows under the hero, alternating sides. The section sits
+   on the plain cream ground: the hero above it is a full amber wash and
+   compliance below is cream-2, so leaving this one unpainted is what gives
+   the page its light-heavy-light rhythm and lets the figures carry the
+   colour instead of competing with a background. */
+.proof__head { max-width: 620px; margin-bottom: clamp(48px, 6vh, 76px); }
+.proof__head .section__title { margin-top: 10px; }
 
-/* ---------- compliance ---------- */
+.proof__row {
+  display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: clamp(32px, 5vw, 72px); align-items: center;
+}
+.proof__row + .proof__row { margin-top: clamp(64px, 9vh, 116px); }
+
+/* Alternating sides. Reordering the grid children rather than reversing
+   the column template keeps the copy first in the DOM on every row, so
+   the reading order stays copy-then-figure for a screen reader and for
+   the stacked layout. */
+.proof__row--flip .proof__copy { grid-column: 2; }
+.proof__row--flip .proof__fig  { grid-column: 1; grid-row: 1; }
+
+.proof__n {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+  color: var(--amber-deep); margin-bottom: 14px;
+}
+.proof__row--floor .proof__n { color: var(--teal); }
+
+/* The instrument names. Small, quiet, and set apart from the sentence —
+   they are a credential, not a claim, and they only earn their place if
+   the clinic actually runs those batteries. */
+.proof__tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+.proof__tags li {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .04em;
+  color: var(--teal); background: var(--sage);
+  border-radius: 999px; padding: 4px 11px;
+}
+
+.proof__title { font-size: clamp(23px, 2.6vw, 31px); letter-spacing: -.025em; margin-bottom: 16px; }
+.proof__text  { color: var(--ink-soft); font-size: 16.5px; max-width: 46ch; }
+
+/* The figure frame borrows the warm card language the compliance cards
+   already use, rather than the dark video mat — these are drawings on the
+   page, not footage in a screen. */
+.proof__fig {
+  margin: 0; padding: clamp(16px, 2.2vw, 28px);
+  background: linear-gradient(150deg, var(--cream-2), #fff);
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.pfig { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* ---------- shared figure language ---------- */
+.pfig text { font-family: inherit; }
+.pf-t   { font-size: 12px; font-weight: 600; fill: var(--ink); text-anchor: middle; letter-spacing: -.01em; }
+.pf-t--on   { fill: var(--teal-deep); }
+.pf-t--amber{ fill: var(--amber-deep); }
+.pf-t2  { font-size: 12.5px; font-weight: 500; fill: var(--ink); }
+.pf-t3  { font-size: 12.5px; font-weight: 600; fill: var(--ink); }
+.pf-t3--amber { fill: var(--amber-deep); }
+.pf-t3--teal  { fill: var(--teal-deep); }
+.pf-cap { font-size: 10.5px; font-weight: 500; fill: var(--ink-soft); opacity: .75; }
+.pf-cap--end   { text-anchor: end; }
+.pf-cap--amber { fill: var(--amber-deep); opacity: 1; }
+.pf-cap--teal  { fill: var(--teal); opacity: 1; }
+
+.pf-node  { stroke: rgba(36,31,27,.2); stroke-width: 1.4; fill: #fff; }
+.pf-card  { fill: #fff; stroke: rgba(36,31,27,.12); stroke-width: 1.4; }
+.pf-line  { stroke: rgba(36,31,27,.3); stroke-width: 1.4; }
+.pf-bar   { fill: rgba(36,31,27,.26); }
+.pf-bar--soft { fill: rgba(36,31,27,.14); }
+.pf-tick  { stroke: var(--teal); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- 01 · branching between batteries ---------- */
+.pf-batt rect { stroke: var(--teal); stroke-width: 1.7; fill: rgba(220,235,238,.5); }
+.pf-batt--off rect { stroke: rgba(36,31,27,.3); fill: none; }
+.pf-batt--off { opacity: .4; }
+.pf-batt--off .pf-t { fill: var(--ink-soft); }
+.pf-x { stroke: var(--ink-soft); stroke-width: 1.6; stroke-linecap: round; }
+
+/* The pre-made answers. One is shown mid-tap, because "most answers are a
+   tap" is the speed claim and a row of untouched buttons does not say it. */
+.pf-chip rect { fill: #fff; stroke: rgba(36,31,27,.16); stroke-width: 1.4; }
+.pf-chip--tap rect { fill: var(--amber); stroke: var(--amber); }
+.pf-chip--tap .pf-t2 { fill: #fff; }
+.pf-ripple { fill: none; stroke: var(--amber); stroke-width: 2; opacity: 0; }
+
+/* ---------- 02 · the gap collapsing ---------- */
+.pf-track { stroke: rgba(36,31,27,.22); stroke-width: 1.4; }
+.pf-seed  { fill: rgba(36,31,27,.3); }
+.pf-seed--amber { fill: var(--amber); }
+.pf-prog  { stroke: var(--amber); stroke-width: 3.4; stroke-linecap: round; }
+.pf-dot--slow { fill: rgba(36,31,27,.45); transform: translateX(372px); }
+.pf-dot--fast { fill: var(--amber); transform: translateX(124px); }
+.pf-booked rect { fill: var(--sage); stroke: none; }
+
+/* ---------- 03 · formula and queue ---------- */
+.pf-plus  { font-size: 15px; font-weight: 600; fill: var(--amber-deep); text-anchor: middle; }
+.pf-arrow { stroke: rgba(36,31,27,.35); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.pf-fx--rank rect { fill: rgba(232,118,47,.10); stroke: var(--amber); stroke-width: 1.7; }
+
+.pf-qrow rect { fill: #fff; stroke: rgba(36,31,27,.12); stroke-width: 1.3; }
+.pf-qrow--top rect { stroke: var(--amber); stroke-width: 1.9; }
+.pf-pip { fill: rgba(36,31,27,.22); }
+.pf-pip--hi  { fill: var(--amber); }
+.pf-pip--mid { fill: var(--teal); }
+
+/* ---------- 04 · simulation before release ---------- */
+.pf-sim { fill: rgba(36,31,27,.22); }
+.pf-sim--flag { fill: var(--amber); }
+.pf-gate { stroke: var(--teal); stroke-width: 1.8; stroke-linecap: round; }
+.pf-status--flag rect { fill: rgba(232,118,47,.09); stroke: var(--amber); stroke-width: 1.5; }
+.pf-status--ok   rect { fill: var(--sage); stroke: none; }
+.pf-bang { stroke: var(--amber-deep); stroke-width: 2.2; stroke-linecap: round; }
+/* The real patient is the same mark as a simulated one, solid and ringed
+   — a person glyph at this size just reads as a face. */
+.pf-real__halo { stroke: var(--teal); stroke-width: 1.6; fill: none; opacity: .45; }
+.pf-real__dot  { fill: var(--teal); }
+
+/* ---------- mid-section CTA ---------- */
+.proof__cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 18px 24px; text-align: center;
+  margin-top: clamp(64px, 9vh, 116px); padding-top: clamp(38px, 5vh, 56px);
+  border-top: 1px solid var(--line);
+}
+.proof__cta-text { font-size: 18px; font-weight: 600; letter-spacing: -.02em; }
+
+/* One quiet link per row, only where a post actually exists. A row without
+   one simply ends at its paragraph — nothing looks broken. */
+.proof__link {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+  font-size: 15px; font-weight: 600; color: var(--amber-deep); text-decoration: none;
+}
+.proof__link--floor { color: var(--teal); }
+.proof__link svg { transition: transform .18s ease; }
+.proof__link:hover svg, .proof__link:focus-visible svg { transform: translateX(3px); }
+.proof__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- figure animation ----------
+   Gated on .js and on no-preference, and driven by .is-visible, which the
+   existing .reveal observer already adds once and never removes. Every
+   figure's resting state is its finished state, so a browser with JS off,
+   an observer that never fires, or reduced motion all show the completed
+   drawing rather than an empty frame — the animation only replays the way
+   it got there. */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* percentage transform-origins need a box to resolve against */
+  .js .pfig .pf-batt, .js .pfig .pf-chip, .js .pfig .pf-fx,
+  .js .pfig .pf-ripple, .js .pfig .pf-booked, .js .pfig .pf-status,
+  .js .pfig .pf-real, .js .pfig .pf-sim {
+    transform-box: fill-box; transform-origin: center;
+  }
+
+  /* --- 01 --- */
+  .js #proof-intake .pf-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-intake.is-visible .pf-line   { animation: pfDraw .4s ease forwards .05s; }
+  .js #proof-intake.is-visible .pf-line--b { animation-delay: .3s; }
+
+  .js #proof-intake .pf-batt { opacity: 0; transform: translateX(-8px); }
+  .js #proof-intake.is-visible .pf-batt {
+    animation: pfSlideIn .4s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(.45s + var(--i) * .1s);
+  }
+  .js #proof-intake .pf-batt--off { --i: 2; }
+  .js #proof-intake.is-visible .pf-batt--off { animation-name: pfSlideDim; }
+
+  .js #proof-intake .pf-chip { opacity: 0; transform: translateY(8px); }
+  .js #proof-intake.is-visible .pf-chip {
+    animation: pfPop .34s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(.8s + var(--i) * .09s);
+  }
+  /* `backwards` holds the untapped look through the delay, then the tap
+     lands and the element's own amber styles take over on completion. */
+  .js #proof-intake.is-visible .pf-chip--tap rect { animation: pfTap .28s ease 1.2s backwards; }
+  .js #proof-intake.is-visible .pf-chip--tap .pf-t2 { animation: pfTapText .28s ease 1.2s backwards; }
+  .js #proof-intake.is-visible .pf-ripple { animation: pfRipple .55s ease-out 1.17s; }
+
+  /* --- 02 --- */
+  .js #proof-response .pf-prog { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-response.is-visible .pf-prog { animation: pfDraw .7s cubic-bezier(.3,.7,.3,1) forwards .15s; }
+  .js #proof-response.is-visible .pf-dot--fast { animation: pfRunFast .7s cubic-bezier(.3,.7,.3,1) both .15s; }
+  /* Still 2.5x the fast dot's duration — the contrast is the whole point, so
+     it stays slow, just not tedious. */
+  .js #proof-response.is-visible .pf-dot--slow { animation: pfRunSlow 1.8s linear both .15s; }
+
+  .js #proof-response .pf-booked { opacity: 0; transform: scale(.9); }
+  .js #proof-response.is-visible .pf-booked { animation: pfPopIn .36s cubic-bezier(.32,.72,.35,1) forwards .88s; }
+
+  /* --- 03 --- */
+  .js #proof-priority .pf-fx { opacity: 0; transform: translateY(-6px); }
+  .js #proof-priority.is-visible .pf-fx {
+    animation: pfPop .36s cubic-bezier(.32,.72,.35,1) forwards;
+    animation-delay: calc(.1s + var(--i) * .12s);
+  }
+  /* The re-sort is the feature, so the top and bottom rows start swapped
+     and travel to their ranked positions. transform only — animating the
+     row heights would reflow the whole drawing. */
+  .js #proof-priority .pf-qrow--top  { transform: translateY(108px); }
+  .js #proof-priority .pf-qrow--last { transform: translateY(-108px); }
+  .js #proof-priority.is-visible .pf-qrow--top,
+  .js #proof-priority.is-visible .pf-qrow--last {
+    animation: pfSettle .55s cubic-bezier(.36,.66,.3,1) forwards .5s;
+  }
+  .js #proof-priority .pf-tick { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-priority.is-visible .pf-tick { animation: pfDraw .3s ease forwards 1.15s; }
+
+  /* --- 04 --- */
+  .js #proof-safety .pf-sim { opacity: 0; transform: translateX(-14px); }
+  .js #proof-safety.is-visible .pf-sim {
+    animation: pfDrift .35s ease-out forwards;
+    animation-delay: calc(.05s + var(--i) * .045s);
+  }
+  .js #proof-safety .pf-gate path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .js #proof-safety.is-visible .pf-gate path { animation: pfDraw .4s ease forwards .05s; }
+
+  .js #proof-safety .pf-status { opacity: 0; transform: translateX(10px); }
+  .js #proof-safety.is-visible .pf-status--flag { animation: pfSlideIn .35s ease forwards .6s; }
+  .js #proof-safety.is-visible .pf-status--ok   { animation: pfSlideIn .35s ease forwards .85s; }
+
+  /* The beat of nothing before the real patient is the point of the whole
+     figure — it is why the delay here is so much longer than the others. */
+  .js #proof-safety .pf-real { opacity: 0; }
+  .js #proof-safety.is-visible .pf-real { animation: pfFade .45s ease forwards 1.5s; }
+}
+
+@keyframes pfDraw    { to { stroke-dashoffset: 0; } }
+@keyframes pfSlideIn { to { opacity: 1; transform: none; } }
+@keyframes pfSlideDim{ to { opacity: .4; transform: none; } }
+@keyframes pfPop     { to { opacity: 1; transform: none; } }
+@keyframes pfPopIn   { to { opacity: 1; transform: scale(1); } }
+@keyframes pfFade    { to { opacity: 1; } }
+@keyframes pfSettle  { to { transform: translateY(0); } }
+@keyframes pfDrift   { to { opacity: 1; transform: none; } }
+@keyframes pfRunFast { from { transform: translateX(0); } to { transform: translateX(124px); } }
+@keyframes pfRunSlow { from { transform: translateX(0); } to { transform: translateX(372px); } }
+@keyframes pfRipple  { from { opacity: .7; transform: scale(.4); } to { opacity: 0; transform: scale(2.6); } }
+@keyframes pfTap     { from { fill: #fff; stroke: rgba(36,31,27,.16); } }
+@keyframes pfTapText { from { fill: var(--ink); } }
+
+/* ---------- safety + compliance ---------- */
 .section--compliance { background: var(--cream-2); }
 .section--compliance .section__head { margin-bottom: 44px; }
 
-.badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+/* The guardrails claim, sharing the card language of the badges below it
+   so the two read as one argument rather than two sections. */
+.safety {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px 48px; align-items: start;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 30px 32px; box-shadow: var(--shadow-sm);
+  margin-bottom: 22px;
+}
+.safety__title { font-size: 20px; letter-spacing: -.02em; margin-bottom: 12px; }
+.safety__text { color: var(--ink-soft); font-size: 16px; }
+
+.badges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .badge {
   display: flex; align-items: flex-start; gap: 18px;
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
@@ -370,17 +702,22 @@ img, video { display: block; max-width: 100%; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 940px) {
-  .hero { padding: 60px 0 72px; }
-  .hero__inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero__title { max-width: none; }
-  /* stacked hero: two panels fit cleanly, the third would collide */
-  .hero__art { height: 380px; max-width: 420px; }
-  .panel--db { left: 0; top: 74px; width: 208px; }
-  .panel--chat { right: 0; top: 0; width: 224px; }
-  .panel--profile { display: none; }
+  /* Stacked, the two columns cannot both hold the screen — copy first,
+     then the film under it. The one-screen constraint is dropped with
+     them: min-height goes back to auto so the section is simply as tall
+     as the two stacked halves, rather than a viewport box they overflow. */
+  .hero { min-height: 0; padding: 40px 0 48px; }
+  .hero__inner { grid-template-columns: 1fr; gap: 36px; }
+  .hero__title { font-size: clamp(38px, 9vw, 62px); }
 
-  .feature { grid-template-columns: 1fr; gap: 32px; padding: 36px 0; }
-  .feature--flip .feature__copy { order: 0; }
+  /* Stacked, the alternating placement has nothing to alternate across,
+     and the explicit grid-column would fight the single-column template. */
+  .proof__row { grid-template-columns: 1fr; gap: 28px; }
+  .proof__row--flip .proof__copy { grid-column: 1; }
+  .proof__row--flip .proof__fig  { grid-column: 1; grid-row: auto; }
+  .proof__text { max-width: none; }
+
+  .safety { grid-template-columns: 1fr; gap: 22px; padding: 26px 24px; }
   .badges { grid-template-columns: 1fr; }
   .section { padding: 72px 0; }
   .section__head { margin-bottom: 44px; }
@@ -410,14 +747,17 @@ img, video { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .hero__art { height: 300px; }
-  .panel--db { left: 0; top: 60px; width: 178px; }
-  .panel--chat { right: 0; width: 226px; }
   .cta__form input { max-width: none; }
+
+  /* Three tabs still fit across a phone once the label sits under the
+     icon; the thumb is inset from the rail edges, so it takes the taller
+     stacked height on its own. */
+  .ftab { flex-direction: column; gap: 6px; padding: 10px 4px; font-size: 13.5px; }
+  .ftab__icon svg { width: 20px; height: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .panel { animation: none; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  .ftabs__thumb, .js .fpanel { transition: none; }
 }

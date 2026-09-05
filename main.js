@@ -47,8 +47,8 @@
     revealables.forEach(function (el) { revealer.observe(el); });
   }
 
-  /* ---------- feature accordion ---------- */
-  initFeatureAccordion();
+  /* ---------- feature tabs ---------- */
+  initFeatureTabs();
 
   function idleCallback(cb) {
     if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 2000 });
@@ -66,145 +66,98 @@
     if (p && p.catch) p.catch(function () { /* autoplay blocked — poster stands in */ });
   }
 
-  function initFeatureAccordion() {
-    var root = document.getElementById('featureAccordion');
+  function initFeatureTabs() {
+    var root = document.getElementById('featureTabs');
     if (!root) return;
 
-    var items = Array.prototype.slice.call(root.querySelectorAll('.accordion__item'));
+    var rail = root.querySelector('.ftabs__rail');
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.ftab'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.fpanel'));
+    if (!rail || !tabs.length || tabs.length !== panels.length) return;
 
-    // Feature 1 ships with a real video src and loads eagerly. Every other
-    // feature (currently just feature 2) only carries a data-src, so the
-    // browser never fetches it on page load — hydrate those in the
-    // background once idle, so the clip is ready the moment its section
-    // is opened, without competing with first paint.
-    root.querySelectorAll('.media__video[data-src]').forEach(function (video) {
-      idleCallback(function () { hydrateVideo(video); });
+    // The rail and the collapsed stack are painted already — styles.css
+    // hooks those on the .js class set inline in <head> — so there is no
+    // class to add here, and no first-frame flash of all three panels.
+    var current = 0;
+    tabs.forEach(function (tab, i) {
+      if (tab.getAttribute('aria-selected') === 'true') current = i;
     });
 
-    root.classList.add('is-js');
-
-    // Animates by measuring real content height (scrollHeight) rather than
-    // transitioning grid-template-rows — a nested grid inside an animating
-    // 0fr/1fr row froze mid-transition in testing, so this uses the
-    // classic, reliable height-transition accordion recipe instead.
-    function setOpen(item, open, animate) {
-      var trigger = item.querySelector('.accordion__trigger');
-      var body = item.querySelector('.accordion__body');
-      trigger.setAttribute('aria-expanded', String(open));
-      body.setAttribute('aria-hidden', String(!open));
-
-      if (open) {
-        item.classList.add('is-open');
-        if (!animate) {
-          body.style.height = 'auto';
-          return;
+    // A clip plays only when it is BOTH the open panel and actually on
+    // screen. The observer below owns the second half of that condition;
+    // this is the single place the two are combined, so switching tabs
+    // and scrolling can't leave a hidden video decoding.
+    function syncPlayback() {
+      panels.forEach(function (panel, i) {
+        var video = panel.querySelector('.media__video');
+        if (!video) return;
+        if (i === current && video.isOnScreen && !reduced) {
+          hydrateVideo(video);
+          tryPlay(video);
+        } else {
+          video.pause();
         }
-        body.style.height = body.scrollHeight + 'px';
-        body.addEventListener('transitionend', function onEnd(e) {
-          if (e.propertyName !== 'height') return;
-          body.removeEventListener('transitionend', onEnd);
-          if (item.classList.contains('is-open')) body.style.height = 'auto';
-        });
-      } else {
-        var video = body.querySelector('.media__video');
-        if (video) video.pause();
-        if (!animate) {
-          item.classList.remove('is-open');
-          body.style.height = '0px';
-          return;
-        }
-        // Freeze the current (possibly 'auto') height as a concrete pixel
-        // value first — a transition can't animate away from 'auto'.
-        body.style.height = body.scrollHeight + 'px';
-        void body.offsetHeight; // force layout so that height is committed
-        item.classList.remove('is-open');
-        requestAnimationFrame(function () { body.style.height = '0px'; });
-      }
+      });
     }
 
-    // Clicking a header toggles just that section. Sections are not
-    // mutually exclusive: see the scroll-driven opening below for why.
-    items.forEach(function (item) {
-      item.querySelector('.accordion__trigger').addEventListener('click', function () {
-        setOpen(item, !item.classList.contains('is-open'), true);
+    function select(index, focusTab) {
+      current = index;
+      rail.style.setProperty('--ftab-i', String(index));
+
+      tabs.forEach(function (tab, i) {
+        var on = i === index;
+        tab.setAttribute('aria-selected', String(on));
+        // Roving tabindex: only the selected tab sits in the tab order, so
+        // Tab steps over the rail and the arrow keys move within it.
+        tab.tabIndex = on ? 0 : -1;
+        if (on && focusTab) tab.focus();
+      });
+
+      panels.forEach(function (panel, i) {
+        panel.classList.toggle('is-active', i === index);
+      });
+
+      syncPlayback();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(i, false); });
+
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next === null) return;
+        e.preventDefault();
+        select(next, true);
       });
     });
 
-    // Feature 1 starts open, the rest closed — set instantly, no animation,
-    // so the page doesn't visibly "open" on every load.
-    items.forEach(function (item, i) { setOpen(item, i === 0, false); });
+    select(current, false);
 
-    // Each section then opens on its own as the reader scrolls to it, so
-    // nobody has to click to reach the next feature.
-    //
-    // Opening is deliberately one-way. Auto-closing the previous section
-    // would pull ~360px of content out from *above* the reading position,
-    // jumping the page mid-scroll — and since that jump drags the next
-    // header back across the trigger line, it can oscillate. Expanding only
-    // ever adds height below where the reader is looking, so nothing they
-    // can see moves.
-    //
-    // Only ever opens ONE section per frame. Collapsed headers sit ~85px
-    // apart, so a batch check would trip every remaining section at once
-    // and dump the whole list open in a single step. Opening one and
-    // stopping lets its expansion push the next header back down the page,
-    // so the reader has to actually scroll to earn each one.
-    if (!reduced) {
-      var ticking = false;
-      var lastOpenAt = null;
-      var MIN_SCROLL_BETWEEN = 220;
-
-      var openNextInView = function () {
-        ticking = false;
-        var y = window.scrollY;
-
-        // Hold off until the reader has actually travelled since the last
-        // section opened. Without this the pacing depends on how far the
-        // previous expansion happened to push the next header down, which
-        // varies with each section's height and with where the height
-        // animation is at the instant we measure.
-        if (lastOpenAt !== null && Math.abs(y - lastOpenAt) < MIN_SCROLL_BETWEEN) return;
-
-        var line = window.innerHeight * 0.72;
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].classList.contains('is-open')) continue;
-          if (items[i].getBoundingClientRect().top < line) {
-            setOpen(items[i], true, true);
-            lastOpenAt = y;
-            return;
-          }
-        }
-      };
-
-      var queueCheck = function () {
-        if (!ticking) { ticking = true; requestAnimationFrame(openNextInView); }
-      };
-
-      window.addEventListener('scroll', queueCheck, { passive: true });
-      window.addEventListener('resize', queueCheck);
-      queueCheck();
-    }
-
-    // A video only plays once its own accordion section is open AND the
-    // majority of the clip is actually on screen — not merely present in
-    // a collapsed (zero-height) panel.
     if ('IntersectionObserver' in window) {
       var player = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          var video = entry.target;
-          var item = video.closest('.accordion__item');
-          var isOpen = item && item.classList.contains('is-open');
-          if (entry.isIntersecting && isOpen && !reduced) {
-            hydrateVideo(video);
-            tryPlay(video);
-          } else {
-            video.pause();
-          }
-        });
+        entries.forEach(function (entry) { entry.target.isOnScreen = entry.isIntersecting; });
+        syncPlayback();
       }, { threshold: 0.5 });
 
       root.querySelectorAll('.media__video').forEach(function (v) { player.observe(v); });
+    } else {
+      // No observer to ask — treat every clip as visible and let the
+      // open-panel half of the rule do the work on its own.
+      panels.forEach(function (panel) {
+        var video = panel.querySelector('.media__video');
+        if (video) video.isOnScreen = true;
+      });
+      syncPlayback();
     }
+
+    // The first tab is what a visitor lands on, so fetch its clip once the
+    // page has settled rather than waiting for the section to scroll in.
+    var first = panels[current] && panels[current].querySelector('.media__video');
+    if (first) idleCallback(function () { hydrateVideo(first); });
   }
 
   /* ---------- demo form (front-end only for now) ---------- */
