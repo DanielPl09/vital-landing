@@ -102,7 +102,7 @@ img, video { display: block; max-width: 100%; }
 .brand__name { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
 
 .hero {
-  padding-block: 40px 96px;
+  padding-block: 40px 48px;
   display: grid; grid-template-columns: minmax(0, 1fr); align-items: center;
   gap: clamp(32px, 4vw, 64px);
 }
@@ -111,7 +111,7 @@ img, video { display: block; max-width: 100%; }
 }
 .hero__copy { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
 .hero__title {
-  margin: 0; font-size: clamp(40px, 5vw, 60px); line-height: 1.06;
+  margin: 0; font-size: clamp(40px, min(5vw, 7vh), 60px); line-height: 1.06;
   font-weight: 600; letter-spacing: -0.025em; text-wrap: balance;
 }
 .hero__title span { color: var(--blue); }
@@ -132,7 +132,9 @@ img, video { display: block; max-width: 100%; }
    desktop, the column's width on a phone. */
 .illus {
   position: relative; flex: none;
-  font-size: min(10px, 100cqw / 52);
+  /* Also capped by screen height, so on short laptops the hero leaves room
+     for the trust pill and a peek of the first phone above the fold. */
+  font-size: min(10px, 100cqw / 52, (100svh - 300px) / 52);
   width: 52em; height: 52em;
 }
 .orb { position: absolute; left: 9em; top: 9em; width: 34em; height: 34em; }
@@ -221,9 +223,34 @@ img, video { display: block; max-width: 100%; }
   display: flex; align-items: center; justify-content: center;
 }
 
+/* ── Trust ── */
+.trust-bar {
+  display: none; margin: 0; padding: 8px var(--gutter);
+  align-items: center; justify-content: center; gap: 6px;
+  background: var(--blue-tint); color: var(--blue);
+  font-size: 13px; font-weight: 500; text-align: center;
+}
+.trust {
+  display: flex; justify-content: center;
+  margin: -19px 0 0; padding-inline: var(--gutter);
+  position: relative; z-index: 1;
+}
+.trust__pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px 8px 13px; border-radius: 999px;
+  background: var(--white); border: 1px solid var(--line);
+  box-shadow: 0 8px 24px rgba(14,42,79,.08);
+  font-size: 14px; font-weight: 500; line-height: 20px; color: var(--ink-2);
+}
+.trust__pill svg, .trust-bar svg { color: var(--blue); flex: none; }
+@media (max-width: 859px) {
+  .trust-bar { display: flex; }
+  .trust { display: none; }
+}
+
 /* ── Features ── */
 .features {
-  padding-block: 96px 40px;
+  padding-block: 32px 40px;
   display: flex; flex-direction: column; gap: clamp(72px, 9vw, 120px);
 }
 /* Text and clip side by side from tablet width up, alternating sides;
@@ -348,10 +375,16 @@ img, video { display: block; max-width: 100%; }
 /* ── Small screens ── */
 @media (max-width: 720px) {
   .header { padding-block: 20px; }
-  .hero { padding-block: 16px 72px; }
-  .features { padding-block: 72px 24px; }
+  .hero { padding-block: 16px 56px; }
+  .features { padding-block: 56px 24px; }
   .demo { padding-block: 72px 80px; }
   .demo__card { border-radius: 24px; }
   .form { grid-template-columns: 1fr; }
   .footer__inner { padding-block: 24px; }
+}
+
+/* Short laptop screens: tighten the top so the first phone still peeks. */
+@media (min-width: 860px) and (max-height: 920px) {
+  .header { padding-block: 16px; }
+  .hero { padding-block: 12px 36px; }
 }
