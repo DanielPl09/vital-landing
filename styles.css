@@ -921,6 +921,23 @@ img, video { display: block; max-width: 100%; }
 }
 .callout__label + p { margin-top: .5em; }
 
+/* ---------- policy tables (privacy.html) ----------
+   Scrolls sideways inside its own box on a narrow phone rather than
+   pushing the page wider than the screen. */
+.policy-table {
+  overflow-x: auto;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: #fff;
+}
+.policy-table table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 15.5px; line-height: 1.55; }
+.policy-table th, .policy-table td { padding: 12px 16px; text-align: left; vertical-align: top; }
+.policy-table th {
+  background: var(--cream-2); font-size: 12.5px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft);
+}
+.policy-table tbody tr + tr td { border-top: 1px solid var(--line); }
+.policy-table td:first-child { font-weight: 600; }
+
 /* ---------- blog responsive ---------- */
 @media (max-width: 940px) {
   .postcard--lead { flex-direction: column; }
