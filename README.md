@@ -11,11 +11,29 @@ python -m http.server 5173
 
 | File | What it holds |
 | --- | --- |
-| `index.html` | All page markup: header, hero (which holds the features), compliance, CTA, footer |
-| `styles.css` | Full stylesheet, design tokens at the top under `:root` |
-| `main.js` | Mobile nav, scroll reveal, feature tabs, viewport-gated video playback, demo form |
+| `index.html` | Home page: header, hero (voice orb), three feature rows, book-a-demo form, footer |
+| `home.css` | Home page styles, tokens in `:root` (Rubik, blue palette) |
+| `home.js` | Hero orb loop and voice waves, feature clips playing only on screen, demo form |
+| `styles.css`, `main.js` | Blog and privacy pages (the previous design) |
 | `assets/video/` | Feature videos |
-| `assets/img/` | Video posters |
+| `assets/img/` | Video posters, expert avatar (Dana) |
+
+## Book a demo
+
+Fields: name, company, email, phone (optional). Requests are emailed to
+`daniel@babelbits.dev` through [FormSubmit](https://formsubmit.co) — no backend needed. The
+**first** submission sends an activation email to that address; click it once and every
+request after that is delivered. If the service can't be reached, the visitor's mail app opens
+with the request pre-filled. To change the recipient, edit `TO` in `home.js` and the form
+`action` in `index.html`.
+
+The three feature clips (`assets/video/voice-feature.mp4`, `expert-feature.mp4`,
+`questionnaires-feature.mp4`) are 1920x1080 slides with the phone on the left and a headline
+panel on the right. `.frame--phone` crops each to the phone (source x 160-840) so only the
+page copy carries a headline. A new clip in the same template drops straight in; one with a
+different layout needs its own `object-position` and `aspect-ratio`.
+
+The notes below describe the previous home page design, which the blog still uses.
 
 ## Design language
 
@@ -130,7 +148,5 @@ on screen. Add `media--light` to the figure if the footage is a light render.
 
 ## Still to wire up
 
-- The demo form in `main.js` validates the email and shows a confirmation; it does not POST
-  anywhere yet. See the `TODO` in the submit handler.
 - Compliance badges are HIPAA and GDPR — swap the copy in the `#compliance` section if the
   clinic-facing claims differ.
