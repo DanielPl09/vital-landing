@@ -185,7 +185,7 @@
       .then(function (res) { return res.json().then(function (j) { return { ok: res.ok, j: j }; }); })
       .then(function (r) {
         if (!r.ok || String(r.j.success) !== 'true') throw new Error(r.j.message || 'send failed');
-        status.textContent = 'Thanks, ' + data.name.split(' ')[0] + '. We’ll be in touch within one business day.';
+        status.textContent = 'Thank you, ' + data.name.split(' ')[0] + '. Our team will see your message soon.';
         form.reset();
       })
       .catch(function () {

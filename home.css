@@ -232,6 +232,12 @@ img, video { display: block; max-width: 100%; }
 @media (min-width: 860px) {
   .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 5vw, 80px); }
   .feature--flip .feature__copy { order: 2; }
+  /* Text and clip meet in the middle: each hugs the inner edge of its
+     column instead of floating at the outside, so the pair reads as one. */
+  .feature .feature__copy { justify-self: end; }
+  .feature .frame--phone { margin-inline: 0 auto; }
+  .feature--flip .feature__copy { justify-self: start; }
+  .feature--flip .frame--phone { margin-inline: auto 0; }
 }
 .feature__copy { min-width: 0; max-width: 30em; display: flex; flex-direction: column; gap: 14px; }
 .feature__title {
