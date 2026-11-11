@@ -84,6 +84,7 @@ function shareBlock(post) {
   return [
     `<title>${attr(title)} — Vital</title>`,
     `<meta name="description" content="${attr(desc)}" />`,
+    `<meta name="robots" content="noindex" />`, // blog hidden until articles are ready
     `<link rel="canonical" href="${attr(url)}" />`,
     `<meta property="og:site_name" content="Vital" />`,
     `<meta property="og:type" content="article" />`,
