@@ -89,14 +89,10 @@ img, video { display: block; max-width: 100%; }
   max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto;
   padding-inline: var(--gutter);
 }
-/* Logo left, trust badge dead centre, button right: equal side columns
-   keep the badge centred on the page whatever the logo and button widths. */
 .header {
   padding-block: 24px;
-  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
 }
-.brand { justify-self: start; }
-.header__cta { justify-self: end; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
 .brand:hover { color: var(--ink); }
 .brand__mark {
@@ -115,13 +111,20 @@ img, video { display: block; max-width: 100%; }
 }
 .hero__copy { min-width: 0; display: flex; flex-direction: column; gap: 24px; }
 .hero__title {
-  margin: 0; font-size: clamp(40px, min(5vw, 7vh), 60px); line-height: 1.06;
+  margin: 0; font-size: clamp(38px, min(4.6vw, 6.6vh), 54px); line-height: 1.06;
   font-weight: 600; letter-spacing: -0.025em; text-wrap: balance;
 }
 .hero__title span { color: var(--blue); }
 .hero__sub { margin: 0; font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 30em; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 .hero__art { min-width: 0; display: flex; justify-content: center; container-type: inline-size; }
+@media (min-width: 860px) {
+  /* The orb's outer ring sits 4em inside the scene's edge; pulling the
+     scene out by that much lines the ring up under the header's
+     Book a demo button. */
+  .hero__art { justify-content: flex-end; }
+  .hero__art .illus { margin-right: -4em; }
+}
 
 /* The orb. A sky in a ball: a blue gradient, two layers of cloud
    drifting sideways at different speeds (the wind), highlight and shade
@@ -132,13 +135,13 @@ img, video { display: block; max-width: 100%; }
    so nothing restarts or jumps.
 
    The scene is drawn on a 52em square, and 1em is a tenth of its column
-   (at most 10px), so the whole orb scales as one picture: full size on a
+   (at most 8.8px, a 458px scene), so the whole orb scales as one picture: full size on a
    desktop, the column's width on a phone. */
 .illus {
   position: relative; flex: none;
   /* Also capped by screen height, so on short laptops the hero leaves room
      for the trust pill and a peek of the first phone above the fold. */
-  font-size: min(10px, 100cqw / 52, (100svh - 300px) / 52);
+  font-size: min(8.8px, 100cqw / 52, (100svh - 300px) / 52);
   width: 52em; height: 52em;
 }
 .orb { position: absolute; left: 9em; top: 9em; width: 34em; height: 34em; }
@@ -235,17 +238,21 @@ img, video { display: block; max-width: 100%; }
   font-size: 13px; font-weight: 500; text-align: center;
 }
 .trust {
-  margin: 0; display: inline-flex; align-items: center; gap: 7px;
-  padding: 7px 14px 7px 11px; border-radius: 999px;
+  display: flex; justify-content: center;
+  margin: -19px 0 0; padding-inline: var(--gutter);
+  position: relative; z-index: 1;
+}
+.trust__pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px 8px 13px; border-radius: 999px;
   background: var(--white); border: 1px solid var(--line);
-  box-shadow: 0 6px 18px rgba(14,42,79,.06);
+  box-shadow: 0 8px 24px rgba(14,42,79,.08);
   font-size: 14px; font-weight: 500; line-height: 20px; color: var(--ink-2); white-space: nowrap;
 }
-.trust svg, .trust-bar svg { color: var(--blue); flex: none; }
-@media (max-width: 639px) {
+.trust__pill svg, .trust-bar svg { color: var(--blue); flex: none; }
+@media (max-width: 859px) {
   .trust-bar { display: flex; }
-  .header .trust { display: none; }
-  .header { grid-template-columns: 1fr auto; }
+  .trust { display: none; }
 }
 
 /* ── Features ── */

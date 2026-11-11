@@ -9,14 +9,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="home.css?v=6" />
+<link rel="stylesheet" href="home.css?v=7" />
+<!-- GitHub Pages lets browsers keep this page for 10 minutes. If the
+     published build is newer than this copy, reload once onto a fresh URL.
+     BUILD here, ?v= on home.css/home.js and version.json move together. -->
+<script>
+(function () {
+  var BUILD = 7;
+  if (!window.fetch || location.protocol === 'file:') return;
+  fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (v) {
+      if (!(v.build > BUILD)) return;
+      var u = new URL(location.href);
+      if (u.searchParams.get('b') === String(v.build)) return;
+      u.searchParams.set('b', v.build);
+      location.replace(u.toString());
+    })
+    .catch(function () {});
+})();
+</script>
 </head>
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div class="top">
-  <!-- Small phones: no room in the header row, so the trust line sits above it. -->
+  <!-- Phones: the hero is taller than the screen, so the trust line sits up here. -->
   <p class="trust-bar"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Trusted by leading HMOs</p>
   <header class="header">
     <a class="brand" href="#top" aria-label="Vital home">
@@ -25,8 +44,7 @@
       </span>
       <span class="brand__name">Vital</span>
     </a>
-    <p class="trust"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Trusted by leading HMOs</p>
-    <a class="btn btn--ink header__cta" href="#demo">Book a demo</a>
+    <a class="btn btn--ink" href="#demo">Book a demo</a>
   </header>
 
   <main id="main">
@@ -99,6 +117,10 @@
     </section>
   </main>
 </div>
+
+<!-- Wider screens: a pill riding the seam between hero and features, in the
+     first screen together with the top of the first phone. -->
+<p class="trust"><span class="trust__pill"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Trusted by leading HMOs</span></p>
 
 <section class="features" id="features" aria-label="How it works">
   <!-- Each clip is a 1920x1080 slide: the phone on a white ground on the
@@ -202,6 +224,6 @@
   </div>
 </footer>
 
-<script src="home.js?v=4"></script>
+<script src="home.js?v=7"></script>
 </body>
 </html>

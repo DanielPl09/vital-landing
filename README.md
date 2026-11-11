@@ -33,6 +33,19 @@ panel on the right. `.frame--phone` crops each to the phone (source x 160-840) s
 page copy carries a headline. A new clip in the same template drops straight in; one with a
 different layout needs its own `object-position` and `aspect-ratio`.
 
+## Publishing (GitHub Pages)
+
+The `test` branch publishes to https://danielpl09.github.io/vital-landing/. Pages lets browsers
+keep files for 10 minutes, so the home page carries a build number in three places that move
+together on every change to `home.css`/`home.js`/`index.html`:
+
+- `BUILD` in the small script in `index.html`'s `<head>`
+- `?v=` on the `home.css` and `home.js` links
+- `version.json`
+
+On load, the page checks `version.json` without cache; if the published build is newer than
+the copy the browser had, it reloads once onto `?b=<build>`, a fresh URL.
+
 The notes below describe the previous home page design, which the blog still uses.
 
 ## Design language
