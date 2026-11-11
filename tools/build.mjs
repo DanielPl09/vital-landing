@@ -34,7 +34,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 /* Absolute URLs are mandatory in og:image and og:url — a crawler has no page
    context to resolve a relative path against. Change this one line if the site
    moves to a custom domain, then re-run. Trailing slash required. */
-const SITE = 'https://danielpl09.github.io/vital-landing/';
+const SITE = 'https://vitalcoach.live/';
 
 const OG_DIR = 'assets/img/blog/og';
 const OUT_DIR = 'posts';

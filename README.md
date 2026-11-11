@@ -35,7 +35,7 @@ different layout needs its own `object-position` and `aspect-ratio`.
 
 ## Publishing (GitHub Pages)
 
-The `test` branch publishes to https://danielpl09.github.io/vital-landing/. Pages lets browsers
+The `test` branch publishes to https://vitalcoach.live/. Pages lets browsers
 keep files for 10 minutes, so the home page carries a build number in three places that move
 together on every change to `home.css`/`home.js`/`index.html`:
 
