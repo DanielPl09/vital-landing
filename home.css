@@ -85,7 +85,7 @@ img, video { display: block; max-width: 100%; }
 /* ── Top: header + hero ── */
 .top { background: linear-gradient(180deg, #FFFFFF 0%, var(--ground) 100%); }
 
-.header, .hero, .features, .demo, .footer__inner {
+.header, .hero, .features, .pricing__inner, .demo, .footer__inner {
   max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto;
   padding-inline: var(--gutter);
 }
@@ -100,6 +100,12 @@ img, video { display: block; max-width: 100%; }
   display: flex; align-items: center; justify-content: center;
 }
 .brand__name { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.header__nav { display: flex; align-items: center; gap: clamp(12px, 2.5vw, 28px); }
+.header__link {
+  display: inline-flex; align-items: center; min-height: 44px; padding-inline: 4px;
+  font-size: 16px; font-weight: 500; color: var(--ink-2); text-decoration: none;
+}
+.header__link:hover { color: var(--blue); }
 
 .hero {
   padding-block: 40px 48px;
@@ -306,6 +312,89 @@ img, video { display: block; max-width: 100%; }
   font-size: 17px; color: var(--muted);
 }
 
+/* ── Pricing ── */
+/* A light band between the features and the form: three plans, Business
+   lifted as the recommended one, an "in every plan" row, then a navy band
+   for HMOs and networks. Every button goes to the demo form and tells it
+   which plan was chosen (home.js). */
+.pricing { background: var(--ground); border-block: 1px solid #E3EAF3; scroll-margin-top: 0; }
+.pricing__inner { padding-block: clamp(72px, 9vw, 112px); display: flex; flex-direction: column; gap: 40px; }
+.pricing__head { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+.pricing__head .pill { align-self: center; }
+.pricing__title {
+  margin: 0; font-size: clamp(32px, 3.8vw, 46px); line-height: 1.1;
+  font-weight: 600; letter-spacing: -0.02em; text-wrap: balance;
+}
+.pricing__sub { margin: 0; font-size: 19px; line-height: 1.55; color: var(--muted); max-width: 32em; }
+
+.plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: stretch; }
+@media (min-width: 900px) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.plan {
+  position: relative; min-width: 0;
+  background: var(--white); border: 1px solid var(--line); border-radius: 24px;
+  padding: 32px clamp(24px, 2.6vw, 32px); display: flex; flex-direction: column; gap: 22px;
+}
+.plan--popular {
+  border: 2px solid var(--blue);
+  box-shadow: 0 30px 60px -30px rgba(21,89,184,.55);
+}
+.plan__badge {
+  position: absolute; top: -15px; left: 28px; margin: 0;
+  padding: 6px 12px; border-radius: 999px; background: var(--blue); color: var(--white);
+  font-size: 13px; font-weight: 600; line-height: 1.2;
+}
+.plan__head { display: flex; flex-direction: column; gap: 6px; }
+.plan__name { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+.plan__desc { margin: 0; font-size: 16px; color: var(--muted); }
+.plan__price { display: flex; flex-direction: column; gap: 6px; }
+.plan__amount { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+.plan__num { font-size: 52px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+.plan__unit { font-size: 16px; color: var(--muted); }
+.plan__est { margin: 0; font-size: 15px; font-weight: 500; color: var(--ink-2); }
+.plan__bill { margin: 0; font-size: 14px; color: var(--muted); }
+.plan__cta { width: 100%; }
+.plan__list {
+  list-style: none; margin: 0; padding: 22px 0 0; border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 12px; font-size: 16px; line-height: 1.45;
+}
+.plan__list li { display: flex; gap: 10px; }
+.plan__list b { font-weight: 600; }
+.tick-i { flex: none; margin-top: 1px; }
+.tick-i circle { fill: var(--blue-tint); }
+.tick-i path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+.included {
+  background: var(--white); border: 1px solid var(--line); border-radius: 24px;
+  padding: 28px clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: 16px;
+}
+.included__title { margin: 0; font-size: 18px; font-weight: 600; }
+.included__list {
+  list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr);
+  gap: 12px 32px; font-size: 16px; line-height: 1.5; color: var(--muted);
+}
+@media (min-width: 860px) { .included__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.included__list b { color: var(--ink); font-weight: 600; }
+.included__addons { margin: 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+.included__addons b { color: var(--ink); font-weight: 600; }
+
+.enterprise {
+  border-radius: 24px; background: var(--ink); color: var(--white);
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 40px;
+}
+.enterprise__copy { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.pill--on-ink { color: var(--white); background: rgba(255,255,255,.14); }
+.enterprise__title { margin: 0; font-size: clamp(26px, 2.8vw, 32px); line-height: 1.15; font-weight: 600; letter-spacing: -0.015em; }
+.enterprise__text { margin: 0; font-size: 18px; line-height: 1.5; color: #C9D8EC; max-width: 34em; }
+
+.pricing__fine { margin: 0; text-align: center; font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+.demo__plan {
+  align-self: flex-start; margin: 4px 0 0; padding: 7px 14px; border-radius: 999px;
+  background: rgba(255,255,255,.16); font-size: 15px; color: var(--white);
+}
+.demo__plan[hidden] { display: none; }
+
 /* ── Demo ── */
 .demo { padding-block: 96px 112px; scroll-margin-top: 24px; }
 .demo__card {
@@ -385,6 +474,7 @@ img, video { display: block; max-width: 100%; }
   .hero { padding-block: 16px 56px; }
   .features { padding-block: 56px 24px; }
   .demo { padding-block: 72px 80px; }
+  .plans { gap: 32px; }
   .demo__card { border-radius: 24px; }
   .form { grid-template-columns: 1fr; }
   .footer__inner { padding-block: 24px; }

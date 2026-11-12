@@ -127,6 +127,22 @@
   };
   var button = form.querySelector('button[type="submit"]');
 
+  // Pricing buttons: remember the chosen plan, show it above the form and
+  // send it with the request. Plain anchors, so the scroll still works.
+  var planField = document.getElementById('f-plan');
+  var planNote = document.getElementById('demoPlan');
+  var planName = document.getElementById('demoPlanName');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('[data-plan]');
+    if (!a || !planField) return;
+    var plan = a.getAttribute('data-plan');
+    planField.value = plan;
+    if (planNote && planName) {
+      planName.textContent = plan === 'Enterprise' ? 'Enterprise, custom quote' : plan;
+      planNote.hidden = false;
+    }
+  });
+
   function value(el) { return el.value.trim(); }
 
   function check() {
@@ -151,7 +167,8 @@
       'Name: ' + data.name,
       'Company: ' + data.company,
       'Email: ' + data.email,
-      'Phone: ' + (data.phone || '-')
+      'Phone: ' + (data.phone || '-'),
+      'Plan: ' + data.plan
     ].join('\n');
     window.location.href = 'mailto:' + TO +
       '?subject=' + encodeURIComponent('Vital demo request') +
@@ -168,7 +185,8 @@
       company: value(fields.company),
       email: value(fields.email),
       phone: value(fields.phone),
-      _subject: 'Vital demo request: ' + value(fields.company),
+      plan: planField && planField.value ? planField.value : '-',
+      _subject: 'Vital demo request: ' + value(fields.company) + (planField && planField.value ? ' (' + planField.value + ')' : ''),
       _replyto: value(fields.email),
       _template: 'table',
       _captcha: 'false'
@@ -185,6 +203,10 @@
       .then(function (res) { return res.json().then(function (j) { return { ok: res.ok, j: j }; }); })
       .then(function (r) {
         if (!r.ok || String(r.j.success) !== 'true') throw new Error(r.j.message || 'send failed');
+        // Google Ads conversion: lead form sent. Fires only on a confirmed send.
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'conversion', { 'send_to': 'AW-18565989964/4I_xCLLOg7cdEMyM-pRF' });
+        }
         status.textContent = 'Thank you, ' + data.name.split(' ')[0] + '. Our team will see your message soon.';
         form.reset();
       })

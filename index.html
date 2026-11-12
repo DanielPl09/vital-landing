@@ -13,18 +13,18 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vital — Lifestyle assistant platform</title>
-<meta name="description" content="Everyday support for your members, guided by your experts. A lifestyle assistant under your brand, with your experts in charge." />
+<meta name="description" content="An always-on motivational coach for your members, guided by your experts. A lifestyle assistant under your brand, with your experts in charge." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><rect width='48' height='48' rx='13' fill='%231559B8'/><path d='M6 27h9l4-9 6 16 5-12 3 5h9' stroke='%23fff' stroke-width='4.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="home.css?v=8" />
+<link rel="stylesheet" href="home.css?v=10" />
 <!-- GitHub Pages lets browsers keep this page for 10 minutes. If the
      published build is newer than this copy, reload once onto a fresh URL.
      BUILD here, ?v= on home.css/home.js and version.json move together. -->
 <script>
 (function () {
-  var BUILD = 8;
+  var BUILD = 10;
   if (!window.fetch || location.protocol === 'file:') return;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' })
     .then(function (r) { return r.json(); })
@@ -53,14 +53,17 @@
       </span>
       <span class="brand__name">Vital</span>
     </a>
-    <a class="btn btn--ink" href="#demo">Book a demo</a>
+    <nav class="header__nav" aria-label="Main">
+      <a class="header__link" href="#pricing">Pricing</a>
+      <a class="btn btn--ink" href="#demo">Book a demo</a>
+    </nav>
   </header>
 
   <main id="main">
     <section class="hero" id="top">
       <div class="hero__copy">
         <span class="pill">Lifestyle assistant platform</span>
-        <h1 class="hero__title">Everyday support for your members. <span>Guided by your experts.</span></h1>
+        <h1 class="hero__title">Always-on motivational coach for your members. <span>Guided by your experts.</span></h1>
         <p class="hero__sub">A lifestyle assistant under your brand, with your experts in charge.</p>
         <div class="hero__actions">
           <a class="btn btn--blue btn--lg" href="#demo">Book a demo</a>
@@ -182,17 +185,117 @@
   </div>
 </section>
 
+<section class="pricing" id="pricing" aria-labelledby="pricing-title">
+  <div class="pricing__inner">
+    <header class="pricing__head">
+      <span class="pill">Pricing</span>
+      <h2 class="pricing__title" id="pricing-title">Simple pricing, per member.</h2>
+      <p class="pricing__sub">Pay for active members only. Your experts approve every plan.</p>
+    </header>
+
+    <div class="plans">
+      <article class="plan" aria-labelledby="plan-starter">
+        <div class="plan__head">
+          <h3 class="plan__name" id="plan-starter">Starter</h3>
+          <p class="plan__desc">For a solo expert.</p>
+        </div>
+        <div class="plan__price">
+          <p class="plan__amount"><span class="plan__num">$6</span> <span class="plan__unit">/ member / week</span></p>
+          <p class="plan__est">About $650 a month for 25 members</p>
+          <p class="plan__bill">Billed monthly · cancel anytime</p>
+        </div>
+        <a class="btn btn--ghost btn--lg plan__cta" href="#demo" data-plan="Starter">Choose Starter</a>
+        <ul class="plan__list">
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Up to <b>25</b> members</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>1</b> expert seat</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>1</b> questionnaire</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>30</b> voice minutes per member / month</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Unlimited text</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Progress reports</span></li>
+        </ul>
+      </article>
+
+      <article class="plan plan--popular" aria-labelledby="plan-business">
+        <p class="plan__badge">Most popular</p>
+        <div class="plan__head">
+          <h3 class="plan__name" id="plan-business">Business</h3>
+          <p class="plan__desc">For a growing clinic.</p>
+        </div>
+        <div class="plan__price">
+          <p class="plan__amount"><span class="plan__num">$10</span> <span class="plan__unit">/ member / week</span></p>
+          <p class="plan__est">About $2,170 a month for 50 members</p>
+          <p class="plan__bill">12-month plan · billed monthly</p>
+        </div>
+        <a class="btn btn--blue btn--lg plan__cta" href="#demo" data-plan="Business">Choose Business</a>
+        <ul class="plan__list">
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Up to <b>50</b> members</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>3</b> expert seats</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>3</b> questionnaires</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>90</b> voice minutes per member / month</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Unlimited text</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Team dashboard</span></li>
+        </ul>
+      </article>
+
+      <article class="plan" aria-labelledby="plan-advanced">
+        <div class="plan__head">
+          <h3 class="plan__name" id="plan-advanced">Advanced</h3>
+          <p class="plan__desc">For a center at full capacity.</p>
+        </div>
+        <div class="plan__price">
+          <p class="plan__amount"><span class="plan__num">$14</span> <span class="plan__unit">/ member / week</span></p>
+          <p class="plan__est">About $6,070 a month for 100 members</p>
+          <p class="plan__bill">12-month plan · billed monthly</p>
+        </div>
+        <a class="btn btn--ghost btn--lg plan__cta" href="#demo" data-plan="Advanced">Choose Advanced</a>
+        <ul class="plan__list">
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Up to <b>100</b> members</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>6</b> expert seats</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>Full</b> questionnaire library</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>Unlimited</b> voice</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Unlimited text</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span>Advanced analytics</span></li>
+          <li><svg class="tick-i" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><circle cx="10" cy="10" r="10"/><path d="M6 10.5l2.6 2.6L14 7.6"/></svg><span><b>Smart priority:</b> see who needs your experts first</span></li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="included">
+      <h3 class="included__title">In every plan</h3>
+      <ul class="included__list">
+        <li><b>Expert-led.</b> Your experts approve, edit or decline every plan.</li>
+        <li><b>Voice, 24/7.</b> Members just talk. Any hour.</li>
+        <li><b>Three languages.</b> Hebrew, Arabic and English.</li>
+      </ul>
+      <p class="included__addons">Add-ons: extra expert seat <b>$49 / month</b> · 500 extra voice minutes <b>$50</b></p>
+    </div>
+
+    <div class="enterprise">
+      <div class="enterprise__copy">
+        <span class="pill pill--on-ink">Enterprise</span>
+        <h3 class="enterprise__title">HMOs and health networks</h3>
+        <p class="enterprise__text">More than 100 members or several branches? Custom pricing, seats and integration, set up on your own protocols.</p>
+      </div>
+      <a class="btn btn--white btn--lg" href="#demo" data-plan="Enterprise">Get a custom quote</a>
+    </div>
+
+    <p class="pricing__fine">Prices in USD, excluding VAT. Unlimited voice is subject to fair use. Over your member limit? Move up a plan anytime.</p>
+  </div>
+</section>
+
 <section class="demo" id="demo">
   <div class="demo__card">
     <div class="demo__copy">
       <h2 class="demo__title">See it running on your own protocols.</h2>
       <p class="demo__sub">Leave your details and we&rsquo;ll set up a short walkthrough.</p>
+      <p class="demo__plan" id="demoPlan" hidden>Plan: <b id="demoPlanName"></b></p>
     </div>
 
     <form class="form" id="demoForm" action="https://formsubmit.co/daniel@babelbits.dev" method="POST" novalidate>
       <input type="hidden" name="_subject" value="Vital demo request" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="plan" id="f-plan" value="" />
       <div class="form__hp" aria-hidden="true">
         <label for="f-honey">Leave this empty</label>
         <input id="f-honey" type="text" name="_honey" tabindex="-1" autocomplete="off" />
@@ -232,6 +335,6 @@
   </div>
 </footer>
 
-<script src="home.js?v=8"></script>
+<script src="home.js?v=10"></script>
 </body>
 </html>
